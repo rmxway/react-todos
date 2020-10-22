@@ -1,27 +1,37 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Alert } from './components/Alert';
+import { Colors } from './components/Colors';
 import { Navbar } from './components/Navbar';
 import { AlertState } from './context/alert/AlertState';
-import { About } from './pages/About';
-import { Home } from './pages/Home';
+import { NotesState } from './context/notes/NotesState';
+import { AboutPage } from './pages/AboutPage';
+import { NotePage } from './pages/NotePage';
 
 function App() {
     return (
-        <AlertState>
-            <BrowserRouter>
-                <div className='app'>
-                    <div className='container'>
-                        <Alert />
+        <NotesState>
+            <AlertState>
+                <BrowserRouter>
+                    <div className="app">
+                        <div className="container">
+                            <Alert />
+                        </div>
+                        <Navbar />
+                        <Switch>
+                            <Route path={'/'} exact component={NotePage} />
+                            <Route path={'/about'} component={AboutPage} />
+                        </Switch>
+                        <div className="bottom-block">
+                            <div className="container">
+                                <p>Bootstrap colors:</p>
+                                <Colors />
+                            </div>
+                        </div>
                     </div>
-                    <Navbar />
-                    <Switch>
-                        <Route path={'/'} exact component={Home} />
-                        <Route path={'/about'} component={About} />
-                    </Switch>
-                </div>
-            </BrowserRouter>
-        </AlertState>
+                </BrowserRouter>
+            </AlertState>
+        </NotesState>
     );
 }
 

@@ -1,10 +1,10 @@
 import React from 'react';
 
-function ColorItem({ name }) {
-    return <div className={`box box-${name}`} />;
-}
+const ColorItem = ({ name }) => {
+    return <div className={`box box-${name}`} title={name} />;
+};
 
-function Colors() {
+export const Colors = () => {
     const colors = [
         'primary',
         'secondary',
@@ -14,12 +14,10 @@ function Colors() {
         'info',
     ];
     return (
-        <div className='box__wrapper'>
+        <div className="box__wrapper">
             {colors.map((color, idx) => (
                 <ColorItem name={color} key={idx} />
             ))}
         </div>
     );
-}
-
-export default Colors;
+};

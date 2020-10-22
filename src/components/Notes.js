@@ -1,21 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { NotesContext } from '../context/notes/notesContext';
 
 export const Notes = ({ notes }) => {
+    const { removeNote } = useContext(NotesContext);
+
+    const handleClick = (id) => {
+        removeNote(id);
+    };
+    console.log(notes);
+
     return (
-        <ul className='list-group'>
+        <ul className="list-group">
             {notes.map((note) => {
                 return (
                     <li
-                        className='list-group-item d-flex justify-content-between align-items-center'
+                        className="list-group-item d-flex justify-content-between align-items-center"
                         key={note.id}
                     >
                         <div>
                             <strong>{note.title} - </strong>
-                            <small>{new Date().toLocaleDateString()}</small>
+                            <small>{note.date}</small>
                         </div>
                         <button
-                            type='button'
-                            className='btn btn-outline-danger btn-sm'
+                            onClick={() => handleClick(note.id)}
+                            type="button"
+                            className="btn btn-outline-danger btn-sm"
                         >
                             &times;
                         </button>
