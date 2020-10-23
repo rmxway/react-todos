@@ -21,10 +21,6 @@ h1 {
 }
 
 .bottom-block {
-    position:         absolute;
-    bottom:           0;
-    left:             0;
-    right:            0;
     background-color: fade-out($primary, .91);
     padding-top:      5px;
 }

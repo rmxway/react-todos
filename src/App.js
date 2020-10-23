@@ -13,6 +13,12 @@ function App() {
         <NotesState>
             <AlertState>
                 <BrowserRouter>
+                    <div className="bottom-block">
+                        <div className="container">
+                            <p>Bootstrap colors:</p>
+                            <Colors />
+                        </div>
+                    </div>
                     <div className="app">
                         <div className="container">
                             <Alert />
@@ -22,12 +28,6 @@ function App() {
                             <Route path={'/'} exact component={NotePage} />
                             <Route path={'/about'} component={AboutPage} />
                         </Switch>
-                        <div className="bottom-block">
-                            <div className="container">
-                                <p>Bootstrap colors:</p>
-                                <Colors />
-                            </div>
-                        </div>
                     </div>
                 </BrowserRouter>
             </AlertState>

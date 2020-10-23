@@ -7,7 +7,6 @@ export const NotePage = () => {
     const { notes } = useContext(NotesContext);
 
     useEffect(() => {
-        console.log(notes);
         localStorage.setItem('notes', JSON.stringify(notes));
     }, [notes]);
 
@@ -19,7 +18,7 @@ export const NotePage = () => {
                 <br />
                 <Form />
                 <hr />
-                {notes.length ? <Notes notes={notes} /> : <p>Нет записей</p>}
+                <Notes notes={notes} />
             </div>
         </Fragment>
     );
