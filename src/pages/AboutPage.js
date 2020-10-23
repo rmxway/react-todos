@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 
-export const About = () => {
+export const AboutPage = () => {
     return (
         <Fragment>
-            <div className='container'>
+            <div className="container">
                 <h1>About page</h1>
                 <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.

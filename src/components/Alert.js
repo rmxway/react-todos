@@ -1,20 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { alertMotion } from '../animations';
+import { AlertContext } from '../context/alert/alertContext';
+import { motion, AnimatePresence } from 'framer-motion';
 
-export const Alert = ({ alert }) => {
-    if (!alert) {
-        return null;
-    }
+export const Alert = () => {
+    const { alert, hide } = useContext(AlertContext);
+
     return (
-        <div
-            className={`alert alert-${
-                alert.type || 'warning'
-            } alert-dismissible`}
-            role='alert'
-        >
-            <strong>Внимание!</strong>
-            <button type='button' className='close' aria-label='Close'>
-                <span aria-hidden='true'>&times;</span>
-            </button>
-        </div>
+        <AnimatePresence initial={false}>
+            {alert.visible && (
+                <motion.div
+                    layout
+                    {...alertMotion}
+                    className={`alert alert-${
+                        alert.type || 'warning'
+                    } alert-dismissible`}
+                >
+                    <strong>Внимание! </strong>
+                    {alert.text}
+                    <button onClick={hide} type="button" className="close">
+                        <span>&times;</span>
+                    </button>
+                </motion.div>
+            )}
+        </AnimatePresence>
     );
 };
