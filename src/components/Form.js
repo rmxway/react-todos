@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { AlertContext } from '../context/alert/alertContext';
 import { NotesContext } from '../context/notes/notesContext';
+import { Input } from '../styled';
 
 export const Form = () => {
     const [value, setValue] = useState('');
@@ -22,7 +23,7 @@ export const Form = () => {
     return (
         <form onSubmit={submitHandler}>
             <div className="form-group">
-                <input
+                <Input
                     type="text"
                     value={value}
                     onChange={(event) => setValue(event.target.value)}

@@ -1,8 +1,8 @@
 import React, { Fragment, useContext } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { NotesContext } from '../context/notes/notesContext';
 import { noteMotion } from '../animations';
-import { NonNotes } from '../styled';
+import { NonNotes, Note } from '../styled';
 
 export const Notes = ({ notes }) => {
     const { removeNote } = useContext(NotesContext);
@@ -12,14 +12,9 @@ export const Notes = ({ notes }) => {
             {!notes.length ? <NonNotes>Нет записей</NonNotes> : ''}
             <ul className="list-group">
                 <AnimatePresence initial={false}>
-                    {notes.map((note, idx) => {
+                    {notes.map((note) => {
                         return (
-                            <motion.li
-                                {...noteMotion}
-                                layout
-                                key={note.id}
-                                className="list-group-item d-flex justify-content-between align-items-center"
-                            >
+                            <Note {...noteMotion} layout key={note.id}>
                                 <div>
                                     <strong>{note.title} - </strong>
                                     <small>{note.date}</small>
@@ -27,11 +22,11 @@ export const Notes = ({ notes }) => {
                                 <button
                                     onClick={() => removeNote(note.id)}
                                     type="button"
-                                    className="btn btn-outline-danger btn-sm"
+                                    className="btn btn-outline-secondary btn-sm"
                                 >
                                     &times;
                                 </button>
-                            </motion.li>
+                            </Note>
                         );
                     })}
                 </AnimatePresence>
