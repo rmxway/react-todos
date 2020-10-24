@@ -1,38 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
 import { Alert } from './components/Alert';
-import { Colors } from './components/Colors';
 import { Navbar } from './components/Navbar';
 import { AlertState } from './context/alert/AlertState';
 import { NotesState } from './context/notes/NotesState';
 import { AboutPage } from './pages/AboutPage';
 import { NotePage } from './pages/NotePage';
+import { App, theme } from './styled';
 
-function App() {
+function Application() {
+    const [color, setColor] = useState(
+        localStorage.getItem('color') || 'light'
+    );
+    const toggleColor = () => {
+        const newColor = color === 'light' ? 'dark' : 'light';
+        setColor(newColor);
+        localStorage.setItem('color', newColor);
+    };
     return (
         <NotesState>
             <AlertState>
-                <BrowserRouter>
-                    <div className="bottom-block">
-                        <div className="container">
-                            <p>Bootstrap colors:</p>
-                            <Colors />
-                        </div>
-                    </div>
-                    <div className="app">
-                        <div className="container">
-                            <Alert />
-                        </div>
-                        <Navbar />
-                        <Switch>
-                            <Route path={'/'} exact component={NotePage} />
-                            <Route path={'/about'} component={AboutPage} />
-                        </Switch>
-                    </div>
-                </BrowserRouter>
+                <ThemeProvider theme={theme[color]}>
+                    <BrowserRouter>
+                        <App layout>
+                            <div className="container">
+                                <Alert />
+                            </div>
+                            <Navbar onToggle={toggleColor} colorTheme={color} />
+                            <Switch>
+                                <Route path={'/'} exact component={NotePage} />
+                                <Route path={'/about'} component={AboutPage} />
+                            </Switch>
+                        </App>
+                    </BrowserRouter>
+                </ThemeProvider>
             </AlertState>
         </NotesState>
     );
 }
 
-export default App;
+export default Application;

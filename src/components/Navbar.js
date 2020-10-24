@@ -1,17 +1,27 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { Button, Nav } from '../styled';
 
-export const Navbar = () => (
-    <nav className="navbar">
-        <div className="container">
-            <img src="img/logo.png" alt="" />
-            <ul>
-                <li>
-                    <a href="/">Notes</a>
-                </li>
-                <li>
-                    <a href="/about">About</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-);
+export const Navbar = ({ onToggle, colorTheme }) => {
+    return (
+        <Nav>
+            <div className="container">
+                <img src="img/logo.png" alt="" />
+
+                {/* Переключение цвета темы */}
+                <Button onClick={() => onToggle()}>
+                    {colorTheme === 'light' ? 'Светлая' : 'Темная'} тема
+                </Button>
+
+                <ul>
+                    <li>
+                        <NavLink to="/">Notes</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/about">About</NavLink>
+                    </li>
+                </ul>
+            </div>
+        </Nav>
+    );
+};
