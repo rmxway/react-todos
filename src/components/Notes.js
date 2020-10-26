@@ -1,7 +1,6 @@
 import React, { Fragment, useContext } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { NotesContext } from '../context/notes/notesContext';
-import { noteMotion } from '../animations';
 import { NonNotes, Note } from '../styled';
 
 export const Notes = ({ notes }) => {
@@ -14,7 +13,7 @@ export const Notes = ({ notes }) => {
                 <AnimatePresence initial={false}>
                     {notes.map((note) => {
                         return (
-                            <Note {...noteMotion} layout key={note.id}>
+                            <Note layout key={note.id}>
                                 <div>
                                     <strong>{note.title} - </strong>
                                     <small>{note.date}</small>
