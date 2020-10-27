@@ -17,6 +17,7 @@ export const NotePage = () => {
                 <H1>React Notes App</H1>
                 <p>TodoList, Animations</p>
                 <br />
+                <br />
                 <Form />
                 <hr />
                 <Notes notes={notes} />

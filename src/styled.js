@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { darken, lighten } from 'polished';
+import { darken } from 'polished';
+import { noteMotion } from './animations';
 
 export const theme = {
     light: {
@@ -94,7 +95,10 @@ export const NonNotes = styled.p`
     position: absolute;
 `;
 
-export const Note = styled(motion.li)`
+export const Note = styled(motion.li).attrs(() => ({
+    // анимации motion
+    ...noteMotion,
+}))`
     color: ${(props) => props.theme.textColor};
     background-color: ${(props) => darken(0.05, props.theme.bg)};
     border: 1px solid ${(props) => props.theme.borderColor};
@@ -133,4 +137,27 @@ export const Button = styled(motion.button).attrs(() => ({
     &:focus {
         outline: none;
     }
+`;
+
+export const ImageComponent = styled.div`
+    position: relative;
+    margin: 50px 0;
+    height: 400px;
+
+    img {
+        position: relative;
+        max-height: 100%;
+        box-shadow: 0 5px 15px #0007;
+        z-index: 2;
+    }
+`;
+
+export const Backplane = styled(motion.div)`
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background-color: #222;
 `;
