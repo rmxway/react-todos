@@ -5,7 +5,7 @@ import { Alert } from './components/Alert';
 import { Navbar } from './components/Navbar';
 import { AlertState } from './context/alert/AlertState';
 import { NotesState } from './context/notes/NotesState';
-import { AboutPage } from './pages/AboutPage';
+import { MotionPage } from './pages/MotionPage';
 import { NotePage } from './pages/NotePage';
 import { App, theme } from './styled';
 
@@ -29,8 +29,12 @@ function Application() {
                             </div>
                             <Navbar onToggle={toggleColor} colorTheme={color} />
                             <Switch>
-                                <Route path={'/'} exact component={NotePage} />
-                                <Route path={'/about'} component={AboutPage} />
+                                <Route exact path={'/'} component={NotePage} />
+                                <Route
+                                    exact
+                                    path={'/motion'}
+                                    component={MotionPage}
+                                />
                             </Switch>
                         </App>
                     </BrowserRouter>

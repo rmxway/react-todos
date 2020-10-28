@@ -15,10 +15,14 @@ export const Navbar = ({ onToggle, colorTheme }) => {
 
                 <ul>
                     <li>
-                        <NavLink to="/">Notes</NavLink>
+                        <NavLink exact to="/" activeClassName="active">
+                            Notes
+                        </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/about">About</NavLink>
+                        <NavLink exact to="/motion" activeClassName="active">
+                            Motion
+                        </NavLink>
                     </li>
                 </ul>
             </div>

@@ -14,7 +14,7 @@ export const theme = {
         bg: '#333',
         textColor: '#fff',
         borderColor: '#777',
-        primary: '#1da',
+        primary: '#aada3D',
     },
 };
 
@@ -69,7 +69,18 @@ export const Nav = styled.nav`
             margin-right: 5px;
 
             a {
-                color: white;
+                color: #fff;
+                font-weight: 600;
+                opacity: 0.6;
+
+                &.active {
+                    opacity: 1;
+                    border-bottom: 2px solid #fff;
+                }
+
+                &:hover {
+                    text-decoration: none;
+                }
             }
         }
     }
@@ -139,13 +150,14 @@ export const Button = styled(motion.button).attrs(() => ({
     }
 `;
 
-export const ImageComponent = styled.div`
+export const ImageComponent = styled(motion.div)`
     position: relative;
     margin: 50px 0;
     height: 400px;
+    width: 100%;
 
     img {
-        position: relative;
+        position: absolute;
         max-height: 100%;
         box-shadow: 0 5px 15px #0007;
         z-index: 2;
