@@ -1,24 +1,30 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { alertMotion } from '../animations';
-import { AlertContext } from '../context/alert/alertContext';
+import { useSelector, useDispatch } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
+import { hideAlert } from '../store/actions';
 
 export const Alert = () => {
-    const { alert, hide } = useContext(AlertContext);
+    const { visible, type, text } = useSelector((state) => state.alert);
+    const dispatch = useDispatch();
 
     return (
         <AnimatePresence initial={false}>
-            {alert.visible && (
+            {visible && (
                 <motion.div
                     layout
                     {...alertMotion}
                     className={`alert alert-${
-                        alert.type || 'warning'
+                        type || 'warning'
                     } alert-dismissible`}
                 >
                     <strong>Внимание! </strong>
-                    {alert.text}
-                    <button onClick={hide} type="button" className="close">
+                    {text}
+                    <button
+                        type="button"
+                        className="close"
+                        onClick={() => dispatch(hideAlert())}
+                    >
                         <span>&times;</span>
                     </button>
                 </motion.div>

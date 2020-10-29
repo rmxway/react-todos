@@ -1,22 +1,29 @@
-import React, { useState, useContext } from 'react';
-import { AlertContext } from '../context/alert/alertContext';
-import { NotesContext } from '../context/notes/notesContext';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addNote, showAlert } from '../store/actions';
 import { Input } from '../styled';
 
 export const Form = () => {
     const [value, setValue] = useState('');
-    const alert = useContext(AlertContext);
-    const { addNote } = useContext(NotesContext);
+    const dispatch = useDispatch();
 
     const submitHandler = (event) => {
         event.preventDefault();
 
         if (value.trim()) {
-            alert.show('Заметка была создана', 'success');
-            addNote(value);
+            const payload = {
+                text: 'Заметка была создана',
+                type: 'success',
+            };
+            dispatch(showAlert(payload));
+            dispatch(addNote(value));
             setValue('');
         } else {
-            alert.show('Введите название заметки', 'danger');
+            const payload = {
+                text: 'Введите название заметки',
+                type: 'danger',
+            };
+            dispatch(showAlert(payload));
         }
     };
 

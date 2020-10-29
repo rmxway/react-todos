@@ -64,23 +64,36 @@ export const Nav = styled.nav`
         display: flex;
 
         li {
+            position: relative;
+            display: block;
             margin: 0;
-            padding: 2px 10px;
-            margin-right: 5px;
+            margin: 0 15px;
 
             a {
+                display: block;
                 color: #fff;
                 font-weight: 600;
                 opacity: 0.6;
+                transition: 0.2s;
+                height: 100%;
+                padding: 5px 0;
 
                 &.active {
                     opacity: 1;
-                    border-bottom: 2px solid #fff;
                 }
 
                 &:hover {
                     text-decoration: none;
                 }
+            }
+
+            .underline {
+                width: 100%;
+                height: 3px;
+                border-radius: 4px;
+                background: #fff;
+                position: absolute;
+                bottom: 0px;
             }
         }
     }
