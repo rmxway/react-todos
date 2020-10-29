@@ -1,7 +1,7 @@
 export const alertMotion = {
-    initial: { opacity: 0, top: 0 },
-    animate: { opacity: 1, top: 10 },
-    exit: { opacity: 0, top: 0 },
+    initial: { opacity: 0, top: 50 },
+    animate: { opacity: 1, top: 60 },
+    exit: { opacity: 0, top: 50 },
     transition: { duration: 0.2 },
 };
 

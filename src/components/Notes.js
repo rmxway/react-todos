@@ -1,13 +1,25 @@
-import React, { Fragment, useContext } from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { AnimatePresence } from 'framer-motion';
-import { NotesContext } from '../context/notes/notesContext';
 import { NonNotes, Note } from '../styled';
+import { removeNote, showAlert } from '../store/actions';
 
-export const Notes = ({ notes }) => {
-    const { removeNote } = useContext(NotesContext);
+export const Notes = () => {
+    const { notes } = useSelector((state) => state);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        localStorage.setItem('notes', JSON.stringify(notes));
+    }, [notes]);
 
+    const handleClick = (id) => {
+        dispatch(removeNote(id));
+        const payload = {
+            text: 'Запись удалена',
+        };
+        dispatch(showAlert(payload));
+    };
     return (
-        <Fragment>
+        <>
             {!notes.length ? <NonNotes>Нет записей</NonNotes> : ''}
             <ul className="list-group">
                 <AnimatePresence initial={false}>
@@ -19,9 +31,9 @@ export const Notes = ({ notes }) => {
                                     <small>{note.date}</small>
                                 </div>
                                 <button
-                                    onClick={() => removeNote(note.id)}
                                     type="button"
                                     className="btn btn-outline-secondary btn-sm"
+                                    onClick={() => handleClick(note.id)}
                                 >
                                     &times;
                                 </button>
@@ -30,6 +42,6 @@ export const Notes = ({ notes }) => {
                     })}
                 </AnimatePresence>
             </ul>
-        </Fragment>
+        </>
     );
 };

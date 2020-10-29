@@ -1,9 +1,9 @@
-import { ADD_NOTE, REMOVE_NOTE } from '../types';
+import { ADD_NOTE, REMOVE_NOTE } from './types';
 
 const handlers = {
     [ADD_NOTE]: (state, { title }) =>
         state.concat({
-            id: Date.now(),
+            id: Math.floor(Math.random() * Date.now()),
             title,
             date: new Date().toLocaleTimeString(),
         }),
@@ -13,7 +13,9 @@ const handlers = {
     DEFAULT: (state) => state,
 };
 
-export const notesReducer = (state, action) => {
+const initialState = JSON.parse(localStorage.getItem('notes')) || [];
+
+export const notesReducer = (state = initialState, action) => {
     const handle = handlers[action.type] || handlers.DEFAULT;
     return handle(state, action);
 };
