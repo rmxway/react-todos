@@ -3,6 +3,7 @@ import { motion, useSpring, useTransform } from 'framer-motion';
 import { useWidth } from '../hooks';
 import { Backplane, H1, ImageComponent } from '../styled';
 import img from '../img/motion.png';
+import { item, mainVariant } from '../animations';
 
 export const MotionPage = () => {
     const moveX = useSpring(0, { stiffness: 1500, damping: 150 });
@@ -30,13 +31,22 @@ export const MotionPage = () => {
 
     return (
         <>
-            <div className="container">
+            <motion.div
+                className="container"
+                variants={mainVariant}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+            >
                 <Backplane
                     initial={{ opacity: 0 }}
                     style={{ opacity, display: move ? 'block' : 'none' }}
                     onClick={() => handleReturnImage()}
                 />
-                <motion.div style={{ position: 'relative', top: up }}>
+                <motion.div
+                    variants={item}
+                    style={{ position: 'relative', top: up }}
+                >
                     <H1>Motion page</H1>
                     <p>
                         Здесь представлен пример использования motion анимации,
@@ -48,6 +58,7 @@ export const MotionPage = () => {
                         src={img}
                         alt="img"
                         ref={imageRef}
+                        variants={item}
                         style={{
                             x: moveX,
                             scale,
@@ -60,14 +71,17 @@ export const MotionPage = () => {
                     />
                 </ImageComponent>
 
-                <motion.div style={{ position: 'relative', top: down }}>
+                <motion.div
+                    variants={item}
+                    style={{ position: 'relative', top: down }}
+                >
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                     Aspernatur porro deleniti cupiditate minus eaque voluptate
                     iure nostrum praesentium molestiae aliquam. Magnam iste
                     aspernatur corrupti neque quibusdam nihil ratione earum
                     quos.
                 </motion.div>
-            </div>
+            </motion.div>
         </>
     );
 };

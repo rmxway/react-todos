@@ -17,3 +17,35 @@ export const noteMotion = {
         damping: 20,
     },
 };
+
+// Variants
+
+export const mainVariant = {
+    hidden: {
+        opacity: 0,
+        y: 10,
+    },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            duration: 0.4,
+            staggerChildren: 0.1,
+        },
+    },
+    exit: {
+        y: 10,
+        opacity: 0,
+    },
+};
+
+export const item = {
+    hidden: { y: 30, opacity: 0 },
+    visible: {
+        y: 0,
+        opacity: 1,
+        transition: {
+            duration: 0.6,
+        },
+    },
+};

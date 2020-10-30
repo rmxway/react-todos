@@ -115,7 +115,7 @@ export const Input = styled.input`
     }
 `;
 
-export const NonNotes = styled.p`
+export const NonNotes = styled(motion.p)`
     position: absolute;
 `;
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { motion, AnimateSharedLayout } from 'framer-motion';
 import { NavLink } from 'react-router-dom';
+import { motion, AnimateSharedLayout } from 'framer-motion';
 import { Button, Nav } from '../styled';
 import { hideAlert } from '../store/actions';
 
@@ -29,7 +29,7 @@ export const Navbar = ({ onToggle, colorTheme }) => {
                 <img src="img/logo.png" alt="" />
 
                 {/* Переключение цвета темы */}
-                <Button onClick={() => onToggle()}>
+                <Button onClick={onToggle}>
                     {colorTheme === 'light' ? 'Светлая' : 'Темная'} тема
                 </Button>
 

@@ -21,8 +21,16 @@ export const hideAlert = () => {
 };
 
 export const showAlert = (payload) => {
-    return {
-        type: SHOW_ALERT,
-        payload,
+    let timer;
+    return (dispatch) => {
+        dispatch({
+            type: SHOW_ALERT,
+            payload,
+        });
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            dispatch(hideAlert());
+            clearTimeout(timer);
+        }, 3000);
     };
 };

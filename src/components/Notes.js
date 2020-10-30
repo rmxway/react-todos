@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { NonNotes, Note } from '../styled';
 import { removeNote, showAlert } from '../store/actions';
+import { item } from '../animations';
 
 export const Notes = () => {
     const { notes } = useSelector((state) => state);
@@ -20,8 +21,8 @@ export const Notes = () => {
     };
     return (
         <>
-            {!notes.length ? <NonNotes>Нет записей</NonNotes> : ''}
-            <ul className="list-group">
+            {!notes.length && <NonNotes variants={item}>Нет записей</NonNotes>}
+            <motion.ul variants={item} className="list-group">
                 <AnimatePresence initial={false}>
                     {notes.map((note) => {
                         return (
@@ -41,7 +42,7 @@ export const Notes = () => {
                         );
                     })}
                 </AnimatePresence>
-            </ul>
+            </motion.ul>
         </>
     );
 };

@@ -1,5 +1,7 @@
+import { motion } from 'framer-motion';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { item } from '../animations';
 import { addNote, showAlert } from '../store/actions';
 import { Input } from '../styled';
 
@@ -28,7 +30,7 @@ export const Form = () => {
     };
 
     return (
-        <form onSubmit={submitHandler}>
+        <motion.form variants={item} onSubmit={submitHandler}>
             <div className="form-group">
                 <Input
                     type="text"
@@ -38,6 +40,6 @@ export const Form = () => {
                     className="form-control"
                 />
             </div>
-        </form>
+        </motion.form>
     );
 };

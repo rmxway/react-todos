@@ -1,7 +1,7 @@
 import React from 'react';
-import { alertMotion } from '../animations';
 import { useSelector, useDispatch } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
+import { alertMotion } from '../animations';
 import { hideAlert } from '../store/actions';
 
 export const Alert = () => {
@@ -18,7 +18,6 @@ export const Alert = () => {
                         type || 'warning'
                     } alert-dismissible`}
                 >
-                    <strong>Внимание! </strong>
                     {text}
                     <button
                         type="button"
