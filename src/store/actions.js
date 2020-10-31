@@ -1,4 +1,10 @@
-import { ADD_NOTE, HIDE_ALERT, REMOVE_NOTE, SHOW_ALERT } from './types';
+import {
+    ADD_NOTE,
+    CHANGE_THEME,
+    HIDE_ALERT,
+    REMOVE_NOTE,
+    SHOW_ALERT,
+} from './types';
 
 export const addNote = (title) => {
     return {
@@ -32,5 +38,12 @@ export const showAlert = (payload) => {
             dispatch(hideAlert());
             clearTimeout(timer);
         }, 3000);
+    };
+};
+
+export const changeTheme = (color) => {
+    return {
+        type: CHANGE_THEME,
+        color,
     };
 };

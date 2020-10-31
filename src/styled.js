@@ -145,7 +145,7 @@ export const Note = styled(motion.li).attrs(() => ({
     }
 `;
 
-export const Button = styled(motion.button).attrs(() => ({
+export const MotionButton = styled(motion.button).attrs(() => ({
     whileHover: { scale: 1 },
     whileTap: { scale: 0.95 },
     transition: { duration: 0.2 },

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { motion, AnimateSharedLayout } from 'framer-motion';
-import { Button, Nav } from '../styled';
-import { hideAlert } from '../store/actions';
+import { MotionButton, Nav } from '../styled';
+import { changeTheme, hideAlert } from '../store/actions';
 
-export const Navbar = ({ onToggle, colorTheme }) => {
+export const Navbar = ({ updateTheme }) => {
     const [selected, setSelected] = useState(0);
     const dispatch = useDispatch();
     const links = [
@@ -19,6 +19,16 @@ export const Navbar = ({ onToggle, colorTheme }) => {
         },
     ];
 
+    const [color, setColor] = useState(useSelector((state) => state.app.color));
+
+    const toggleColor = () => {
+        const newColor = color === 'light' ? 'dark' : 'light';
+        setColor(newColor);
+        localStorage.setItem('color', newColor);
+        dispatch(changeTheme(newColor));
+        updateTheme(newColor);
+    };
+
     const handleClick = (idx) => {
         setSelected(idx);
         dispatch(hideAlert());
@@ -29,9 +39,9 @@ export const Navbar = ({ onToggle, colorTheme }) => {
                 <img src="img/logo.png" alt="" />
 
                 {/* Переключение цвета темы */}
-                <Button onClick={onToggle}>
-                    {colorTheme === 'light' ? 'Светлая' : 'Темная'} тема
-                </Button>
+                <MotionButton onClick={toggleColor}>
+                    {color === 'light' ? 'Светлая' : 'Темная'} тема
+                </MotionButton>
 
                 <AnimateSharedLayout>
                     <ul>
