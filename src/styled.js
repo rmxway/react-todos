@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { darken } from 'polished';
+import { darken, lighten, opacify } from 'polished';
 import { noteMotion } from './animations';
 
 export const theme = {
@@ -17,6 +17,8 @@ export const theme = {
         primary: '#aada3D',
     },
 };
+
+const borderColor = (props) => props.theme.borderColor;
 
 const transitionMixin = {
     transition: '.3s',
@@ -185,4 +187,53 @@ export const Backplane = styled(motion.div)`
     bottom: 0;
     z-index: 1;
     background-color: #222;
+`;
+
+export const SelectSC = styled(motion.div)`
+    position: relative;
+    width: 100%;
+    margin: 20px 0;
+
+    .select-block {
+        padding: 15px;
+        background-color: ${(props) => darken(0.02, props.theme.bg)};
+        border-radius: 4px;
+        border: 1px solid ${borderColor};
+        cursor: pointer;
+    }
+
+    ul {
+        position: absolute;
+        top: calc(100% + 5px);
+        left: 0;
+        width: 100%;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        overflow-y: auto;
+        box-shadow: 0 7px 20px #2227;
+        background-color: ${(props) => darken(0.05, props.theme.bg)};
+
+        li {
+            cursor: pointer;
+            padding: 15px;
+            border-bottom: 1px solid
+                ${(props) => darken(0.1, props.theme.borderColor)};
+            transition: 0.1s;
+
+            &.selected,
+            &.selected:hover {
+                background-color: ${(props) => darken(0.1, props.theme.bg)};
+            }
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            &:hover {
+                background-color: ${(props) => props.theme.bg};
+            }
+        }
+    }
 `;

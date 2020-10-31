@@ -20,7 +20,6 @@ export const NotePage = () => {
                 <br />
                 <br />
                 <Form />
-                <motion.hr variants={item} />
                 <Notes />
             </motion.div>
         </>
