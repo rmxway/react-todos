@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { darken, lighten, opacify } from 'polished';
+import { darken } from 'polished';
 import { noteMotion } from './animations';
 
 export const theme = {
@@ -37,6 +37,10 @@ export const App = styled(motion.section)`
 export const H1 = styled.h1`
     color: ${(props) => props.theme.primary};
     ${transitionMixin}
+`;
+
+export const Fly = styled.div`
+    height: 40px;
 `;
 
 export const Nav = styled.nav`
@@ -102,18 +106,23 @@ export const Nav = styled.nav`
 `;
 
 export const Input = styled.input`
-    padding: 20px 10px;
+    padding: 15px;
+    background-color: ${(props) => darken(0.04, props.theme.bg)};
+    border-radius: 4px;
+    border: 1px solid ${(props) => props.theme.borderColor};
+    padding: 15px;
+    width: 100%;
+    margin-bottom: 20px;
     ${transitionMixin}
     &,
     &:focus {
-        background-color: ${(props) => props.theme.bg};
-        border-color: ${(props) => props.theme.primary};
+        // background-color: ${(props) => props.theme.bg};
+        outline: none;
         color: ${(props) => props.theme.primary};
     }
 
     &:focus {
-        box-shadow: 0 0 5px ${(props) => props.theme.primary},
-            0 0 5px ${(props) => props.theme.primary};
+        border-color: ${(props) => props.theme.primary};
     }
 `;
 
@@ -189,22 +198,59 @@ export const Backplane = styled(motion.div)`
     background-color: #222;
 `;
 
+export const SelectWrapper = styled(motion.section)`
+    margin: 0 -10px;
+    display: flex;
+    flex-wrap: nowrap;
+`;
+
 export const SelectSC = styled(motion.div)`
     position: relative;
-    width: 100%;
-    margin: 20px 0;
+    display: block;
+    flex: 1;
+    margin: 20px 10px;
+    cursor: pointer;
 
-    .select-block {
-        padding: 15px;
-        background-color: ${(props) => darken(0.02, props.theme.bg)};
-        border-radius: 4px;
-        border: 1px solid ${borderColor};
-        cursor: pointer;
+    &[data-disabled='true'] {
+        opacity: 0.2;
+        cursor: default;
+    }
+
+    .select {
+        &-label {
+            position: absolute;
+            left: 2px;
+            top: -20px;
+            font-size: 10px;
+            opacity: 0.5;
+            text-transform: uppercase;
+        }
+        &-block {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: ${(props) => darken(0.02, props.theme.bg)};
+            border-radius: 4px;
+            border: 1px solid ${borderColor};
+            transition: 0.2s;
+
+            &.open {
+                border-color: ${(props) => props.theme.primary};
+                .select-icon {
+                    transform: scale(1, -1);
+                }
+            }
+        }
+
+        &-icon {
+            transition: 0.2s;
+        }
     }
 
     ul {
         position: absolute;
-        top: calc(100% + 5px);
+        top: calc(100% + 2px);
         left: 0;
         width: 100%;
         list-style: none;
@@ -212,6 +258,8 @@ export const SelectSC = styled(motion.div)`
         margin: 0;
         overflow: hidden;
         overflow-y: auto;
+        z-index: 1;
+        border-radius: 0 0 4px 4px;
         box-shadow: 0 7px 20px #2227;
         background-color: ${(props) => darken(0.05, props.theme.bg)};
 

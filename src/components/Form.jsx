@@ -31,15 +31,12 @@ export const Form = () => {
 
     return (
         <motion.form variants={item} onSubmit={submitHandler}>
-            <div className="form-group">
-                <Input
-                    type="text"
-                    value={value}
-                    onChange={(event) => setValue(event.target.value)}
-                    placeholder="Введите название задачи"
-                    className="form-control"
-                />
-            </div>
+            <Input
+                type="text"
+                value={value}
+                onChange={(event) => setValue(event.target.value)}
+                placeholder="Введите название задачи"
+            />
         </motion.form>
     );
 };

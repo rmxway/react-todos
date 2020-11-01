@@ -1,10 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { motion, AnimateSharedLayout } from 'framer-motion';
 import { MotionButton, Nav } from '../styled';
 import { changeTheme, hideAlert } from '../store/actions';
-import { useEffect } from 'react';
 import { navVariants, navLiVarinats } from '../animations';
 
 export const Navbar = ({ updateTheme }) => {
@@ -51,12 +50,10 @@ export const Navbar = ({ updateTheme }) => {
         <Nav>
             <div className="container">
                 <img src="img/logo.png" alt="" />
-
                 {/* Переключение цвета темы */}
                 <MotionButton onClick={toggleColor}>
                     {color === 'light' ? 'Светлая' : 'Темная'} тема
                 </MotionButton>
-
                 <AnimateSharedLayout>
                     <motion.ul
                         ref={ulRef}
