@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { AnimatePresence, motion } from 'framer-motion';
 import { NonNotes, Note } from '../styled';
 import { removeNote, showAlert } from '../store/actions';
-import { item } from '../animations';
+import { item, notesVariant } from '../animations';
 
 export const Notes = () => {
     const { notes } = useSelector((state) => state);
@@ -20,13 +20,13 @@ export const Notes = () => {
         dispatch(showAlert(payload));
     };
     return (
-        <>
+        <motion.div variants={item}>
             {!notes.length && <NonNotes variants={item}>Нет записей</NonNotes>}
-            <motion.ul variants={item} className="list-group">
-                <AnimatePresence initial={false}>
+            <motion.ul variants={notesVariant} className="list-group">
+                <AnimatePresence>
                     {notes.map((note) => {
                         return (
-                            <Note layout key={note.id}>
+                            <Note variants={item} layout key={note.id}>
                                 <div>
                                     <strong>{note.title} - </strong>
                                     <small>{note.date}</small>
@@ -43,6 +43,6 @@ export const Notes = () => {
                     })}
                 </AnimatePresence>
             </motion.ul>
-        </>
+        </motion.div>
     );
 };

@@ -13,6 +13,7 @@ import { Alert } from './components/Alert';
 import { Navbar } from './components/Navbar';
 import { MotionPage } from './pages/MotionPage';
 import { NotePage } from './pages/NotePage';
+import { SelectPage } from './pages/SelectPage';
 import { App, theme } from './styled';
 
 class Application extends React.Component {
@@ -43,9 +44,7 @@ class Application extends React.Component {
                 <ThemeProvider theme={theme[this.state.color]}>
                     <BrowserRouter>
                         <App layout>
-                            <div className="container">
-                                <Alert />
-                            </div>
+                            <Alert />
                             <Navbar
                                 updateTheme={(themeColor) =>
                                     this.updateColor(themeColor)
@@ -55,12 +54,17 @@ class Application extends React.Component {
                                 <Switch>
                                     <Route
                                         exact
-                                        path={'/'}
+                                        path="/"
                                         component={NotePage}
                                     />
                                     <Route
                                         exact
-                                        path={'/motion'}
+                                        path="/select"
+                                        component={SelectPage}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/motion"
                                         component={MotionPage}
                                     />
                                 </Switch>
