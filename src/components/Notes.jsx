@@ -76,6 +76,10 @@ export const Notes = () => {
 
     const handleRemoveAllNotes = () => {
         dispatch(removeAllNotes());
+        const payload = {
+            text: 'Все записи были удалены',
+        };
+        dispatch(showAlert(payload));
     };
     return (
         <motion.div variants={item}>

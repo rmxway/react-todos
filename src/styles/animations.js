@@ -1,8 +1,12 @@
 export const alertMotion = {
-    initial: { opacity: 0, top: 50 },
-    animate: { opacity: 1, top: 60 },
-    exit: { opacity: 0, top: 50 },
-    transition: { duration: 0.2 },
+    initial: { opacity: 0, top: -100 },
+    animate: { opacity: 1, top: 15 },
+    exit: { opacity: 0, top: 0 },
+    transition: {
+        duration: 0.2,
+        type: 'spring',
+        mass: 0.5,
+    },
 };
 
 export const noteMotion = {

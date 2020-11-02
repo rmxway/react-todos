@@ -1,12 +1,27 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useSpring, useTransform } from 'framer-motion';
 import { useWidth } from '../hooks';
-import { Backplane, H1, ImageComponent } from '../styles/sc/base';
+import { Backplane, H1 } from '../styles/sc/base';
 import { item, mainVariant } from '../styles/animations';
 import img from '../img/motion.png';
+import styled from 'styled-components';
+
+const ImageComponent = styled(motion.div)`
+    position: relative;
+    margin: 50px 0;
+    height: 400px;
+    width: 100%;
+
+    img {
+        position: absolute;
+        max-height: 100%;
+        box-shadow: 0 5px 15px #0007;
+        z-index: ${(props) => props.theme.z.modal};
+    }
+`;
 
 export const MotionPage = () => {
-    const moveX = useSpring(0, { stiffness: 1500, damping: 150 });
+    const moveX = useSpring(0, { stiffness: 200, damping: 50 });
     const scale = useTransform(moveX, [-300, 0], [1.4, 1]);
     const opacity = useTransform(moveX, [-400, 0], [1, 0]);
     const up = useTransform(moveX, [-300, 0], [-30, 0]);

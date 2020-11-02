@@ -5,5 +5,5 @@ export const lightTheme = {
     bg: '#fff',
     textColor: '#333',
     borderColor: '#ccc',
-    primary: '#24777B',
+    primary: '#278b90',
 };
