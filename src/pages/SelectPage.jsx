@@ -2,8 +2,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import { Select } from '../components/Select';
-import { item, mainVariant } from '../animations';
-import { Fly, H1, SelectWrapper } from '../styled';
+import { SelectWrapper } from '../styles/sc/selectWrapper';
+import { item, mainVariant } from '../styles/animations';
+import { Fly, H1 } from '../styles/sc/base';
 
 export const SelectPage = () => {
     const { notes } = useSelector((state) => state);

@@ -5,7 +5,7 @@ const handlers = {
         state.concat({
             id: Math.floor(Math.random() * Date.now()),
             title,
-            date: new Date().toLocaleTimeString(),
+            date: `[ ${new Date().toLocaleDateString()} ] ${new Date().toLocaleTimeString()}`,
         }),
     [REMOVE_NOTE]: (state, { id }) => {
         return state.filter((note) => note.id !== id) || [];

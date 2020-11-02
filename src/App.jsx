@@ -1,20 +1,35 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
+
+import styled, { ThemeProvider } from 'styled-components';
+import { AnimatePresence, motion } from 'framer-motion';
+import { lightTheme } from './styles/sc/lightTheme';
+import { darkTheme } from './styles/sc/darkTheme';
 
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { rootReducer } from './store/rootReducer';
 
-import { AnimatePresence } from 'framer-motion';
-
 import { Alert } from './components/Alert';
 import { Navbar } from './components/Navbar';
 import { MotionPage } from './pages/MotionPage';
 import { NotePage } from './pages/NotePage';
 import { SelectPage } from './pages/SelectPage';
-import { App, theme } from './styled';
+
+export const App = styled(motion.section)`
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    flex: 1;
+    padding-top: 65px;
+    padding-bottom: 40px;
+    color: ${(props) => props.theme.textColor};
+    background-color: ${(props) => props.theme.bg};
+    transition: 0.5s;
+    margin: 0 auto;
+    align-items: center;
+`;
 
 class Application extends React.Component {
     constructor(props) {
@@ -30,26 +45,30 @@ class Application extends React.Component {
         );
 
         this.state = {
-            color: this.store.getState().app.color || 'light',
+            theme:
+                this.store.getState().app.color === 'dark'
+                    ? darkTheme
+                    : lightTheme,
         };
     }
 
-    updateColor = (themeColor) => {
-        this.setState({ color: themeColor });
+    updateColor = () => {
+        this.setState({
+            theme:
+                this.store.getState().app.color === 'dark'
+                    ? darkTheme
+                    : lightTheme,
+        });
     };
 
     render() {
         return (
             <Provider store={this.store}>
-                <ThemeProvider theme={theme[this.state.color]}>
+                <ThemeProvider theme={this.state.theme}>
                     <BrowserRouter>
-                        <App layout>
+                        <App>
                             <Alert />
-                            <Navbar
-                                updateTheme={(themeColor) =>
-                                    this.updateColor(themeColor)
-                                }
-                            />
+                            <Navbar updateTheme={this.updateColor} />
                             <AnimatePresence exitBeforeEnter>
                                 <Switch>
                                     <Route

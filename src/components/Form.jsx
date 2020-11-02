@@ -1,9 +1,9 @@
-import { motion } from 'framer-motion';
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { useDispatch } from 'react-redux';
-import { item } from '../animations';
 import { addNote, showAlert } from '../store/actions';
-import { Input } from '../styled';
+import { item } from '../styles/animations';
+import { Input } from '../styles/sc/base';
 
 export const Form = () => {
     const [value, setValue] = useState('');

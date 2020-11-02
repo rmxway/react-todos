@@ -1,15 +1,13 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
-import { alertMotion } from '../animations';
+import { alertMotion } from '../styles/animations';
 import { hideAlert } from '../store/actions';
 
 export const Alert = () => {
     const { visible, type, text } = useSelector((state) => state.alert);
     const { notes } = useSelector((state) => state);
     const dispatch = useDispatch();
-
-    console.log(notes);
 
     // useEffect(() => {
     //     let timer;
