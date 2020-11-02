@@ -2,6 +2,7 @@ import {
     ADD_NOTE,
     CHANGE_THEME,
     HIDE_ALERT,
+    REMOVE_ALL_NOTES,
     REMOVE_NOTE,
     SHOW_ALERT,
 } from './types';
@@ -20,6 +21,12 @@ export const removeNote = (id) => {
     };
 };
 
+export const removeAllNotes = () => {
+    return {
+        type: REMOVE_ALL_NOTES,
+    };
+};
+
 export const hideAlert = () => {
     return {
         type: HIDE_ALERT,
@@ -27,17 +34,11 @@ export const hideAlert = () => {
 };
 
 export const showAlert = (payload) => {
-    let timer;
     return (dispatch) => {
         dispatch({
             type: SHOW_ALERT,
             payload,
         });
-        clearTimeout(timer);
-        timer = setTimeout(() => {
-            dispatch(hideAlert());
-            clearTimeout(timer);
-        }, 3000);
     };
 };
 

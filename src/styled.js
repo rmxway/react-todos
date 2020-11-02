@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { darken } from 'polished';
 import { noteMotion } from './animations';
 
@@ -28,7 +28,9 @@ export const App = styled(motion.section)`
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    min-height: 100vh;
+    flex: 1;
+    padding-top: 65px;
+    padding-bottom: 40px;
     color: ${(props) => props.theme.textColor};
     background-color: ${(props) => props.theme.bg};
     transition: 0.5s;
@@ -44,6 +46,11 @@ export const Fly = styled.div`
 `;
 
 export const Nav = styled.nav`
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
     background-color: ${(props) => props.theme.primary};
     padding: 10px;
     margin-bottom: 20px;
@@ -130,6 +137,20 @@ export const NonNotes = styled(motion.p)`
     position: absolute;
 `;
 
+export const NoteTitle = styled(motion.div)`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0 10px 2px;
+    font-size: 12px;
+
+    .button {
+        margin-right: 0;
+        border-color: ${(props) => props.theme.textColor};
+        color: ${(props) => props.theme.textColor};
+    }
+`;
+
 export const Note = styled(motion.li).attrs(() => ({
     // анимации motion
     ...noteMotion,
@@ -211,10 +232,12 @@ export const SelectSC = styled(motion.div)`
     margin: 20px 10px;
     cursor: pointer;
 
-    &[data-disabled='true'] {
-        opacity: 0.2;
-        cursor: default;
-    }
+    ${(props) =>
+        props.noItems &&
+        css`
+            opacity: 0.2;
+            cursor: default;
+        `}
 
     .select {
         &-label {
@@ -253,6 +276,7 @@ export const SelectSC = styled(motion.div)`
         top: calc(100% + 2px);
         left: 0;
         width: 100%;
+        max-height: 250px;
         list-style: none;
         padding: 0;
         margin: 0;

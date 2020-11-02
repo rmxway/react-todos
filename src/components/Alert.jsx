@@ -6,8 +6,24 @@ import { hideAlert } from '../store/actions';
 
 export const Alert = () => {
     const { visible, type, text } = useSelector((state) => state.alert);
+    const { notes } = useSelector((state) => state);
     const dispatch = useDispatch();
 
+    console.log(notes);
+
+    // useEffect(() => {
+    //     let timer;
+    //     clearTimeout(timer);
+
+    //     timer = setTimeout(() => {
+    //         dispatch(hideAlert());
+    //         clearTimeout(timer);
+    //     }, 3000);
+
+    //     return () => {
+    //         clearTimeout(timer);
+    //     };
+    // }, []);
     return (
         <AnimatePresence initial={false}>
             {visible && (

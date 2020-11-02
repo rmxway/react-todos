@@ -1,4 +1,4 @@
-import { ADD_NOTE, REMOVE_NOTE } from './types';
+import { ADD_NOTE, REMOVE_ALL_NOTES, REMOVE_NOTE } from './types';
 
 const handlers = {
     [ADD_NOTE]: (state, { title }) =>
@@ -9,6 +9,9 @@ const handlers = {
         }),
     [REMOVE_NOTE]: (state, { id }) => {
         return state.filter((note) => note.id !== id) || [];
+    },
+    [REMOVE_ALL_NOTES]: (state) => {
+        return (state.note = []);
     },
     DEFAULT: (state) => state,
 };

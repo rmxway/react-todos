@@ -1,13 +1,17 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { AnimatePresence, motion } from 'framer-motion';
-import { NonNotes, Note } from '../styled';
-import { removeNote, showAlert } from '../store/actions';
+import { NonNotes, Note, NoteTitle, MotionButton } from '../styled';
+import { removeAllNotes, removeNote, showAlert } from '../store/actions';
 import { item, notesVariant } from '../animations';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export const Notes = () => {
     const { notes } = useSelector((state) => state);
     const dispatch = useDispatch();
+    const noItems = !notes.length;
+    const trashIcon = <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>;
     useEffect(() => {
         localStorage.setItem('notes', JSON.stringify(notes));
     }, [notes]);
@@ -19,9 +23,24 @@ export const Notes = () => {
         };
         dispatch(showAlert(payload));
     };
+
+    const handleRemoveAllNotes = () => {
+        dispatch(removeAllNotes());
+    };
     return (
         <motion.div variants={item}>
-            {!notes.length && <NonNotes variants={item}>Нет записей</NonNotes>}
+            {noItems && <NonNotes variants={item}>Нет записей</NonNotes>}
+            {!noItems && (
+                <NoteTitle>
+                    Список задач
+                    <MotionButton
+                        onClick={handleRemoveAllNotes}
+                        className="button"
+                    >
+                        удалить все {trashIcon}
+                    </MotionButton>
+                </NoteTitle>
+            )}
             <motion.ul variants={notesVariant} className="list-group">
                 <AnimatePresence>
                     {notes.map((note) => {

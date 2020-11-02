@@ -42,6 +42,7 @@ export const Navbar = ({ updateTheme }) => {
 
     const handleClick = (idx) => {
         setSelected(idx);
+        window.scrollTo(0, 0);
         if (visibleAlert) {
             dispatch(hideAlert());
         }

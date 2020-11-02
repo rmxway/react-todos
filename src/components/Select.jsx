@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import ClickOutHandler from 'react-onclickout';
 import { motion, AnimatePresence } from 'framer-motion';
 import { selectDropdownVariants, selectLiVariants } from '../animations';
@@ -17,14 +17,13 @@ export const Select = ({
     );
     const [isOpen, setIsOpen] = useState(false);
     const [selected, setSelected] = useState(null);
-    const selectRef = useRef();
+    const noItems = !list.length;
     const arrow = (
         <FontAwesomeIcon className="select-icon" icon={faChevronDown} />
     );
 
     const handleClick = (e) => {
-        const { disabled } = selectRef.current.dataset;
-        if (disabled === 'true') {
+        if (noItems) {
             return;
         }
         const { type } = e.target.dataset;
@@ -49,11 +48,7 @@ export const Select = ({
 
     return (
         <ClickOutHandler onClickOut={outsideClick}>
-            <SelectSC
-                onClick={handleClick}
-                data-disabled={!list.length}
-                ref={selectRef}
-            >
+            <SelectSC onClick={handleClick} noItems={noItems}>
                 <div className="select-label">{label}</div>
                 <div
                     className={`select-block${isOpen ? ' open' : ''}`}

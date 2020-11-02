@@ -20,13 +20,13 @@ class Application extends React.Component {
     constructor(props) {
         super(props);
 
+        this.reduxDevTools =
+            window.__REDUX_DEVTOOLS_EXTENSION__ &&
+            window.__REDUX_DEVTOOLS_EXTENSION__();
+
         this.store = createStore(
             rootReducer,
-            compose(
-                applyMiddleware(thunk),
-                window.__REDUX_DEVTOOLS_EXTENSION__ &&
-                    window.__REDUX_DEVTOOLS_EXTENSION__()
-            )
+            compose(applyMiddleware(thunk), this.reduxDevTools)
         );
 
         this.state = {

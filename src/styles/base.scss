@@ -1,8 +1,25 @@
+html,
 body {
-    font-family:    Roboto, sans-serif;
-    font-size:      14px;
-    letter-spacing: .5px;
-    overflow:       hidden;
+    min-height:      1000px;
+    width:           100%;
+    scroll-behavior: smooth;
+
+}
+
+body {
+    font-family:      Roboto, sans-serif;
+    font-size:        14px;
+    letter-spacing:   .5px;
+    display:          flex;
+    flex-direction:   column;
+    overflow:         hidden;
+    overflow-y:       scroll;
+    background-color: #222;
+}
+
+#root {
+    display: flex;
+    flex:    1;
 }
 
 p {
