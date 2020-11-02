@@ -1,40 +1,67 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
-import { alertMotion } from '../animations';
+import styled, { css } from 'styled-components';
+import { alertMotion } from '../styles/animations';
 import { hideAlert } from '../store/actions';
+import { lighten } from 'polished';
+
+const AlertSC = styled(motion.div)`
+    position: absolute;
+    line-height: 1;
+    display: flex;
+    font-size: 16px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    border-radius: 4px;
+    color: ${(props) => props.theme.bg};
+    left: 0;
+    right: 0;
+    box-shadow: ${(props) => props.theme.shadows.alert};
+    z-index: ${(props) => props.theme.z.modal};
+    margin: 0 15px;
+
+    ${(props) =>
+        props.type === 'danger'
+            ? css`
+                  background-color: ${lighten(0.15, props.theme.colors.danger)};
+                  color: white;
+              `
+            : props.type === 'success'
+            ? css`
+                  background-color: ${lighten(
+                      0.15,
+                      props.theme.colors.success
+                  )};
+              `
+            : css`
+                  background-color: ${lighten(0.1, props.theme.colors.warning)};
+              `};
+`;
 
 export const Alert = () => {
     const { visible, type, text } = useSelector((state) => state.alert);
-    const { notes } = useSelector((state) => state);
     const dispatch = useDispatch();
 
-    console.log(notes);
-
-    // useEffect(() => {
-    //     let timer;
-    //     clearTimeout(timer);
-
-    //     timer = setTimeout(() => {
-    //         dispatch(hideAlert());
-    //         clearTimeout(timer);
-    //     }, 3000);
-
-    //     return () => {
-    //         clearTimeout(timer);
-    //     };
-    // }, []);
+    useEffect(() => {
+        let timer;
+        clearTimeout(timer);
+        if (visible) {
+            timer = setTimeout(() => {
+                clearTimeout(timer);
+                dispatch(hideAlert());
+            }, 3300);
+        }
+        return () => {
+            clearTimeout(timer);
+        };
+    });
     return (
         <AnimatePresence initial={false}>
             {visible && (
                 <div className="container">
-                    <motion.div
-                        layout
-                        {...alertMotion}
-                        className={`alert alert-${
-                            type || 'warning'
-                        } alert-dismissible`}
-                    >
+                    <AlertSC type={type} layout {...alertMotion}>
                         {text}
                         <button
                             type="button"
@@ -43,7 +70,7 @@ export const Alert = () => {
                         >
                             <span>&times;</span>
                         </button>
-                    </motion.div>
+                    </AlertSC>
                 </div>
             )}
         </AnimatePresence>
