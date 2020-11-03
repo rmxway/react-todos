@@ -29,7 +29,7 @@ export const SelectSC = styled(motion.div)`
             left: 2px;
             top: -20px;
             font-size: 10px;
-            opacity: 0.5;
+            opacity: 0.7;
             text-transform: uppercase;
         }
         &-block {

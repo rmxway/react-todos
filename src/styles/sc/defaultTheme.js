@@ -1,8 +1,9 @@
 export const defaultTheme = {
     colors: {
-        danger: '#d34836',
+        danger: '#f25945',
         warning: '#f6d584',
-        success: '#1ba763',
+        success: '#1a8e56',
+        silver: '#696969',
     },
     gaps: {
         containerWidth: '1200px',

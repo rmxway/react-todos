@@ -25,7 +25,7 @@ const AlertSC = styled(motion.div)`
     ${(props) =>
         props.type === 'danger'
             ? css`
-                  background-color: ${lighten(0.15, props.theme.colors.danger)};
+                  background-color: ${lighten(0.08, props.theme.colors.danger)};
               `
             : props.type === 'success'
             ? css`

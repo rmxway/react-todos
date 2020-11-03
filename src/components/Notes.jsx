@@ -3,19 +3,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import { removeAllNotes, removeNote, showAlert } from '../store/actions';
 
 import { AnimatePresence, motion } from 'framer-motion';
-import styled from 'styled-components';
-import { MotionButton } from '../styles/sc/base';
+import styled, { css } from 'styled-components';
+import { FlexBlock, MotionButton } from '../styles/sc/base';
 import { item, noteMotion, notesVariant } from '../styles/animations';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { darken } from 'polished';
+import { darken, lighten } from 'polished';
 
-export const NonNotes = styled(motion.p)`
+const NonNotes = styled(motion.p)`
     position: absolute;
 `;
 
-export const NoteTitle = styled(motion.div)`
+const NoteTitle = styled(motion.div)`
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -25,13 +25,33 @@ export const NoteTitle = styled(motion.div)`
     .button {
         margin-right: 0;
         font-size: 13px;
-        opacity: 0.7;
-        border-color: ${(props) => props.theme.textColor};
-        color: ${(props) => props.theme.textColor};
     }
 `;
 
-export const Note = styled(motion.li).attrs(() => ({
+const NoteNumber = styled(motion.div)`
+    display: inline-block;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 400;
+    color: white;
+    width: 35px;
+    height: 45px;
+    letter-spacing: 0;
+    line-height: 50px;
+    margin: 0 20px 0 0;
+    // border-bottom: 1px solid ${(props) => props.theme.bg};
+    background-color: ${(props) => props.theme.colors.silver};
+
+    ${(props) => {
+        if (props.theme.currentTheme === 'light') {
+            return css`
+                background-color: ${lighten(0.3, props.theme.colors.silver)};
+            `;
+        }
+    }}
+`;
+
+const Note = styled(motion.li).attrs(() => ({
     // анимации motion
     ...noteMotion,
 }))`
@@ -43,7 +63,7 @@ export const Note = styled(motion.li).attrs(() => ({
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    padding-right: 10px;
     transition-property: background-color;
     transition-duration: 0.3s;
 
@@ -97,13 +117,14 @@ export const Notes = () => {
             )}
             <motion.ul variants={notesVariant} className="list-group">
                 <AnimatePresence>
-                    {notes.map((note) => {
+                    {notes.map((note, idx) => {
                         return (
                             <Note variants={item} layout key={note.id}>
-                                <div>
+                                <FlexBlock>
+                                    <NoteNumber>{idx + 1}</NoteNumber>
                                     <strong>{note.title}&nbsp; – &nbsp;</strong>
                                     <small>{note.date}</small>
-                                </div>
+                                </FlexBlock>
                                 <button
                                     type="button"
                                     className="btn btn-outline-secondary btn-sm"

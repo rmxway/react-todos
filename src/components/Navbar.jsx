@@ -20,6 +20,13 @@ export const Nav = styled.nav`
     box-shadow: 0 5px 30px #fff4;
     transition: ${(props) => props.theme.transitions.default};
 
+    ${MotionButton} {
+        color: white;
+        border-color: white;
+        opacity: 1;
+        padding: 5px 10px;
+    }
+
     .container {
         display: flex;
         align-items: center;

@@ -15,7 +15,7 @@ export const RegPage = () => {
                 animate="visible"
                 exit="exit"
             >
-                <H1>Registration Form</H1>
+                <H1>Registration Formik</H1>
                 <motion.p variants={item}>
                     Formik is compatible with React v15+ and works with ReactDOM
                     and React Native.

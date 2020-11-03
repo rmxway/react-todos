@@ -45,6 +45,7 @@ class Application extends React.Component {
         );
 
         this.state = {
+            color: this.store.getState().app.color,
             theme:
                 this.store.getState().app.color === 'dark'
                     ? darkTheme
@@ -54,6 +55,7 @@ class Application extends React.Component {
 
     updateColor = () => {
         this.setState({
+            color: this.store.getState().app.color,
             theme:
                 this.store.getState().app.color === 'dark'
                     ? darkTheme

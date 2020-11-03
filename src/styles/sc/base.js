@@ -11,6 +11,12 @@ export const Fly = styled.div`
     height: 40px;
 `;
 
+export const FlexBlock = styled(motion.div)`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+
 export const Input = styled(motion.input)`
     padding: 15px;
     background-color: ${(props) => darken(0.04, props.theme.bg)};
@@ -43,31 +49,43 @@ export const Input = styled(motion.input)`
     }}
 `;
 
+export const Div = styled(motion.div)`
+    ${(props) => {
+        if (props.comment) {
+            return css`
+                margin-top: 20px;
+                color: ${props.theme.colors.silver};
+            `;
+        }
+    }}
+`;
+
 export const MotionButton = styled(motion.button).attrs(() => ({
     whileHover: { scale: 1 },
     whileTap: { scale: 0.95 },
     transition: { duration: 0.2 },
 }))`
-    border: 2px solid white;
-    color: white;
+    border: 2px solid ${(props) => props.theme.textColor};
+    color: ${(props) => props.theme.textColor};
     border-radius: 5px;
-    padding: 5px 10px;
+    padding: 15px;
     margin-right: 15px;
     outline: none;
+    opacity: 0.7;
     background-color: #fff0;
 
     &:focus {
         outline: none;
     }
 
-    /* ${(props) => {
+    ${(props) => {
         if (props.disabled) {
             return css`
                 pointer-events: none;
-                opacity: 0.5;
+                opacity: 0.2;
             `;
         }
-    }} */
+    }}
 `;
 
 export const Backplane = styled(motion.div)`
