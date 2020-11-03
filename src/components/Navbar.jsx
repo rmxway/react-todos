@@ -5,7 +5,6 @@ import { changeTheme, hideAlert } from '../store/actions';
 
 import { motion, AnimateSharedLayout } from 'framer-motion';
 import styled from 'styled-components';
-import { transitionMixin } from '../styles/sc/mixins';
 import { MotionButton } from '../styles/sc/base';
 import { navVariants, navLiVarinats } from '../styles/animations';
 
@@ -19,7 +18,7 @@ export const Nav = styled.nav`
     padding: 10px;
     margin-bottom: 20px;
     box-shadow: 0 5px 30px #fff4;
-    ${transitionMixin}
+    transition: ${(props) => props.theme.transitions.default};
 
     .container {
         display: flex;
@@ -90,6 +89,10 @@ export const Navbar = ({ updateTheme }) => {
         {
             path: '/select',
             title: 'Select',
+        },
+        {
+            path: './registration',
+            title: 'Registration',
         },
         {
             path: '/motion',

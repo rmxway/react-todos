@@ -16,7 +16,7 @@ export const defaultTheme = {
         onBack: 0,
     },
     transitions: {
-        default: 'all .1s cubic-bezier(.17,.67,.83,.67)',
+        default: 'all .3s',
     },
     shadows: {
         alert: '0 10px 30px #2225',

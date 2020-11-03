@@ -15,7 +15,7 @@ const AlertSC = styled(motion.div)`
     align-items: center;
     padding: 12px 20px;
     border-radius: 4px;
-    color: ${(props) => props.theme.bg};
+    color: ${(props) => props.theme.textColor};
     left: 0;
     right: 0;
     box-shadow: ${(props) => props.theme.shadows.alert};
@@ -26,7 +26,6 @@ const AlertSC = styled(motion.div)`
         props.type === 'danger'
             ? css`
                   background-color: ${lighten(0.15, props.theme.colors.danger)};
-                  color: white;
               `
             : props.type === 'success'
             ? css`
@@ -37,6 +36,7 @@ const AlertSC = styled(motion.div)`
               `
             : css`
                   background-color: ${lighten(0.1, props.theme.colors.warning)};
+                  color: #333;
               `};
 `;
 

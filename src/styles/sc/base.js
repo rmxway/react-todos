@@ -1,18 +1,17 @@
 import { motion } from 'framer-motion';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { darken } from 'polished';
-import { transitionMixin } from './mixins';
 
 export const H1 = styled.h1`
     color: ${(props) => props.theme.primary};
-    ${transitionMixin}
+    transition: ${(props) => props.theme.transitions.default};
 `;
 
 export const Fly = styled.div`
     height: 40px;
 `;
 
-export const Input = styled.input`
+export const Input = styled(motion.input)`
     padding: 15px;
     background-color: ${(props) => darken(0.04, props.theme.bg)};
     border-radius: 4px;
@@ -20,16 +19,28 @@ export const Input = styled.input`
     padding: 15px;
     width: 100%;
     margin-bottom: 20px;
-    ${transitionMixin}
+    transition: ${(props) => props.theme.transitions.default};
+
     &,
     &:focus {
         outline: none;
-        color: ${(props) => props.theme.primary};
+        color: ${(props) => props.theme.textColor};
     }
 
     &:focus {
         border-color: ${(props) => props.theme.primary};
     }
+
+    ${(props) => {
+        if (props.error) {
+            return css`
+                &,
+                &:focus {
+                    border-color: ${props.theme.colors.danger};
+                }
+            `;
+        }
+    }}
 `;
 
 export const MotionButton = styled(motion.button).attrs(() => ({
@@ -48,6 +59,15 @@ export const MotionButton = styled(motion.button).attrs(() => ({
     &:focus {
         outline: none;
     }
+
+    /* ${(props) => {
+        if (props.disabled) {
+            return css`
+                pointer-events: none;
+                opacity: 0.5;
+            `;
+        }
+    }} */
 `;
 
 export const Backplane = styled(motion.div)`

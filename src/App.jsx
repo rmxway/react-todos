@@ -13,9 +13,10 @@ import { rootReducer } from './store/rootReducer';
 
 import { Alert } from './components/Alert';
 import { Navbar } from './components/Navbar';
-import { MotionPage } from './pages/MotionPage';
 import { NotePage } from './pages/NotePage';
 import { SelectPage } from './pages/SelectPage';
+import { RegPage } from './pages/RegPage';
+import { MotionPage } from './pages/MotionPage';
 
 export const App = styled(motion.section)`
     display: flex;
@@ -27,7 +28,6 @@ export const App = styled(motion.section)`
     color: ${(props) => props.theme.textColor};
     background-color: ${(props) => props.theme.bg};
     transition: 0.5s;
-    margin: 0 auto;
     align-items: center;
 `;
 
@@ -80,6 +80,11 @@ class Application extends React.Component {
                                         exact
                                         path="/select"
                                         component={SelectPage}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/registration"
+                                        component={RegPage}
                                     />
                                     <Route
                                         exact
