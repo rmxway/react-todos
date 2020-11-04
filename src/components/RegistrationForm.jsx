@@ -14,6 +14,12 @@ const FormBlock = styled(motion.form)`
         width: 100%;
         margin-top: 10px;
     }
+
+    ${Input} {
+        padding: 10px;
+        margin-bottom: 10px;
+        font-size: 12px;
+    }
 `;
 
 const stringPattern = RegExp(/^[а-яА-ЯёЁ a-zA-Z]+$/);
@@ -34,7 +40,9 @@ const ErrorForm = styled(motion.div).attrs(() => ({
     exit: 'exit',
 }))`
     color: ${(props) => props.theme.colors.danger};
-    margin: -10px 0 10px;
+
+    margin: -5px 0 5px;
+    font-size: 11px;
 `;
 
 const RegistrationSchema = Yup.object().shape({

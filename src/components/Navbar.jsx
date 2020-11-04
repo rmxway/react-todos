@@ -7,6 +7,7 @@ import { motion, AnimateSharedLayout } from 'framer-motion';
 import styled from 'styled-components';
 import { MotionButton } from '../styles/sc/base';
 import { navVariants, navLiVarinats } from '../styles/animations';
+import { LoginUser } from './LoginUser';
 
 export const Nav = styled.nav`
     position: fixed;
@@ -19,13 +20,6 @@ export const Nav = styled.nav`
     margin-bottom: 20px;
     box-shadow: 0 5px 30px #fff4;
     transition: ${(props) => props.theme.transitions.default};
-
-    ${MotionButton} {
-        color: white;
-        border-color: white;
-        opacity: 1;
-        padding: 5px 10px;
-    }
 
     .container {
         display: flex;
@@ -45,6 +39,7 @@ export const Nav = styled.nav`
         padding: 0;
         list-style: none;
         display: flex;
+        flex-grow: 1;
 
         li {
             position: relative;
@@ -131,7 +126,7 @@ export const Navbar = ({ updateTheme }) => {
             <div className="container">
                 <img src="img/logo.png" alt="" />
                 {/* Переключение цвета темы */}
-                <MotionButton onClick={toggleColor}>
+                <MotionButton inNav={true} onClick={toggleColor}>
                     {color === 'light' ? 'Светлая' : 'Темная'} тема
                 </MotionButton>
                 <AnimateSharedLayout>
@@ -174,6 +169,7 @@ export const Navbar = ({ updateTheme }) => {
                         ))}
                     </motion.ul>
                 </AnimateSharedLayout>
+                <LoginUser />
             </div>
         </Nav>
     );

@@ -50,18 +50,18 @@ export const Input = styled(motion.input)`
 `;
 
 export const Div = styled(motion.div)`
-    ${(props) => {
+    /* ${(props) => {
         if (props.comment) {
             return css`
                 margin-top: 20px;
                 color: ${props.theme.colors.silver};
             `;
         }
-    }}
+    }} */
 `;
 
 export const MotionButton = styled(motion.button).attrs(() => ({
-    whileHover: { scale: 1 },
+    whileHover: { scale: 1.02 },
     whileTap: { scale: 0.95 },
     transition: { duration: 0.2 },
 }))`
@@ -77,16 +77,23 @@ export const MotionButton = styled(motion.button).attrs(() => ({
     &:focus {
         outline: none;
     }
-
-    ${(props) => {
-        if (props.disabled) {
-            return css`
-                pointer-events: none;
-                opacity: 0.2;
-            `;
-        }
-    }}
 `;
+
+// if (props.inNav === true) {
+//     css`
+//         color: white;
+//         border-color: white;
+//         opacity: 1;
+//         padding: 5px 10px;
+//     `;
+// }
+
+// if (props.disabled) {
+//     css`
+//         pointer-events: none;
+//         opacity: 0.2;
+//     `;
+// }
 
 export const Backplane = styled(motion.div)`
     position: fixed;

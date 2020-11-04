@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, useSpring, useTransform } from 'framer-motion';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { useWidth } from '../hooks';
 import { Backplane, H1 } from '../styles/sc/base';
 import { item, mainVariant } from '../styles/animations';
@@ -21,7 +21,8 @@ const ImageComponent = styled(motion.div)`
 `;
 
 export const MotionPage = () => {
-    const moveX = useSpring(0, { stiffness: 200, damping: 50 });
+    // const moveX = useSpring(0, { stiffness: 200, damping: 50 });
+    const moveX = useMotionValue(0);
     const scale = useTransform(moveX, [-300, 0], [1.4, 1]);
     const opacity = useTransform(moveX, [-400, 0], [1, 0]);
     const up = useTransform(moveX, [-300, 0], [-30, 0]);

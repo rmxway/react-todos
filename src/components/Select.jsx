@@ -16,12 +16,14 @@ export const SelectSC = styled(motion.div)`
     margin: 20px 10px;
     cursor: pointer;
 
-    ${(props) =>
-        props.noItems &&
-        css`
-            opacity: 0.4;
-            cursor: default;
-        `}
+    /* ${(props) => {
+        if (props.noItems) {
+            css`
+                opacity: 0.4;
+                cursor: default;
+            `;
+        }
+    }} */
 
     .select {
         &-label {
