@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ClickOutHandler from 'react-onclickout';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { selectDropdownVariants, selectLiVariants } from '../styles/animations';
+import { selectDropdownVariants, selectLiVariants } from 'styles/animations';
 import { darken } from 'polished';
 import styled, { css } from 'styled-components';
 

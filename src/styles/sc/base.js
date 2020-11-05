@@ -1,8 +1,11 @@
 import { motion } from 'framer-motion';
 import styled, { css } from 'styled-components';
 import { darken } from 'polished';
+import { breakpoints } from './media';
 
 export const H1 = styled.h1`
+    font-weight: 100;
+    font-size: 35px;
     color: ${(props) => props.theme.primary};
     transition: ${(props) => props.theme.transitions.default};
 `;
@@ -19,12 +22,13 @@ export const FlexBlock = styled(motion.div)`
 
 export const Input = styled(motion.input)`
     padding: 15px;
-    background-color: ${(props) => darken(0.04, props.theme.bg)};
+    background-color: #22222211;
     border-radius: 4px;
     border: 1px solid ${(props) => props.theme.borderColor};
     padding: 15px;
     width: 100%;
-    margin-bottom: 20px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
     transition: ${(props) => props.theme.transitions.default};
 
     &,
@@ -50,14 +54,20 @@ export const Input = styled(motion.input)`
 `;
 
 export const Div = styled(motion.div)`
-    /* ${(props) => {
+    ${(props) => {
         if (props.comment) {
             return css`
                 margin-top: 20px;
                 color: ${props.theme.colors.silver};
             `;
         }
-    }} */
+
+        if (props.relative) {
+            return css`
+                position: relative;
+            `;
+        }
+    }}
 `;
 
 export const MotionButton = styled(motion.button).attrs(() => ({
@@ -77,23 +87,25 @@ export const MotionButton = styled(motion.button).attrs(() => ({
     &:focus {
         outline: none;
     }
+
+    ${(props) => {
+        if (props.inNav) {
+            return css`
+                color: white;
+                border-color: white;
+                opacity: 1;
+                padding: 5px 10px;
+            `;
+        }
+
+        if (props.disabled) {
+            return css`
+                pointer-events: none;
+                opacity: 0.2;
+            `;
+        }
+    }}
 `;
-
-// if (props.inNav === true) {
-//     css`
-//         color: white;
-//         border-color: white;
-//         opacity: 1;
-//         padding: 5px 10px;
-//     `;
-// }
-
-// if (props.disabled) {
-//     css`
-//         pointer-events: none;
-//         opacity: 0.2;
-//     `;
-// }
 
 export const Backplane = styled(motion.div)`
     position: fixed;
@@ -103,4 +115,19 @@ export const Backplane = styled(motion.div)`
     bottom: 0;
     z-index: ${(props) => props.theme.z.modal};
     background-color: #222;
+`;
+
+export const Container = styled(motion.section)`
+    margin: 0 auto;
+    padding: 0 15px;
+    width: 100%;
+    ${breakpoints.greaterThan('lg')`
+        max-width: 1330px;
+    `}
+    ${breakpoints.lessThan('lg')`
+        max-width: 1030px;
+    `}
+    ${breakpoints.lessThan('md')`
+        max-width: 100%;
+    `}
 `;

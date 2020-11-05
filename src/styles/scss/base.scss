@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
 html,
 body {
     min-height:      1000px;
@@ -8,8 +14,10 @@ body {
 }
 
 body {
-    font-family:      Roboto, sans-serif;
+    font-family:      'Nanum Gothic', sans-serif;
     font-size:        14px;
+    margin:           0;
+    padding:          0;
     letter-spacing:   .5px;
     display:          flex;
     flex-direction:   column;
@@ -28,18 +36,6 @@ p {
     padding: 0;
 }
 
-h1 {
-    color:          $primary;
-    font-weight:    100;
-    letter-spacing: 0;
-    margin-top:     10px;
-}
-
 .container {
     position: relative;
-}
-
-.bottom-block {
-    background-color: fade-out($primary, .91);
-    padding-top:      5px;
 }

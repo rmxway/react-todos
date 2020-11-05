@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
-import { useWidth } from '../hooks';
-import { Backplane, H1 } from '../styles/sc/base';
-import { item, mainVariant } from '../styles/animations';
-import img from '../img/motion.png';
+import { useWidth } from 'scripts/hooks';
+import { Backplane, Container, H1 } from 'styles/sc/base';
+import { item, mainVariant } from 'styles/animations';
+import img from '../../img/motion.png';
 import styled from 'styled-components';
 
 const ImageComponent = styled(motion.div)`
@@ -46,8 +46,7 @@ export const MotionPage = () => {
     }, [moveX]);
 
     return (
-        <motion.div
-            className="container"
+        <Container
             variants={mainVariant}
             initial="hidden"
             animate="visible"
@@ -97,6 +96,6 @@ export const MotionPage = () => {
                 nostrum praesentium molestiae aliquam. Magnam iste aspernatur
                 corrupti neque quibusdam nihil ratione earum quos.
             </motion.div>
-        </motion.div>
+        </Container>
     );
 };

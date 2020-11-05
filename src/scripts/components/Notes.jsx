@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeAllNotes, removeNote, showAlert } from '../store/actions';
+import { removeAllNotes, removeNote, showAlert } from 'scripts/store/actions';
 
 import { AnimatePresence, motion } from 'framer-motion';
 import styled, { css } from 'styled-components';
-import { FlexBlock, MotionButton } from '../styles/sc/base';
-import { item, noteMotion, notesVariant } from '../styles/animations';
+import { FlexBlock, MotionButton } from 'styles/sc/base';
+import { item, noteMotion, notesVariant } from 'styles/animations';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -26,6 +26,11 @@ const NoteTitle = styled(motion.div)`
         margin-right: 0;
         font-size: 13px;
     }
+`;
+
+const List = styled(motion.ul)`
+    margin: 0;
+    padding: 0;
 `;
 
 const NoteNumber = styled(motion.div)`
@@ -115,7 +120,7 @@ export const Notes = () => {
                     </MotionButton>
                 </NoteTitle>
             )}
-            <motion.ul variants={notesVariant} className="list-group">
+            <List variants={notesVariant}>
                 <AnimatePresence>
                     {notes.map((note, idx) => {
                         return (
@@ -127,7 +132,6 @@ export const Notes = () => {
                                 </FlexBlock>
                                 <button
                                     type="button"
-                                    className="btn btn-outline-secondary btn-sm"
                                     onClick={() => handleClick(note.id)}
                                 >
                                     &times;
@@ -136,7 +140,7 @@ export const Notes = () => {
                         );
                     })}
                 </AnimatePresence>
-            </motion.ul>
+            </List>
         </motion.div>
     );
 };

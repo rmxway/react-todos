@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled, { css } from 'styled-components';
-import { alertMotion } from '../styles/animations';
-import { hideAlert } from '../store/actions';
+import { alertMotion } from 'styles/animations';
+import { hideAlert } from 'scripts/store/actions';
 import { lighten } from 'polished';
 
 const AlertSC = styled(motion.div)`

@@ -1,15 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Form } from '../components/Form';
-import { Notes } from '../components/Notes';
-import { Fly, H1 } from '../styles/sc/base';
-import { item, mainVariant } from '../styles/animations';
+import { Form } from 'components/Form';
+import { Notes } from 'components/Notes';
+import { Container, Fly, H1 } from 'styles/sc/base';
+import { item, mainVariant } from 'styles/animations';
 
 export const NotePage = () => {
     return (
         <>
-            <motion.div
-                className="container"
+            <Container
                 variants={mainVariant}
                 initial="hidden"
                 animate="visible"
@@ -20,7 +19,7 @@ export const NotePage = () => {
                 <Fly />
                 <Form />
                 <Notes />
-            </motion.div>
+            </Container>
         </>
     );
 };

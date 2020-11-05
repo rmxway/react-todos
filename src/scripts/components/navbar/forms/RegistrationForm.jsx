@@ -3,47 +3,14 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { item, fadein, mainVariant } from '../styles/animations';
-import styled from 'styled-components';
-import { Input, MotionButton, Div } from '../styles/sc/base';
-
-const FormBlock = styled(motion.form)`
-    max-width: 400px;
-
-    ${MotionButton} {
-        width: 100%;
-        margin-top: 10px;
-    }
-
-    ${Input} {
-        padding: 10px;
-        margin-bottom: 10px;
-        font-size: 12px;
-    }
-`;
-
-const stringPattern = RegExp(/^[а-яА-ЯёЁ a-zA-Z]+$/);
-
-const Label = styled(motion.label)`
-    position: relative;
-    left: 2px;
-    margin-bottom: 5px;
-    font-size: 10px;
-    opacity: 0.7;
-    text-transform: uppercase;
-`;
-
-const ErrorForm = styled(motion.div).attrs(() => ({
-    variants: fadein,
-    initial: 'hidden',
-    animate: 'visible',
-    exit: 'exit',
-}))`
-    color: ${(props) => props.theme.colors.danger};
-
-    margin: -5px 0 5px;
-    font-size: 11px;
-`;
+import { item, mainVariant } from 'styles/animations';
+import { Input, MotionButton, Div } from 'styles/sc/base';
+import {
+    ErrorForm,
+    FormBlock,
+    Label,
+    stringPattern,
+} from 'components/navbar/forms/NavbarForms';
 
 const RegistrationSchema = Yup.object().shape({
     name: Yup.string()
@@ -63,7 +30,7 @@ const RegistrationSchema = Yup.object().shape({
         .required('Обязательно для ввода'),
 });
 
-export const RegistrationForm = () => {
+export const RegistrationForm = ({ onSubmit }) => {
     return (
         <motion.div variants={item}>
             <Formik
@@ -74,7 +41,7 @@ export const RegistrationForm = () => {
                     repassword: '',
                 }}
                 validationSchema={RegistrationSchema}
-                onSubmit={(values) => console.log(values)}
+                onSubmit={(values) => onSubmit(values)}
             >
                 {({
                     values,
@@ -89,7 +56,7 @@ export const RegistrationForm = () => {
                     <FormBlock variants={mainVariant} onSubmit={handleSubmit}>
                         <AnimatePresence>
                             <Div variants={item} key="name">
-                                <Label htmlFor="name">Введите ваше имя *</Label>
+                                <Label htmlFor="name">Имя *</Label>
                                 <Input
                                     autoComplete="off"
                                     name="name"
@@ -106,7 +73,7 @@ export const RegistrationForm = () => {
                             </Div>
 
                             <Div variants={item} key="login">
-                                <Label htmlFor="login">Введите логин *</Label>
+                                <Label htmlFor="login">Логин *</Label>
                                 <Input
                                     autoComplete="off"
                                     name="login"
@@ -123,9 +90,7 @@ export const RegistrationForm = () => {
                                 ) : null}
                             </Div>
                             <Div variants={item} key="password">
-                                <Label htmlFor="password">
-                                    Введите пароль *
-                                </Label>
+                                <Label htmlFor="password">Пароль *</Label>
                                 <Input
                                     autoComplete="off"
                                     name="password"
@@ -144,7 +109,7 @@ export const RegistrationForm = () => {
                             </Div>
                             <Div variants={item} key="repassword">
                                 <Label htmlFor="repassword">
-                                    Введите пароль еще раз *
+                                    Пароль еще раз *
                                 </Label>
                                 <Input
                                     autoComplete="off"
@@ -166,7 +131,7 @@ export const RegistrationForm = () => {
                             </Div>
                             <Div variants={item} key="button">
                                 <MotionButton
-                                    disabled={isValid && !dirty}
+                                    disabled={!isValid || !dirty}
                                     layout
                                     type="submit"
                                 >

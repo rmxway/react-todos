@@ -1,10 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
-import { Select } from '../components/Select';
-import { SelectWrapper } from '../styles/sc/selectWrapper';
-import { item, mainVariant } from '../styles/animations';
-import { Fly, H1 } from '../styles/sc/base';
+import { Select } from 'components/Select';
+import { SelectWrapper } from 'styles/sc/selectWrapper';
+import { item, mainVariant } from 'styles/animations';
+import { Container, Fly, H1 } from 'styles/sc/base';
 
 export const SelectPage = () => {
     const { notes } = useSelector((state) => state);
@@ -31,12 +31,7 @@ export const SelectPage = () => {
         console.log(sel);
     };
     return (
-        <motion.div
-            className="container"
-            variants={mainVariant}
-            initial="hidden"
-            animate="visible"
-        >
+        <Container variants={mainVariant} initial="hidden" animate="visible">
             <H1 variants={item}>Select page</H1>
             <motion.p variants={item}>Component Select</motion.p>
             <Fly />
@@ -57,6 +52,6 @@ export const SelectPage = () => {
                 <Select list={list} label="Инструмент разработки" />
                 <Select list={list} />
             </SelectWrapper>
-        </motion.div>
+        </Container>
     );
 };

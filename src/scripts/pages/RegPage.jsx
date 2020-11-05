@@ -1,15 +1,13 @@
 import React from 'react';
 
 import { motion } from 'framer-motion';
-import { RegistrationForm } from '../components/RegistrationForm';
-import { item, mainVariant } from '../styles/animations';
-import { Fly, H1 } from '../styles/sc/base';
+import { item, mainVariant } from 'styles/animations';
+import { Container, Fly, H1 } from 'styles/sc/base';
 
 export const RegPage = () => {
     return (
         <>
-            <motion.div
-                className="container"
+            <Container
                 variants={mainVariant}
                 initial="hidden"
                 animate="visible"
@@ -21,8 +19,7 @@ export const RegPage = () => {
                     and React Native.
                 </motion.p>
                 <Fly />
-                <RegistrationForm />
-            </motion.div>
+            </Container>
         </>
     );
 };

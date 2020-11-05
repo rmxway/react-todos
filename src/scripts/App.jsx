@@ -3,20 +3,20 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import styled, { ThemeProvider } from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
-import { lightTheme } from './styles/sc/lightTheme';
-import { darkTheme } from './styles/sc/darkTheme';
+import { lightTheme } from 'styles/sc/lightTheme';
+import { darkTheme } from 'styles/sc/darkTheme';
 
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-import { rootReducer } from './store/rootReducer';
+import { rootReducer } from 'scripts/store/rootReducer';
 
-import { Alert } from './components/Alert';
-import { Navbar } from './components/Navbar';
-import { NotePage } from './pages/NotePage';
-import { SelectPage } from './pages/SelectPage';
-import { RegPage } from './pages/RegPage';
-import { MotionPage } from './pages/MotionPage';
+import { Alert } from 'components/Alert';
+import { Navbar } from 'components/navbar/Navbar';
+import { NotePage } from 'scripts/pages/NotePage';
+import { SelectPage } from 'scripts/pages/SelectPage';
+import { RegPage } from 'scripts/pages/RegPage';
+import { MotionPage } from 'scripts/pages/MotionPage';
 
 export const App = styled(motion.section)`
     display: flex;

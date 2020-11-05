@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeTheme, hideAlert } from '../store/actions';
+import { changeTheme, hideAlert } from 'scripts/store/actions';
 
 import { motion, AnimateSharedLayout } from 'framer-motion';
 import styled from 'styled-components';
-import { MotionButton } from '../styles/sc/base';
-import { navVariants, navLiVarinats } from '../styles/animations';
+import { Container, MotionButton } from 'styles/sc/base';
+import { navVariants, navLiVarinats } from 'styles/animations';
 import { LoginUser } from './LoginUser';
 
 export const Nav = styled.nav`
@@ -16,12 +16,12 @@ export const Nav = styled.nav`
     right: 0;
     z-index: ${(props) => props.theme.z.menu};
     background-color: ${(props) => props.theme.primary};
-    padding: 10px;
-    margin-bottom: 20px;
+    padding: 10px 0;
     box-shadow: 0 5px 30px #fff4;
     transition: ${(props) => props.theme.transitions.default};
 
-    .container {
+    ${Container} {
+        width: auto;
         display: flex;
         align-items: center;
         justify-content: flex-start;
@@ -54,7 +54,8 @@ export const Nav = styled.nav`
                 opacity: 0.6;
                 transition: 0.2s;
                 height: 100%;
-                padding: 5px 0;
+                padding: 5px 0 8px;
+                text-decoration: none;
 
                 &.active {
                     opacity: 1;
@@ -123,10 +124,10 @@ export const Navbar = ({ updateTheme }) => {
     };
     return (
         <Nav>
-            <div className="container">
+            <Container>
                 <img src="img/logo.png" alt="" />
                 {/* Переключение цвета темы */}
-                <MotionButton inNav={true} onClick={toggleColor}>
+                <MotionButton inNav onClick={toggleColor}>
                     {color === 'light' ? 'Светлая' : 'Темная'} тема
                 </MotionButton>
                 <AnimateSharedLayout>
@@ -170,7 +171,7 @@ export const Navbar = ({ updateTheme }) => {
                     </motion.ul>
                 </AnimateSharedLayout>
                 <LoginUser />
-            </div>
+            </Container>
         </Nav>
     );
 };
