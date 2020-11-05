@@ -2,7 +2,6 @@ import React from 'react';
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { lighten } from 'polished';
 import { fadein } from 'styles/animations';
 import { MotionButton } from 'styles/sc/base';
 

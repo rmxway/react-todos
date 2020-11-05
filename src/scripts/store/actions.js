@@ -1,5 +1,7 @@
 import {
+    ACTIVE_USER,
     ADD_NOTE,
+    ADD_USER,
     CHANGE_THEME,
     HIDE_ALERT,
     REMOVE_ALL_NOTES,
@@ -46,5 +48,29 @@ export const changeTheme = (color) => {
     return {
         type: CHANGE_THEME,
         color,
+    };
+};
+
+export const addUser = (user) => {
+    return {
+        type: ADD_USER,
+        payload: {
+            name: user.name,
+            login: user.login,
+            password: user.password,
+            id: user.id,
+        },
+    };
+};
+
+export const activeUser = (user) => {
+    return {
+        type: ACTIVE_USER,
+        payload: {
+            name: user.name,
+            login: user.login,
+            password: user.password,
+            id: user.id,
+        },
     };
 };

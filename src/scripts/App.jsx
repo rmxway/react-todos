@@ -15,7 +15,6 @@ import { Alert } from 'components/Alert';
 import { Navbar } from 'components/navbar/Navbar';
 import { NotePage } from 'scripts/pages/NotePage';
 import { SelectPage } from 'scripts/pages/SelectPage';
-import { RegPage } from 'scripts/pages/RegPage';
 import { MotionPage } from 'scripts/pages/MotionPage';
 
 export const App = styled(motion.section)`
@@ -82,11 +81,6 @@ class Application extends React.Component {
                                         exact
                                         path="/select"
                                         component={SelectPage}
-                                    />
-                                    <Route
-                                        exact
-                                        path="/registration"
-                                        component={RegPage}
                                     />
                                     <Route
                                         exact

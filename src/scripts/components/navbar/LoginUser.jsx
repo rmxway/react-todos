@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ClickOutHandler from 'react-onclickout';
 
 import { motion, AnimatePresence } from 'framer-motion';
 import styled from 'styled-components';
 import { darken, lighten } from 'polished';
-import { RegistrationForm } from 'components/navbar/forms/RegistrationForm';
 import { fadein } from 'styles/animations';
+
+import { RegistrationForm } from 'components/navbar/forms/RegistrationForm';
 import { Div } from 'styles/sc/base';
 import { NavbarForms } from 'components/navbar/forms/NavbarForms';
 import { LoginForm } from 'components/navbar/forms/LoginForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { activeUser, addUser } from '../../store/actions';
 
 const Link = styled(motion.div)`
     position: relative;
@@ -68,15 +71,16 @@ const PopupBackplane = styled(motion.div)`
     transition: 0.2s;
 `;
 
+// -----------------------------------------------------------------
+
 export const LoginUser = () => {
-    const [logged, setLogged] = useState(false); // user enter on account
+    const dispatch = useDispatch();
+    const { users, currentUser } = useSelector((state) => state.app);
+
+    const [logged, setLogged] = useState(currentUser.login); // user enter on account
     const [isOpen, setIsOpen] = useState(false); // popup login | registration
     const [isReg, setIsReg] = useState(false); // если не залогинены, на что нажали, на регистрацию или логин
-    const [prevLink, setPrevLink] = useState('');
-    const [values, setValues] = useState({
-        name: 'Evgeny',
-        login: 'rmxway',
-    });
+    const [prevLink, setPrevLink] = useState(''); // на какую ссылку нажали последней
 
     const handleClick = (event) => {
         const links = document.querySelectorAll('.loglink');
@@ -102,14 +106,33 @@ export const LoginUser = () => {
         setPrevLink(currentLink);
     };
 
-    const handleLogout = () => {
-        setLogged(!logged);
-    };
-
-    const handleSubmit = (values) => {
-        setValues(values);
+    // Регистрация пользователя
+    const handleSubmit = (user) => {
+        const id = Date.now();
+        Object.assign(user, { id });
         setIsOpen(!isOpen);
         setLogged(!logged);
+        dispatch(addUser(user));
+        dispatch(activeUser(user));
+    };
+
+    // Вход в аккаунт
+    const handleLogin = (user) => {
+        const findUser = users.filter(
+            (item) =>
+                item.login === user.login && item.password === user.password
+        );
+        if ({ ...findUser['login'] }) {
+            setIsOpen(!isOpen);
+            setLogged(!logged);
+            dispatch(activeUser(...findUser));
+        }
+    };
+
+    // Выход из аккаунта
+    const handleLogout = () => {
+        setLogged(!logged);
+        dispatch(activeUser({}));
     };
 
     const outsideClick = (e) => {
@@ -141,7 +164,7 @@ export const LoginUser = () => {
                                 {isReg ? (
                                     <RegistrationForm onSubmit={handleSubmit} />
                                 ) : (
-                                    <LoginForm />
+                                    <LoginForm onSubmit={handleLogin} />
                                 )}
                             </NavbarForms>
                         </PopupBackplane>
@@ -152,9 +175,9 @@ export const LoginUser = () => {
     ) : (
         <Div layout>
             <User>
-                <span>You logged in, </span> {values.name}
+                <span>You logged in, </span> {currentUser.name}
             </User>
-            <Link onClick={() => handleLogout()}>Logout</Link>
+            <Link onClick={handleLogout}>Logout</Link>
         </Div>
     );
 };

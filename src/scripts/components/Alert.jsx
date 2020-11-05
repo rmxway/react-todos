@@ -5,6 +5,7 @@ import styled, { css } from 'styled-components';
 import { alertMotion } from 'styles/animations';
 import { hideAlert } from 'scripts/store/actions';
 import { lighten } from 'polished';
+import { Container, MotionButton } from 'styles/sc/base';
 
 const AlertSC = styled(motion.div)`
     position: absolute;
@@ -40,6 +41,15 @@ const AlertSC = styled(motion.div)`
               `};
 `;
 
+const Close = styled(MotionButton)`
+    border: none;
+    background-color: #2227;
+    color: white;
+    padding: 5px;
+    width: 30px;
+    margin-right: 0;
+`;
+
 export const Alert = () => {
     const { visible, type, text } = useSelector((state) => state.alert);
     const dispatch = useDispatch();
@@ -60,18 +70,18 @@ export const Alert = () => {
     return (
         <AnimatePresence initial={false}>
             {visible && (
-                <div className="container">
+                <Container>
                     <AlertSC type={type} layout {...alertMotion}>
                         {text}
-                        <button
+                        <Close
                             type="button"
                             className="close"
                             onClick={() => dispatch(hideAlert())}
                         >
                             <span>&times;</span>
-                        </button>
+                        </Close>
                     </AlertSC>
-                </div>
+                </Container>
             )}
         </AnimatePresence>
     );

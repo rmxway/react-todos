@@ -22,7 +22,7 @@ export const FlexBlock = styled(motion.div)`
 
 export const Input = styled(motion.input)`
     padding: 15px;
-    background-color: #22222211;
+    background-color: ${(props) => darken(0.02, props.theme.bg)};
     border-radius: 4px;
     border: 1px solid ${(props) => props.theme.borderColor};
     padding: 15px;
@@ -83,6 +83,7 @@ export const MotionButton = styled(motion.button).attrs(() => ({
     outline: none;
     opacity: 0.7;
     background-color: #fff0;
+    cursor: pointer;
 
     &:focus {
         outline: none;
@@ -118,6 +119,7 @@ export const Backplane = styled(motion.div)`
 `;
 
 export const Container = styled(motion.section)`
+    position: relative;
     margin: 0 auto;
     padding: 0 15px;
     width: 100%;

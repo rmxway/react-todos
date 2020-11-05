@@ -94,10 +94,6 @@ export const Navbar = ({ updateTheme }) => {
             title: 'Select',
         },
         {
-            path: './registration',
-            title: 'Registration',
-        },
-        {
             path: '/motion',
             title: 'Motion',
         },

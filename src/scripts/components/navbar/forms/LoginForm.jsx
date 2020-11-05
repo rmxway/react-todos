@@ -30,7 +30,10 @@ export const LoginForm = ({ onSubmit }) => {
                     password: '',
                 }}
                 validationSchema={LoginSchema}
-                onSubmit={(values) => onSubmit(values)}
+                onSubmit={(values, { resetForm }) => {
+                    onSubmit(values);
+                    resetForm({});
+                }}
             >
                 {({
                     values,

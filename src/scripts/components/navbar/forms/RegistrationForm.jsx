@@ -41,7 +41,10 @@ export const RegistrationForm = ({ onSubmit }) => {
                     repassword: '',
                 }}
                 validationSchema={RegistrationSchema}
-                onSubmit={(values) => onSubmit(values)}
+                onSubmit={(values, { resetForm }) => {
+                    onSubmit(values);
+                    resetForm({});
+                }}
             >
                 {({
                     values,

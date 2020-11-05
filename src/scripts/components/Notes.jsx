@@ -11,6 +11,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { darken, lighten } from 'polished';
 
+import { Form } from 'components/Form';
+
 const NonNotes = styled(motion.p)`
     position: absolute;
 `;
@@ -21,16 +23,21 @@ const NoteTitle = styled(motion.div)`
     align-items: center;
     padding: 0 0 10px 2px;
     font-size: 20px;
-
-    .button {
-        margin-right: 0;
-        font-size: 13px;
-    }
 `;
 
 const List = styled(motion.ul)`
     margin: 0;
     padding: 0;
+`;
+
+const AlertParagraph = styled(motion.div)`
+    position: absolute;
+    width: 100%;
+    margin-top: 100px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 100;
+    letter-spacing: 2px;
 `;
 
 const NoteNumber = styled(motion.div)`
@@ -44,7 +51,6 @@ const NoteNumber = styled(motion.div)`
     letter-spacing: 0;
     line-height: 50px;
     margin: 0 20px 0 0;
-    // border-bottom: 1px solid ${(props) => props.theme.bg};
     background-color: ${(props) => props.theme.colors.silver};
 
     ${(props) => {
@@ -82,8 +88,15 @@ const Note = styled(motion.li).attrs(() => ({
     }
 `;
 
+const Close = styled(MotionButton)`
+    padding: 5px;
+    width: 30px;
+    margin-right: 0;
+`;
+
 export const Notes = () => {
     const { notes } = useSelector((state) => state);
+    const { currentUser } = useSelector((state) => state.app);
     const dispatch = useDispatch();
     const noItems = !notes.length;
     const trashIcon = <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>;
@@ -106,8 +119,9 @@ export const Notes = () => {
         };
         dispatch(showAlert(payload));
     };
-    return (
+    return currentUser.name ? (
         <motion.div variants={item}>
+            <Form />
             {noItems && <NonNotes variants={item}>Нет записей</NonNotes>}
             {!noItems && (
                 <NoteTitle>
@@ -130,17 +144,21 @@ export const Notes = () => {
                                     <strong>{note.title}&nbsp; – &nbsp;</strong>
                                     <small>{note.date}</small>
                                 </FlexBlock>
-                                <button
+                                <Close
                                     type="button"
                                     onClick={() => handleClick(note.id)}
                                 >
                                     &times;
-                                </button>
+                                </Close>
                             </Note>
                         );
                     })}
                 </AnimatePresence>
             </List>
         </motion.div>
+    ) : (
+        <AlertParagraph variants={item} transition={{ duration: 1 }}>
+            Зайдите в свой аккаунт либо зарегистрируйте новый
+        </AlertParagraph>
     );
 };

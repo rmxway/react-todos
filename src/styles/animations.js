@@ -60,7 +60,7 @@ export const item = {
         y: 0,
         opacity: 1,
         transition: {
-            duration: 0.4,
+            duration: 0.3,
         },
     },
 };
