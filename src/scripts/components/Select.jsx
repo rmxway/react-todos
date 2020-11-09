@@ -105,11 +105,11 @@ export const Select = ({
     placeholder = 'Выберите вариант',
 }) => {
     const [title, setTitle] = useState(
-        list.length ? placeholder : 'Нет данных...'
+        list && list.length ? placeholder : 'Нет данных...'
     );
     const [isOpen, setIsOpen] = useState(false);
     const [selected, setSelected] = useState(null);
-    const noItems = !list.length;
+    const noItems = list ? !list.length : true;
     const arrow = (
         <FontAwesomeIcon className="select-icon" icon={faChevronDown} />
     );

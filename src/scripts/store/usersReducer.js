@@ -20,18 +20,20 @@ const initialState = {
 };
 
 export const userReducer = (state = initialState, action) => {
-    const curUser = state.list.find((user) => user.id === state.currentUser.id);
-    console.log(state);
+    let curUser = state.list.find((user) => user.id === state.currentUser.id);
     switch (action.type) {
         case ADD_NOTE:
-            curUser.notes.push({
+            const newNote = {
                 id: Math.floor(Math.random() * Date.now()),
                 title: action.title,
                 date: `[ ${new Date().toLocaleDateString()} ] ${new Date().toLocaleTimeString()}`,
-            });
+            };
+            curUser.notes.push(newNote);
             return { ...state };
         case REMOVE_NOTE:
-            curUser.notes.filter((note) => note.id !== action.id);
+            curUser.notes = curUser.notes.filter(
+                (note) => note.id !== action.id
+            );
             return { ...state };
         case REMOVE_ALL_NOTES:
             curUser.notes = [];

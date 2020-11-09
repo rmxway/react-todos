@@ -7,7 +7,15 @@ import { item, mainVariant } from 'styles/animations';
 import { Container, Fly, H1 } from 'styles/sc/base';
 
 export const SelectPage = () => {
-    const { notes } = useSelector((state) => state);
+    const { users } = useSelector((state) => state);
+    const { currentUser } = users;
+
+    const findUserNotes = currentUser.name
+        ? users.list.find((user) =>
+              currentUser.name ? user.id === currentUser.id : null
+          ).notes
+        : undefined;
+
     const list = [
         {
             id: '23423',
@@ -37,7 +45,7 @@ export const SelectPage = () => {
             <Fly />
             <SelectWrapper variants={item}>
                 <Select
-                    list={notes}
+                    list={findUserNotes}
                     onChange={onChange}
                     label="Список заметок"
                     placeholder="Выберите заметку"
