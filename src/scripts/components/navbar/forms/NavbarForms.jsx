@@ -17,6 +17,8 @@ export const FormBlock = styled(motion.form)`
 export const stringPattern = RegExp(/^[а-яА-ЯёЁ a-zA-Z]+$/);
 
 export const Label = styled(motion.label)`
+    font-family: 'Roboto Condensed', sans-serif;
+    letter-spacing: 1px;
     position: relative;
     display: block;
     left: 2px;

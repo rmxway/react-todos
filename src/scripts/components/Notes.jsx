@@ -4,7 +4,7 @@ import { removeAllNotes, removeNote, showAlert } from 'scripts/store/actions';
 
 import { AnimatePresence, motion } from 'framer-motion';
 import styled, { css } from 'styled-components';
-import { FlexBlock, MotionButton } from 'styles/sc/base';
+import { Div, FlexBlock, MotionButton } from 'styles/sc/base';
 import { item, noteMotion, notesVariant } from 'styles/animations';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,6 +23,12 @@ const NoteTitle = styled(motion.div)`
     align-items: center;
     padding: 0 0 10px 2px;
     font-size: 20px;
+
+    ${MotionButton} {
+        margin-right: 0;
+        font-size: 14px;
+        padding: 10px;
+    }
 `;
 
 const List = styled(motion.ul)`
@@ -95,14 +101,22 @@ const Close = styled(MotionButton)`
 `;
 
 export const Notes = () => {
-    const { notes } = useSelector((state) => state);
-    const { currentUser } = useSelector((state) => state.app);
+    const { users } = useSelector((state) => state);
+    const { currentUser } = users;
+
+    const findUserNotes = users.currentUser.name
+        ? users.list.find((user) =>
+              currentUser.name ? user.id === currentUser.id : null
+          ).notes
+        : undefined;
+
     const dispatch = useDispatch();
-    const noItems = !notes.length;
+    const noItems = findUserNotes ? !findUserNotes.length : null;
     const trashIcon = <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>;
+
     useEffect(() => {
-        localStorage.setItem('notes', JSON.stringify(notes));
-    }, [notes]);
+        localStorage.setItem('users', JSON.stringify(users));
+    }, [users]);
 
     const handleClick = (id) => {
         dispatch(removeNote(id));
@@ -136,29 +150,32 @@ export const Notes = () => {
             )}
             <List variants={notesVariant}>
                 <AnimatePresence>
-                    {notes.map((note, idx) => {
-                        return (
-                            <Note variants={item} layout key={note.id}>
-                                <FlexBlock>
-                                    <NoteNumber>{idx + 1}</NoteNumber>
-                                    <strong>{note.title}&nbsp; – &nbsp;</strong>
-                                    <small>{note.date}</small>
-                                </FlexBlock>
-                                <Close
-                                    type="button"
-                                    onClick={() => handleClick(note.id)}
-                                >
-                                    &times;
-                                </Close>
-                            </Note>
-                        );
-                    })}
+                    {!noItems &&
+                        findUserNotes.map((note, idx) => {
+                            return (
+                                <Note variants={item} layout key={note.id}>
+                                    <FlexBlock>
+                                        <NoteNumber>{idx + 1}</NoteNumber>
+                                        <strong>
+                                            {note.title}&nbsp; – &nbsp;
+                                        </strong>
+                                        <small>{note.date}</small>
+                                    </FlexBlock>
+                                    <Close
+                                        type="button"
+                                        onClick={() => handleClick(note.id)}
+                                    >
+                                        &times;
+                                    </Close>
+                                </Note>
+                            );
+                        })}
                 </AnimatePresence>
             </List>
         </motion.div>
     ) : (
         <AlertParagraph variants={item} transition={{ duration: 1 }}>
-            Зайдите в свой аккаунт либо зарегистрируйте новый
+            <Div>Зайдите в свой аккаунт либо зарегистрируйте новый.</Div>
         </AlertParagraph>
     );
 };

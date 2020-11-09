@@ -31,6 +31,8 @@ export const SelectSC = styled(motion.div)`
             left: 2px;
             top: -20px;
             font-size: 10px;
+            font-family: 'Roboto Condensed', sans-serif;
+            letter-spacing: 1px;
             opacity: 0.7;
             text-transform: uppercase;
         }

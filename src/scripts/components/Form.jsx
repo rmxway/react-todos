@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addNote, showAlert } from 'scripts/store/actions';
 import { item } from 'styles/animations';
 import { Input } from 'styles/sc/base';
@@ -8,6 +8,7 @@ import { Input } from 'styles/sc/base';
 export const Form = () => {
     const [value, setValue] = useState('');
     const dispatch = useDispatch();
+    const { currentUser } = useSelector((state) => state.app);
 
     const submitHandler = (event) => {
         event.preventDefault();

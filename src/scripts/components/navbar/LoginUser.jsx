@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ClickOutHandler from 'react-onclickout';
 
 import { motion, AnimatePresence } from 'framer-motion';
@@ -11,7 +11,7 @@ import { Div } from 'styles/sc/base';
 import { NavbarForms } from 'components/navbar/forms/NavbarForms';
 import { LoginForm } from 'components/navbar/forms/LoginForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { activeUser, addUser } from '../../store/actions';
+import { currentUser, addUser, showAlert } from '../../store/actions';
 
 const Link = styled(motion.div)`
     position: relative;
@@ -75,9 +75,9 @@ const PopupBackplane = styled(motion.div)`
 
 export const LoginUser = () => {
     const dispatch = useDispatch();
-    const { users, currentUser } = useSelector((state) => state.app);
+    const { users } = useSelector((state) => state);
 
-    const [logged, setLogged] = useState(currentUser.login); // user enter on account
+    const [logged, setLogged] = useState(users.currentUser.login); // user enter on account
     const [isOpen, setIsOpen] = useState(false); // popup login | registration
     const [isReg, setIsReg] = useState(false); // если не залогинены, на что нажали, на регистрацию или логин
     const [prevLink, setPrevLink] = useState(''); // на какую ссылку нажали последней
@@ -113,26 +113,33 @@ export const LoginUser = () => {
         setIsOpen(!isOpen);
         setLogged(!logged);
         dispatch(addUser(user));
-        dispatch(activeUser(user));
+        dispatch(currentUser(user));
     };
 
     // Вход в аккаунт
     const handleLogin = (user) => {
-        const findUser = users.filter(
+        const findUser = users.list.filter(
             (item) =>
                 item.login === user.login && item.password === user.password
         );
-        if ({ ...findUser['login'] }) {
+        if (findUser.length) {
             setIsOpen(!isOpen);
             setLogged(!logged);
-            dispatch(activeUser(...findUser));
+            dispatch(currentUser(...findUser));
+        } else {
+            const payload = {
+                type: 'danger',
+                text: 'Аккаунта не существует',
+            };
+
+            dispatch(showAlert(payload));
         }
     };
 
     // Выход из аккаунта
     const handleLogout = () => {
         setLogged(!logged);
-        dispatch(activeUser({}));
+        dispatch(currentUser({}));
     };
 
     const outsideClick = (e) => {
@@ -146,10 +153,10 @@ export const LoginUser = () => {
     return !logged ? (
         <Div layout relative>
             <Link type="register" className="loglink" onClick={handleClick}>
-                Registration
+                Регистрация
             </Link>
             <Link type="login" className="loglink" onClick={handleClick}>
-                Login
+                Войти
             </Link>
             <AnimatePresence>
                 {isOpen && (
@@ -175,9 +182,9 @@ export const LoginUser = () => {
     ) : (
         <Div layout>
             <User>
-                <span>You logged in, </span> {currentUser.name}
+                <span>Вы зашли как, </span> {users.currentUser.name}
             </User>
-            <Link onClick={handleLogout}>Logout</Link>
+            <Link onClick={handleLogout}>Выйти</Link>
         </Div>
     );
 };

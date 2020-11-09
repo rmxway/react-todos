@@ -88,7 +88,7 @@ export const LoginForm = ({ onSubmit }) => {
                                     layout
                                     type="submit"
                                 >
-                                    Регистрация
+                                    Войти
                                 </MotionButton>
                             </Div>
                             <Div comment variants={item} key="comment">

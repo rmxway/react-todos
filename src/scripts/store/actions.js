@@ -1,5 +1,5 @@
 import {
-    ACTIVE_USER,
+    CURRENT_USER,
     ADD_NOTE,
     ADD_USER,
     CHANGE_THEME,
@@ -9,7 +9,7 @@ import {
     SHOW_ALERT,
 } from './types';
 
-export const addNote = (title) => {
+export const addNote = (title, userId) => {
     return {
         type: ADD_NOTE,
         title,
@@ -63,9 +63,9 @@ export const addUser = (user) => {
     };
 };
 
-export const activeUser = (user) => {
+export const currentUser = (user) => {
     return {
-        type: ACTIVE_USER,
+        type: CURRENT_USER,
         payload: {
             name: user.name,
             login: user.login,

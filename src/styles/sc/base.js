@@ -4,6 +4,7 @@ import { darken } from 'polished';
 import { breakpoints } from './media';
 
 export const H1 = styled.h1`
+    font-family: 'Roboto Condensed', sans-serif;
     font-weight: 100;
     font-size: 35px;
     color: ${(props) => props.theme.primary};
@@ -75,6 +76,7 @@ export const MotionButton = styled(motion.button).attrs(() => ({
     whileTap: { scale: 0.95 },
     transition: { duration: 0.2 },
 }))`
+    font-family: 'Roboto Condensed', sans-serif;
     border: 2px solid ${(props) => props.theme.textColor};
     color: ${(props) => props.theme.textColor};
     border-radius: 5px;
