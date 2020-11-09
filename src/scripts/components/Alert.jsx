@@ -54,14 +54,16 @@ export const Alert = () => {
     const { visible, type, text } = useSelector((state) => state.alert);
     const dispatch = useDispatch();
 
+    let timer = () =>
+        setTimeout(() => {
+            clearTimeout(timer);
+            dispatch(hideAlert());
+        }, 3300);
+
     useEffect(() => {
-        let timer;
         clearTimeout(timer);
         if (visible) {
-            timer = setTimeout(() => {
-                clearTimeout(timer);
-                dispatch(hideAlert());
-            }, 3300);
+            timer();
         }
         return () => {
             clearTimeout(timer);
