@@ -1,8 +1,9 @@
 export const defaultTheme = {
     colors: {
-        danger: '#d34836',
+        danger: '#f25945',
         warning: '#f6d584',
-        success: '#1ba763',
+        success: '#1a8e56',
+        silver: '#696969',
     },
     gaps: {
         containerWidth: '1200px',
@@ -16,9 +17,10 @@ export const defaultTheme = {
         onBack: 0,
     },
     transitions: {
-        default: 'all .1s cubic-bezier(.17,.67,.83,.67)',
+        default: 'all .3s',
     },
     shadows: {
         alert: '0 10px 30px #2225',
+        popup: '0 5px 10px #222a',
     },
 };

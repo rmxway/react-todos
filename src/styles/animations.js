@@ -60,7 +60,25 @@ export const item = {
         y: 0,
         opacity: 1,
         transition: {
-            duration: 0.4,
+            duration: 0.3,
+        },
+    },
+};
+
+export const fadein = {
+    hidden: {
+        opacity: 0,
+    },
+    visible: {
+        opacity: 1,
+        transition: {
+            duration: 0.2,
+        },
+    },
+    exit: {
+        opacity: 0,
+        transition: {
+            duration: 0.2,
         },
     },
 };
