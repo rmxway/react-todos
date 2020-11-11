@@ -8,7 +8,7 @@ import { lighten } from 'polished';
 import { Container, MotionButton } from 'styles/sc/base';
 
 const AlertSC = styled(motion.div)`
-    position: absolute;
+    position: fixed;
     line-height: 1;
     display: flex;
     font-size: 16px;
@@ -17,6 +17,7 @@ const AlertSC = styled(motion.div)`
     padding: 12px 20px;
     border-radius: 4px;
     color: ${(props) => props.theme.textColor};
+    top: 50px;
     left: 0;
     right: 0;
     box-shadow: ${(props) => props.theme.shadows.alert};
@@ -53,22 +54,23 @@ const Close = styled(MotionButton)`
 export const Alert = () => {
     const { visible, type, text } = useSelector((state) => state.alert);
     const dispatch = useDispatch();
-
+    let timeout;
     let timer = () =>
-        setTimeout(() => {
-            clearTimeout(timer);
+        (timeout = setTimeout(() => {
+            clearTimeout(timeout);
             dispatch(hideAlert());
-        }, 3300);
+        }, 3300));
 
     useEffect(() => {
-        clearTimeout(timer);
+        clearTimeout(timeout);
         if (visible) {
             timer();
         }
         return () => {
-            clearTimeout(timer);
+            clearTimeout(timeout);
         };
     });
+
     return (
         <AnimatePresence initial={false}>
             {visible && (

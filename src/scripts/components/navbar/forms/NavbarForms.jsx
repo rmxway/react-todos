@@ -36,7 +36,7 @@ export const ErrorForm = styled(motion.div).attrs(() => ({
 }))`
     color: ${(props) => props.theme.colors.danger};
 
-    margin: -5px 0 5px;
+    margin: -10px 0 10px;
     font-size: 11px;
 `;
 
