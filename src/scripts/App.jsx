@@ -16,6 +16,7 @@ import { Navbar } from 'components/navbar/Navbar';
 import { NotePage } from 'scripts/pages/NotePage';
 import { SelectPage } from 'scripts/pages/SelectPage';
 import { MotionPage } from 'scripts/pages/MotionPage';
+import { ModalPage } from './pages/ModalPage';
 
 export const App = styled(motion.section)`
     display: flex;
@@ -76,6 +77,11 @@ class Application extends React.Component {
                                         exact
                                         path="/"
                                         component={NotePage}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/modal"
+                                        component={ModalPage}
                                     />
                                     <Route
                                         exact

@@ -90,6 +90,10 @@ export const Navbar = ({ updateTheme }) => {
             title: 'Notes',
         },
         {
+            path: '/modal',
+            title: 'Modal',
+        },
+        {
             path: '/select',
             title: 'Select',
         },

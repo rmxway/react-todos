@@ -37,7 +37,6 @@ const List = styled(motion.ul)`
 `;
 
 const AlertParagraph = styled(motion.div)`
-    position: absolute;
     width: 100%;
     margin-top: 100px;
     text-align: center;

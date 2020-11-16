@@ -63,6 +63,10 @@ export const item = {
             duration: 0.3,
         },
     },
+    exit: {
+        y: 30,
+        opacity: 0,
+    },
 };
 
 export const fadein = {
