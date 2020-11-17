@@ -1,6 +1,7 @@
 import {
     ADD_NOTE,
     ADD_USER,
+    CHANGE_COMPLETED,
     CURRENT_USER,
     REMOVE_ALL_NOTES,
     REMOVE_NOTE,
@@ -26,6 +27,7 @@ export const userReducer = (state = initialState, action) => {
             const newNote = {
                 id: Math.floor(Math.random() * Date.now()),
                 title: action.title,
+                completed: false,
                 date: `[ ${new Date().toLocaleDateString()} ] ${new Date().toLocaleTimeString()}`,
             };
             curUser.notes.push(newNote);
@@ -37,6 +39,11 @@ export const userReducer = (state = initialState, action) => {
             return { ...state };
         case REMOVE_ALL_NOTES:
             curUser.notes = [];
+            return { ...state };
+        case CHANGE_COMPLETED:
+            const curNote = curUser.notes.find((note) => note.id === action.id);
+            console.log(curNote.title);
+            curNote.completed = !curNote.completed;
             return { ...state };
         case ADD_USER:
             const list = state.list.concat({ ...action.payload, notes: [] });

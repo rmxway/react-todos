@@ -7,6 +7,7 @@ import {
     REMOVE_ALL_NOTES,
     REMOVE_NOTE,
     SHOW_ALERT,
+    CHANGE_COMPLETED,
 } from './types';
 
 export const addNote = (title, userId) => {
@@ -26,6 +27,13 @@ export const removeNote = (id) => {
 export const removeAllNotes = () => {
     return {
         type: REMOVE_ALL_NOTES,
+    };
+};
+
+export const changeCompleted = (id) => {
+    return {
+        type: CHANGE_COMPLETED,
+        id,
     };
 };
 

@@ -22,6 +22,6 @@ export const defaultTheme = {
     shadows: {
         alert: '0 10px 30px #2225',
         popup: '0 5px 10px #222a',
-        modal: '0 10px 30px #2222',
+        modal: '0 10px 30px #222f',
     },
 };

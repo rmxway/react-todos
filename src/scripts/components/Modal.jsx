@@ -14,7 +14,7 @@ const ModalWrapper = styled(motion.section)`
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: ${(props) => transparentize(0.2, props.theme.bg)};
+    background-color: ${transparentize(0.4, '#000')};
     z-index: ${(props) => props.theme.z.modal};
 `;
 
@@ -24,7 +24,7 @@ const ModalWindow = styled(motion.div)`
     width: 100%;
     min-height: 200px;
     color: #222;
-    padding: 20px;
+    overflow: hidden;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: ${(props) => props.theme.shadows.modal};
@@ -38,17 +38,24 @@ const ModalWindow = styled(motion.div)`
 `;
 
 const ModalTitle = styled.div`
-    font-size: 25px;
-    margin-bottom: 20px;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1;
+    padding: 20px 30px 20px 20px;
+    background-color: #ddd;
+    border-bottom: 1px solid #ccc;
 `;
-const ModalBody = styled.div``;
+const ModalBody = styled.div`
+    padding: 20px;
+`;
 const Close = styled.div`
     position: absolute;
-    right: 10px;
-    top: 10px;
+    right: 12px;
+    top: 12px;
     width: 20px;
     height: 20px;
     font-size: 30px;
+    line-height: 0.5;
     cursor: pointer;
     transition: 0.2s;
     opacity: 0.7;
@@ -64,7 +71,7 @@ export const Modal = ({ open, onClose, title, body, noClose }) => {
         if (e.target === modalRef.current) onClose();
     };
     return (
-        <AnimatePresence exitBeforeEnter>
+        <AnimatePresence>
             {open && (
                 <ModalWrapper
                     variants={fadein}

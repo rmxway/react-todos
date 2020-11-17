@@ -1,9 +1,15 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeAllNotes, removeNote, showAlert } from 'scripts/store/actions';
+import {
+    changeCompleted,
+    removeAllNotes,
+    removeNote,
+    showAlert,
+} from 'scripts/store/actions';
 
 import { AnimatePresence, motion } from 'framer-motion';
 import styled, { css } from 'styled-components';
+import { transparentize } from 'polished';
 import { Div, FlexBlock, MotionButton } from 'styles/sc/base';
 import { item, noteMotion, notesVariant } from 'styles/animations';
 
@@ -12,6 +18,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { darken, lighten } from 'polished';
 
 import { Form } from 'components/Form';
+import { Checkbox } from 'components/forms/Checkbox';
 
 const NonNotes = styled(motion.p)`
     position: absolute;
@@ -34,6 +41,11 @@ const NoteTitle = styled(motion.div)`
 const List = styled(motion.ul)`
     margin: 0;
     padding: 0;
+
+    ${FlexBlock} {
+        justify-content: flex-start;
+        width: 100%;
+    }
 `;
 
 const AlertParagraph = styled(motion.div)`
@@ -80,8 +92,19 @@ const Note = styled(motion.li).attrs(() => ({
     justify-content: space-between;
     align-items: center;
     padding-right: 10px;
-    transition-property: background-color;
+    transition-property: background-color, opacity;
     transition-duration: 0.3s;
+
+    ${({ completed }) =>
+        completed &&
+        css`
+            opacity: 0.5 !important;
+
+            strong,
+            small {
+                text-decoration: line-through;
+            }
+        `}
 
     &:first-child {
         border-radius: 4px 4px 0 0;
@@ -152,8 +175,21 @@ export const Notes = () => {
                     {!noItems &&
                         findUserNotes.map((note, idx) => {
                             return (
-                                <Note variants={item} layout key={note.id}>
+                                <Note
+                                    variants={item}
+                                    layout
+                                    key={note.id}
+                                    completed={note.completed}
+                                >
                                     <FlexBlock>
+                                        <Checkbox
+                                            checked={note.completed}
+                                            onChange={() =>
+                                                dispatch(
+                                                    changeCompleted(note.id)
+                                                )
+                                            }
+                                        />
                                         <NoteNumber>{idx + 1}</NoteNumber>
                                         <strong>
                                             {note.title}&nbsp; – &nbsp;

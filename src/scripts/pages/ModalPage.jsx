@@ -17,14 +17,16 @@ export const ModalPage = () => {
 
     // контент внутри модального окна
     const paragraph = (
-        <p>
+        <p key="it1">
             Суперский контент, который изменит все представление о модальных
             окнах.
         </p>
     );
 
     const closeButton = (
-        <MotionButton onClick={handleCloseModal}>Закрыть</MotionButton>
+        <MotionButton key="it2" onClick={handleCloseModal}>
+            Закрыть
+        </MotionButton>
     );
 
     return (
@@ -41,14 +43,14 @@ export const ModalPage = () => {
 
             <br />
 
-            <MotionButton onClick={handleOpenModal}>
+            <MotionButton variants={item} onClick={handleOpenModal}>
                 Открыть модальное окно
             </MotionButton>
 
             <Modal
                 open={isOpen}
                 onClose={handleCloseModal}
-                title="Modal Window"
+                title="Заголовок модального окна в две строки"
                 body={[paragraph, closeButton]}
             />
         </Container>
