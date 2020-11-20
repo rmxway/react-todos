@@ -4,7 +4,7 @@ import { Container, H1, MotionButton } from 'styles/sc/base';
 import { item, mainVariant } from 'styles/animations';
 import { Modal } from 'components/Modal';
 
-export const ModalPage = () => {
+const ModalPage = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleOpenModal = () => {
@@ -56,3 +56,5 @@ export const ModalPage = () => {
         </Container>
     );
 };
+
+export default ModalPage;

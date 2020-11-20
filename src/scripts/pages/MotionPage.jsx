@@ -20,7 +20,7 @@ const ImageComponent = styled(motion.div)`
     }
 `;
 
-export const MotionPage = () => {
+const MotionPage = () => {
     // const moveX = useSpring(0, { stiffness: 200, damping: 50 });
     const moveX = useMotionValue(0);
     const scale = useTransform(moveX, [-300, 0], [1.4, 1]);
@@ -99,3 +99,5 @@ export const MotionPage = () => {
         </Container>
     );
 };
+
+export default MotionPage;

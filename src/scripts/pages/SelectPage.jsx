@@ -6,7 +6,7 @@ import { SelectWrapper } from 'styles/sc/selectWrapper';
 import { item, mainVariant } from 'styles/animations';
 import { Container, Fly, H1 } from 'styles/sc/base';
 
-export const SelectPage = () => {
+const SelectPage = () => {
     const { users } = useSelector((state) => state);
     const { currentUser } = users;
 
@@ -63,3 +63,5 @@ export const SelectPage = () => {
         </Container>
     );
 };
+
+export default SelectPage;

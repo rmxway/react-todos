@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import styled, { ThemeProvider } from 'styled-components';
@@ -13,10 +13,12 @@ import { rootReducer } from 'scripts/store/rootReducer';
 
 import { Alert } from 'components/Alert';
 import { Navbar } from 'components/navbar/Navbar';
-import { NotePage } from 'scripts/pages/NotePage';
-import { SelectPage } from 'scripts/pages/SelectPage';
-import { MotionPage } from 'scripts/pages/MotionPage';
-import { ModalPage } from './pages/ModalPage';
+
+// разделение кода на блоки при загрузке
+const NotePage = lazy(() => import('./pages/NotePage'));
+const SelectPage = lazy(() => import('./pages/SelectPage'));
+const MotionPage = lazy(() => import('./pages/MotionPage'));
+const ModalPage = lazy(() => import('./pages/ModalPage'));
 
 export const App = styled(motion.section)`
     display: flex;
@@ -71,30 +73,32 @@ class Application extends React.Component {
                         <App>
                             <Alert />
                             <Navbar updateTheme={this.updateColor} />
-                            <AnimatePresence exitBeforeEnter>
-                                <Switch>
-                                    <Route
-                                        exact
-                                        path="/"
-                                        component={NotePage}
-                                    />
-                                    <Route
-                                        exact
-                                        path="/modal"
-                                        component={ModalPage}
-                                    />
-                                    <Route
-                                        exact
-                                        path="/select"
-                                        component={SelectPage}
-                                    />
-                                    <Route
-                                        exact
-                                        path="/motion"
-                                        component={MotionPage}
-                                    />
-                                </Switch>
-                            </AnimatePresence>
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <AnimatePresence exitBeforeEnter>
+                                    <Switch>
+                                        <Route
+                                            exact
+                                            path="/"
+                                            component={NotePage}
+                                        />
+                                        <Route
+                                            exact
+                                            path="/modal"
+                                            component={ModalPage}
+                                        />
+                                        <Route
+                                            exact
+                                            path="/select"
+                                            component={SelectPage}
+                                        />
+                                        <Route
+                                            exact
+                                            path="/motion"
+                                            component={MotionPage}
+                                        />
+                                    </Switch>
+                                </AnimatePresence>
+                            </Suspense>
                         </App>
                     </BrowserRouter>
                 </ThemeProvider>

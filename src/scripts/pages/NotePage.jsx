@@ -4,7 +4,7 @@ import { Notes } from 'components/Notes';
 import { Container, Fly, H1 } from 'styles/sc/base';
 import { item, mainVariant } from 'styles/animations';
 
-export const NotePage = () => {
+const NotePage = () => {
     return (
         <>
             <Container
@@ -21,3 +21,5 @@ export const NotePage = () => {
         </>
     );
 };
+
+export default NotePage;
