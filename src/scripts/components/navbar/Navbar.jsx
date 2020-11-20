@@ -72,7 +72,7 @@ export const Navbar = ({ updateTheme }) => {
     return (
         <Nav>
             <Container>
-                <img src="img/logo.png" alt="" />
+                <img className="logo" src="img/logo.png" alt="" />
 
                 <MenuButton
                     animate={menuOpened ? 'opened' : 'initial'}
