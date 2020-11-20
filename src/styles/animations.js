@@ -124,6 +124,54 @@ export const navLiVarinats = {
 
 //---------------------------------
 
+export const transitionLines = {
+    duration: 1,
+    type: 'spring',
+};
+
+export const menuLineCenter = {
+    initial: {
+        opacity: 1,
+    },
+    opened: {
+        opacity: 0,
+    },
+};
+
+export const menuLineTop = {
+    initial: {
+        rotate: 0,
+        y: 0,
+    },
+    opened: {
+        rotate: 45,
+        y: 9,
+    },
+};
+export const menuLineBottom = {
+    initial: {
+        rotate: 0,
+        y: 0,
+    },
+    opened: {
+        rotate: -45,
+        y: -9,
+    },
+};
+
+export const mobileMenuVar = {
+    hidden: { x: '-100%', transition: { ease: 'easeIn' } },
+    visible: {
+        x: 0,
+        transition: {
+            duration: 0.4,
+            ease: 'easeInOut',
+        },
+    },
+};
+
+// --------------------------------------
+
 export const selectDropdownVariants = {
     close: {
         opacity: 0,

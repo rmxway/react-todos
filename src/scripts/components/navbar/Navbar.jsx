@@ -3,85 +3,26 @@ import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeTheme, hideAlert } from 'scripts/store/actions';
 
-import { motion, AnimateSharedLayout } from 'framer-motion';
-import styled from 'styled-components';
+import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
+import { Nav, MenuButton, MobileMenu } from 'components/navbar/styledNavbar';
 import { Container, MotionButton } from 'styles/sc/base';
-import { navVariants, navLiVarinats } from 'styles/animations';
+import {
+    navVariants,
+    navLiVarinats,
+    menuLineTop,
+    menuLineBottom,
+    menuLineCenter,
+    transitionLines,
+    mobileMenuVar,
+} from 'styles/animations';
 import { LoginUser } from './LoginUser';
-
-export const Nav = styled.nav`
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: ${(props) => props.theme.z.menu};
-    background-color: ${(props) => props.theme.primary};
-    padding: 10px 0;
-    box-shadow: 0 5px 30px #fff4;
-    transition: ${(props) => props.theme.transitions.default};
-
-    ${Container} {
-        width: auto;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-    }
-
-    img {
-        height: 35px;
-        max-height: 100%;
-        max-width: 100%;
-        margin-right: 20px;
-    }
-
-    ul {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        display: flex;
-        flex-grow: 1;
-
-        li {
-            position: relative;
-            display: block;
-            margin: 0;
-            margin: 0 15px;
-
-            a {
-                display: block;
-                color: #fff;
-                font-weight: 600;
-                opacity: 0.6;
-                transition: 0.2s;
-                height: 100%;
-                padding: 5px 0 8px;
-                text-decoration: none;
-
-                &.active {
-                    opacity: 1;
-                }
-
-                &:hover {
-                    text-decoration: none;
-                }
-            }
-
-            .underline {
-                width: 100%;
-                height: 3px;
-                border-radius: 4px;
-                background: #fff;
-                position: absolute;
-                bottom: 0px;
-            }
-        }
-    }
-`;
 
 export const Navbar = ({ updateTheme }) => {
     const [selected, setSelected] = useState(0);
+    const [menuOpened, setMenuOpened] = useState(false);
     const color = useSelector((state) => state.app.color);
     const ulRef = useRef();
+    const mobileMenuRef = useRef();
     const visibleAlert = useSelector((state) => state.alert.visible);
     const dispatch = useDispatch();
     const links = [
@@ -121,18 +62,77 @@ export const Navbar = ({ updateTheme }) => {
         if (visibleAlert) {
             dispatch(hideAlert());
         }
+        setMenuOpened(false);
     };
+
+    const handleClickMobileMenu = () => {
+        setMenuOpened(!menuOpened);
+    };
+
     return (
         <Nav>
             <Container>
-                <img src="img/logo.png" alt="" />
+                <img className="logo" src="img/logo.png" alt="" />
+
+                <MenuButton
+                    animate={menuOpened ? 'opened' : 'initial'}
+                    onClick={handleClickMobileMenu}
+                >
+                    <motion.span
+                        variants={menuLineTop}
+                        transition={transitionLines}
+                    />
+                    <motion.span
+                        variants={menuLineCenter}
+                        transition={transitionLines}
+                    />
+                    <motion.span
+                        variants={menuLineBottom}
+                        transition={transitionLines}
+                    />
+                </MenuButton>
+
+                {/* Mobile menu */}
+                <AnimatePresence exitBeforeEnter>
+                    {menuOpened && (
+                        <MobileMenu
+                            ref={mobileMenuRef}
+                            variants={mobileMenuVar}
+                            initial="hidden"
+                            animate={menuOpened ? 'visible' : 'hidden'}
+                            exit="hidden"
+                        >
+                            <ul className="mobile-menu">
+                                {links.map((item, idx) => (
+                                    <li
+                                        key={item.title}
+                                        onClick={() => handleClick(idx)}
+                                    >
+                                        <NavLink
+                                            exact
+                                            to={item.path}
+                                            activeClassName="active"
+                                            data-id={idx}
+                                        >
+                                            {item.title}
+                                        </NavLink>
+                                    </li>
+                                ))}
+                            </ul>
+                        </MobileMenu>
+                    )}
+                </AnimatePresence>
+
                 {/* Переключение цвета темы */}
                 <MotionButton inNav onClick={toggleColor}>
                     {color === 'light' ? 'Светлая' : 'Темная'} тема
                 </MotionButton>
+
+                {/* Desktop menu */}
                 <AnimateSharedLayout>
                     <motion.ul
                         ref={ulRef}
+                        className="desktop-menu"
                         variants={navVariants}
                         initial="hidden"
                         animate="visible"
@@ -141,7 +141,7 @@ export const Navbar = ({ updateTheme }) => {
                             <motion.li
                                 variants={navLiVarinats}
                                 onClick={() => handleClick(idx)}
-                                key={idx}
+                                key={item.title}
                             >
                                 <NavLink
                                     exact
@@ -170,6 +170,8 @@ export const Navbar = ({ updateTheme }) => {
                         ))}
                     </motion.ul>
                 </AnimateSharedLayout>
+
+                {/* Регистрация, вход */}
                 <LoginUser />
             </Container>
         </Nav>

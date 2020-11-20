@@ -9,7 +9,6 @@ import {
 
 import { AnimatePresence, motion } from 'framer-motion';
 import styled, { css } from 'styled-components';
-import { transparentize } from 'polished';
 import { Div, FlexBlock, MotionButton } from 'styles/sc/base';
 import { item, noteMotion, notesVariant } from 'styles/animations';
 
@@ -19,6 +18,8 @@ import { darken, lighten } from 'polished';
 
 import { Form } from 'components/Form';
 import { Checkbox } from 'components/forms/Checkbox';
+
+// Styles ---------------------------------------------------------
 
 const NonNotes = styled(motion.p)`
     position: absolute;
@@ -121,6 +122,8 @@ const Close = styled(MotionButton)`
     width: 30px;
     margin-right: 0;
 `;
+
+// Component ---------------------------------------------------------
 
 export const Notes = () => {
     const { users } = useSelector((state) => state);
