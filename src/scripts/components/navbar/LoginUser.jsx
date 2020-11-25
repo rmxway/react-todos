@@ -21,7 +21,7 @@ const Link = styled(motion.div)`
     transition: 0.2s;
     height: 100%;
     padding: 5px 0;
-    margin-left: 30px;
+    margin-left: 15px;
     cursor: pointer;
 
     &:after {
@@ -181,9 +181,7 @@ export const LoginUser = () => {
         </Div>
     ) : (
         <Div layout>
-            <User>
-                <span>Вы зашли как, </span> {users.currentUser.name}
-            </User>
+            <User>{users.currentUser.name}</User>
             <Link onClick={handleLogout}>Выйти</Link>
         </Div>
     );

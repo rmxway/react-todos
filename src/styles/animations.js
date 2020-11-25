@@ -160,12 +160,12 @@ export const menuLineBottom = {
 };
 
 export const mobileMenuVar = {
-    hidden: { opacity: 0 },
+    hidden: { x: '-100%', transition: { ease: 'easeIn' } },
     visible: {
-        opacity: 1,
+        x: 0,
         transition: {
-            duration: 0.2,
-            type: 'tween',
+            duration: 0.4,
+            ease: 'easeInOut',
         },
     },
 };

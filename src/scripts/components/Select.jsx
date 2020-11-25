@@ -8,6 +8,7 @@ import styled, { css } from 'styled-components';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { breakpoints } from 'styles/sc/media';
 
 export const SelectSC = styled(motion.div)`
     position: relative;
@@ -24,6 +25,11 @@ export const SelectSC = styled(motion.div)`
             `;
         }
     }}
+
+    ${breakpoints.lessThan('sm')`
+        flex: auto;
+        width: 45%;
+    `}
 
     .select {
         &-label {
