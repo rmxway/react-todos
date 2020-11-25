@@ -26,22 +26,10 @@ export const Navbar = ({ updateTheme }) => {
     const visibleAlert = useSelector((state) => state.alert.visible);
     const dispatch = useDispatch();
     const links = [
-        {
-            path: '/',
-            title: 'Notes',
-        },
-        {
-            path: '/modal',
-            title: 'Modal',
-        },
-        {
-            path: '/select',
-            title: 'Select',
-        },
-        {
-            path: '/motion',
-            title: 'Motion',
-        },
+        { path: '/', title: 'Notes' },
+        { path: '/modal', title: 'Modal' },
+        { path: '/select', title: 'Select' },
+        { path: '/motion', title: 'Motion' },
     ];
 
     useEffect(() => {
