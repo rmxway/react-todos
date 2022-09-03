@@ -35,9 +35,9 @@ class Application extends React.Component {
     constructor(props) {
         super(props);
 
-        this.reduxDevTools =
-            window.__REDUX_DEVTOOLS_EXTENSION__ &&
-            window.__REDUX_DEVTOOLS_EXTENSION__();
+        this.reduxDevTools = window.__REDUX_DEVTOOLS_EXTENSION__
+            ? window.__REDUX_DEVTOOLS_EXTENSION__()
+            : (f) => f;
 
         this.store = createStore(
             rootReducer,
