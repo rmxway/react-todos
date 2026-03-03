@@ -1,6 +1,7 @@
-import { fadein, modalItem } from '@/styles/animations';
 import { AnimatePresence } from 'framer-motion';
 import { useRef } from 'react';
+
+import { fadein, modalItem } from '@/styles/animations';
 
 import {
 	Close,

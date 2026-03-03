@@ -1,8 +1,9 @@
-import { noteMotion } from '@/styles/animations';
-import { FlexBlock, MotionButton } from '@/styles/base';
 import { motion } from 'framer-motion';
 import { darken, lighten } from 'polished';
 import styled, { css } from 'styled-components';
+
+import { noteMotion } from '@/styles/animations';
+import { FlexBlock, MotionButton } from '@/styles/base';
 
 export const NonNotes = styled(motion.p)`
 	position: absolute;

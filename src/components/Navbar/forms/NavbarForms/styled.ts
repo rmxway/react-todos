@@ -1,7 +1,8 @@
-import { fadein } from '@/styles/animations';
-import { MotionButton } from '@/styles/base';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
+
+import { fadein } from '@/styles/animations';
+import { MotionButton } from '@/styles/base';
 
 export const FormBlock = styled(motion.form)`
 	max-width: 400px;

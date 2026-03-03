@@ -1,7 +1,8 @@
-import { breakpoints } from '@/styles/media';
 import { motion } from 'framer-motion';
 import { darken } from 'polished';
 import styled, { css } from 'styled-components';
+
+import { breakpoints } from '@/styles/media';
 
 export const SelectSC = styled(motion.div)<{ noItems?: boolean }>`
 	position: relative;

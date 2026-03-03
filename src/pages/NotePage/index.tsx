@@ -1,7 +1,8 @@
+import { motion } from 'framer-motion';
+
 import { Notes } from '@/components/Notes';
 import { item, mainVariant } from '@/styles/animations';
 import { Container, Fly, H1 } from '@/styles/base';
-import { motion } from 'framer-motion';
 
 export const NotePage = () => {
 	return (

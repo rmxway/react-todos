@@ -1,18 +1,27 @@
-import { fadein } from '@/styles/animations';
-import { Div } from '@/styles/base';
 import { AnimatePresence } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { lazy, Suspense, useRef, useState } from 'react';
 
 import { useOnClickOutside } from '@/hooks';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { showAlert } from '@/store/slices/alertSlice';
 import { addUser, currentUser } from '@/store/slices/usersSlice';
+import { fadein } from '@/styles/animations';
+import { Div } from '@/styles/base';
 import type { User as UserType } from '@/types';
 
-import { LoginForm } from '../forms/LoginForm';
-import { NavbarForms } from '../forms/NavbarForms';
-import { RegistrationForm } from '../forms/RegistrationForm';
 import { Link, PopupBackplane, User } from './styled';
+
+const LoginForm = lazy(() =>
+	import('../forms/LoginForm').then((m) => ({ default: m.LoginForm })),
+);
+const RegistrationForm = lazy(() =>
+	import('../forms/RegistrationForm').then((m) => ({
+		default: m.RegistrationForm,
+	})),
+);
+const NavbarForms = lazy(() =>
+	import('../forms/NavbarForms').then((m) => ({ default: m.NavbarForms })),
+);
 
 export const LoginUser = () => {
 	const dispatch = useAppDispatch();
@@ -120,13 +129,17 @@ export const LoginUser = () => {
 							animate={isOpen ? 'visible' : 'hidden'}
 							exit="exit"
 						>
-							<NavbarForms>
-								{isReg ? (
-									<RegistrationForm onSubmit={handleSubmit} />
-								) : (
-									<LoginForm onSubmit={handleLogin} />
-								)}
-							</NavbarForms>
+							<Suspense fallback={null}>
+								<NavbarForms>
+									{isReg ? (
+										<RegistrationForm
+											onSubmit={handleSubmit}
+										/>
+									) : (
+										<LoginForm onSubmit={handleLogin} />
+									)}
+								</NavbarForms>
+							</Suspense>
 						</PopupBackplane>
 					)}
 				</AnimatePresence>

@@ -1,10 +1,10 @@
+import { motion } from 'framer-motion';
+
 import { Select } from '@/components/Select';
+import { useAppSelector } from '@/store/hooks';
 import { item, mainVariant } from '@/styles/animations';
 import { Container, Fly, H1 } from '@/styles/base';
 import { SelectWrapper } from '@/styles/selectWrapper';
-import { motion } from 'framer-motion';
-
-import { useAppSelector } from '@/store/hooks';
 
 const frameworksList = [
 	{ id: '23423', title: 'React' },

@@ -4107,9 +4107,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-todo@workspace:.":
+"react-todos@workspace:.":
   version: 0.0.0-use.local
-  resolution: "react-todo@workspace:."
+  resolution: "react-todos@workspace:."
   dependencies:
     "@eslint/js": "npm:^9"
     "@fortawesome/fontawesome-svg-core": "npm:^7.2.0"

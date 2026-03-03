@@ -1,11 +1,11 @@
-import { item } from '@/styles/animations';
-import { Input } from '@/styles/base';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 
 import { useAppDispatch } from '@/store/hooks';
 import { showAlert } from '@/store/slices/alertSlice';
 import { addNote } from '@/store/slices/usersSlice';
+import { item } from '@/styles/animations';
+import { Input } from '@/styles/base';
 
 export const Form = () => {
 	const [value, setValue] = useState('');

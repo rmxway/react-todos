@@ -1,10 +1,10 @@
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { selectDropdownVariants, selectLiVariants } from '@/styles/animations';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRef, useState } from 'react';
 
 import { useOnClickOutside } from '@/hooks';
+import { selectDropdownVariants, selectLiVariants } from '@/styles/animations';
 
 import { SelectSC } from './styled';
 

@@ -1,3 +1,7 @@
+import { Formik } from 'formik';
+import { AnimatePresence, motion } from 'framer-motion';
+import * as Yup from 'yup';
+
 import {
 	ErrorForm,
 	FormBlock,
@@ -5,9 +9,6 @@ import {
 } from '@/components/Navbar/forms/NavbarForms';
 import { item, mainVariant } from '@/styles/animations';
 import { Div, Input, MotionButton } from '@/styles/base';
-import { Formik } from 'formik';
-import { AnimatePresence, motion } from 'framer-motion';
-import * as Yup from 'yup';
 
 const LoginSchema = Yup.object().shape({
 	login: Yup.string()

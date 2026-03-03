@@ -1,12 +1,10 @@
-import { Checkbox } from '@/components/Checkbox';
-import { Form } from '@/components/Form';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { item, notesVariant } from '@/styles/animations';
-import { Div, FlexBlock, MotionButton } from '@/styles/base';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect } from 'react';
 
+import { Checkbox } from '@/components/Checkbox';
+import { Form } from '@/components/Form';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { showAlert } from '@/store/slices/alertSlice';
 import {
@@ -14,6 +12,8 @@ import {
 	removeAllNotes,
 	removeNote,
 } from '@/store/slices/usersSlice';
+import { item, notesVariant } from '@/styles/animations';
+import { Div, FlexBlock, MotionButton } from '@/styles/base';
 
 import {
 	AlertParagraph,

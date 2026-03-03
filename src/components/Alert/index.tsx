@@ -1,10 +1,10 @@
-import { alertMotion } from '@/styles/animations';
-import { Container } from '@/styles/base';
 import { AnimatePresence } from 'framer-motion';
 import { useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { hideAlert } from '@/store/slices/alertSlice';
+import { alertMotion } from '@/styles/animations';
+import { Container } from '@/styles/base';
 
 import { AlertSC, Close } from './styled';
 
@@ -26,7 +26,7 @@ export const Alert = () => {
 		<AnimatePresence initial={false}>
 			{visible && (
 				<Container>
-					<AlertSC type={type} layout {...alertMotion}>
+					<AlertSC $type={type} layout {...alertMotion}>
 						{text}
 						<Close
 							type="button"

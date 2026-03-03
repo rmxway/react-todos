@@ -1,8 +1,9 @@
+import { motion } from 'framer-motion';
+import { useState } from 'react';
+
 import { Modal } from '@/components/Modal';
 import { item, mainVariant } from '@/styles/animations';
 import { Container, H1, MotionButton } from '@/styles/base';
-import { motion } from 'framer-motion';
-import { useState } from 'react';
 
 export const ModalPage = () => {
 	const [isOpen, setIsOpen] = useState(false);

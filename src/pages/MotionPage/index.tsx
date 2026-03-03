@@ -1,9 +1,9 @@
-import { item, mainVariant } from '@/styles/animations';
-import { Backplane, Container, H1 } from '@/styles/base';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 import { useWidth } from '@/hooks';
+import { item, mainVariant } from '@/styles/animations';
+import { Backplane, Container, H1 } from '@/styles/base';
 
 import { ImageComponent } from './styled';
 

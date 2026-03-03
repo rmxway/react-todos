@@ -4,7 +4,7 @@ export const alertMotion = {
 	exit: { opacity: 0, top: 0 },
 	transition: {
 		duration: 0.2,
-		type: 'spring',
+		type: 'spring' as const,
 		mass: 0.5,
 	},
 };

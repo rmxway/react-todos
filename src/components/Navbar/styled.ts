@@ -1,8 +1,9 @@
-import { Container, MotionButton } from '@/styles/base';
-import { breakpoints } from '@/styles/media';
 import { motion } from 'framer-motion';
 import { darken } from 'polished';
 import styled from 'styled-components';
+
+import { Container, MotionButton } from '@/styles/base';
+import { breakpoints } from '@/styles/media';
 
 export const Nav = styled.nav`
 	position: fixed;

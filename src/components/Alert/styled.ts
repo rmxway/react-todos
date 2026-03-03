@@ -1,9 +1,10 @@
-import { MotionButton } from '@/styles/base';
 import { motion } from 'framer-motion';
 import { lighten } from 'polished';
 import styled, { css } from 'styled-components';
 
-export const AlertSC = styled(motion.div)<{ type?: string }>`
+import { MotionButton } from '@/styles/base';
+
+export const AlertSC = styled(motion.div)<{ $type?: string }>`
 	position: fixed;
 	line-height: 1;
 	display: flex;
@@ -21,14 +22,14 @@ export const AlertSC = styled(motion.div)<{ type?: string }>`
 	margin: 0 15px;
 
 	${(props) =>
-		props.type === 'danger'
+		props.$type === 'danger'
 			? css`
 					background-color: ${lighten(
 						0.08,
 						props.theme.colors.danger,
 					)};
 				`
-			: props.type === 'success'
+			: props.$type === 'success'
 				? css`
 						background-color: ${lighten(
 							0.15,

@@ -1,3 +1,10 @@
+import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { NavLink } from 'react-router-dom';
+
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { hideAlert } from '@/store/slices/alertSlice';
+import { changeTheme } from '@/store/slices/appSlice';
 import {
 	menuLineBottom,
 	menuLineCenter,
@@ -8,13 +15,6 @@ import {
 	transitionLines,
 } from '@/styles/animations';
 import { Container, MotionButton } from '@/styles/base';
-import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
-import { NavLink } from 'react-router-dom';
-
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { hideAlert } from '@/store/slices/alertSlice';
-import { changeTheme } from '@/store/slices/appSlice';
 
 import { LoginUser } from './LoginUser';
 import { MenuButton, MobileMenu, Nav } from './styled';

@@ -79,3 +79,7 @@ src/
 ├── styles/         # Темы, анимации, глобальные стили
 └── types/          # TypeScript-типы
 ```
+
+## GitHub Pages
+
+Автодеплой настроен через GitHub Actions. При пуше в ветку `master` приложение собирается и публикуется на [GitHub Pages](https://rmxway.github.io/react-todos/).
