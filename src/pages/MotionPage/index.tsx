@@ -1,6 +1,7 @@
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
+import motionImg from '@/assets/motion.png';
 import { useWidth } from '@/hooks';
 import { item, mainVariant } from '@/styles/animations';
 import { Backplane, Container, H1 } from '@/styles/base';
@@ -57,7 +58,7 @@ export const MotionPage = () => {
 			</motion.div>
 			<ImageComponent ref={componentRef}>
 				<motion.img
-					src="/assets/motion.png"
+					src={motionImg}
 					alt="img"
 					ref={imageRef}
 					variants={item}

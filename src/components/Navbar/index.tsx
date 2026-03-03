@@ -2,6 +2,7 @@ import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
+import logo from '@/assets/logo.png';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { hideAlert } from '@/store/slices/alertSlice';
 import { changeTheme } from '@/store/slices/appSlice';
@@ -71,7 +72,7 @@ export const Navbar = ({ updateTheme }: NavbarProps) => {
 	return (
 		<Nav>
 			<Container>
-				<img className="logo" src="/assets/logo.png" alt="" />
+				<img className="logo" src={logo} alt="" />
 
 				<MenuButton
 					animate={menuOpened ? 'opened' : 'initial'}
