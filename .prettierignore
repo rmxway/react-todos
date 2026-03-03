@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+coverage/
+public/
+
+# Lock files
+yarn.lock
+package-lock.json
+
+# Other
+*.log
