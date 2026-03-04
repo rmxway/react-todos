@@ -4,9 +4,9 @@ import styled, { css } from 'styled-components';
 import { darkTheme, lightTheme } from '@/shared/config/theme';
 
 export interface ButtonProps {
-	variant?: 'primary' | 'danger' | 'light' | 'dark';
-	size?: 'small' | 'medium' | 'large';
-	disabled?: boolean;
+	$variant?: 'primary' | 'danger' | 'light' | 'dark';
+	$size?: 'small' | 'medium' | 'large';
+	$disabled?: boolean;
 	onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 	type?: 'button' | 'submit' | 'reset';
 	children?: React.ReactNode;
@@ -20,8 +20,6 @@ export const StyledButton = styled(motion.button).attrs(() => ({
 	transition: { duration: 0.2 },
 }))<ButtonProps>`
 	font-family: 'Roboto Condensed', sans-serif;
-	border: 2px solid ${(props) => props.theme.textColor};
-	color: ${(props) => props.theme.textColor};
 	border-radius: 5px;
 	padding: 15px;
 	outline: none;
@@ -33,52 +31,45 @@ export const StyledButton = styled(motion.button).attrs(() => ({
 		outline: none;
 	}
 
-	${(props) =>
-		props.variant === 'primary' &&
+	${({ theme, $variant, $size, $disabled }) => css`
+		border: 2px solid ${theme.textColor};
+		color: ${theme.textColor};
+		${$variant === 'primary' &&
 		css`
-			background-color: ${props.theme.primary};
-			border-color: ${props.theme.primary};
+			background-color: ${theme.primary};
+			border-color: ${theme.primary};
 			color: white;
 			opacity: 1;
 		`}
-
-	${(props) =>
-		props.variant === 'danger' &&
+		${$variant === 'danger' &&
 		css`
-			background-color: ${props.theme.colors.danger};
-			border-color: ${props.theme.colors.danger};
+			background-color: ${theme.colors.danger};
+			border-color: ${theme.colors.danger};
 			color: white;
 			opacity: 1;
 		`}
-
-	${(props) =>
-		(props.variant === 'light' || props.variant === 'dark') &&
+			${($variant === 'light' || $variant === 'dark') &&
 		css`
-			border-color: ${props.variant === 'light'
+			border-color: ${$variant === 'light'
 				? lightTheme.bg
 				: darkTheme.bg};
-			color: ${props.variant === 'light' ? lightTheme.bg : darkTheme.bg};
+			color: ${$variant === 'light' ? lightTheme.bg : darkTheme.bg};
 			opacity: 1;
 		`}
-	
-	${(props) =>
-		props.size === 'small' &&
+		${$size === 'small' &&
 		css`
 			padding: 5px 10px;
 			font-size: 14px;
 		`}
-
-	${(props) =>
-		props.size === 'large' &&
+		${$size === 'large' &&
 		css`
 			padding: 20px 30px;
 			font-size: 18px;
 		`}
-
-	${(props) =>
-		props.disabled &&
+		${$disabled &&
 		css`
 			pointer-events: none;
 			opacity: 0.2;
 		`}
+	`}
 `;

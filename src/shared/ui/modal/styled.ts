@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { transparentize } from 'polished';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const ModalWrapper = styled(motion.section)`
 	position: fixed;
@@ -15,16 +15,18 @@ export const ModalWrapper = styled(motion.section)`
 	z-index: ${(props) => props.theme.z.modal};
 `;
 
-export const ModalWindow = styled(motion.div)<{ width?: string }>`
+export const ModalWindow = styled(motion.div)<{ $width?: string }>`
 	position: relative;
-	max-width: ${(props) => props.width ?? '300px'};
 	width: 100%;
 	min-height: 200px;
 	color: #222;
 	overflow: hidden;
 	background-color: #fff;
 	border-radius: 10px;
-	box-shadow: ${(props) => props.theme.shadows.modal};
+	${({ theme, $width }) => css`
+		max-width: ${$width ?? '300px'};
+		box-shadow: ${theme.shadows.modal};
+	`}
 `;
 
 export const ModalTitle = styled.div`

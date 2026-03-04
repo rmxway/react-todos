@@ -1,6 +1,7 @@
 import js from '@eslint/js';
 import tseslint from '@typescript-eslint/eslint-plugin';
 import tsparser from '@typescript-eslint/parser';
+import eslintConfigPrettier from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import prettier from 'eslint-plugin-prettier';
@@ -9,7 +10,6 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import unusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
-import eslintConfigPrettier from 'eslint-config-prettier';
 
 export default [
 	{
@@ -132,13 +132,13 @@ export default [
 			'@typescript-eslint/no-misused-promises': 'off',
 		},
 	},
-    {
-        files: ['**/vite-env.d.ts'],
-        rules: {
-            '@typescript-eslint/triple-slash-reference': 'off',
-            '@typescript-eslint/no-empty-object-type': 'off',
-            '@typescript-eslint/no-explicit-any': 'off',
-            'import/extensions': 'off',
-        },
-    },
+	{
+		files: ['**/vite-env.d.ts'],
+		rules: {
+			'@typescript-eslint/triple-slash-reference': 'off',
+			'@typescript-eslint/no-empty-object-type': 'off',
+			'@typescript-eslint/no-explicit-any': 'off',
+			'import/extensions': 'off',
+		},
+	},
 ];

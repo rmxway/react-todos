@@ -1,3 +1,5 @@
+'use client';
+
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
@@ -58,7 +60,11 @@ export const MotionPage = () => {
 			</motion.div>
 			<ImageComponent ref={componentRef}>
 				<motion.img
-					src={motionImg}
+					src={
+						typeof motionImg === 'object' && 'src' in motionImg
+							? motionImg.src
+							: String(motionImg)
+					}
 					alt="img"
 					ref={imageRef}
 					variants={item}

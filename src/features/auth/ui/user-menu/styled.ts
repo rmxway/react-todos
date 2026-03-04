@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { darken, lighten } from 'polished';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Link = styled(motion.div)`
 	position: relative;
@@ -61,6 +61,10 @@ export const PopupBackplane = styled(motion.div)`
 	transition: 0.2s;
 `;
 
-export const Wrapper = styled(motion.div)<{ relative?: boolean }>`
-	${(props) => props.relative && 'position: relative;'}
+export const Wrapper = styled(motion.div)<{ $relative?: boolean }>`
+	${({ $relative }) =>
+		$relative &&
+		css`
+			position: relative;
+		`}
 `;

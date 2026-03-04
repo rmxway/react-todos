@@ -22,31 +22,31 @@ export const Label = styled.label`
 
 export const StyledInput = styled(motion.input)<{ $error?: boolean }>`
 	padding: 15px;
-	background-color: ${(props) => darken(0.02, props.theme.bg)};
 	border-radius: 4px;
-	border: 1px solid ${(props) => props.theme.borderColor};
 	width: 100%;
 	box-sizing: border-box;
-	transition: ${(props) => props.theme.transitions.default};
 
 	&,
 	&:focus {
 		outline: none;
-		color: ${(props) => props.theme.textColor};
 	}
 
-	&:focus {
-		border-color: ${(props) => props.theme.primary};
-	}
-
-	${(props) =>
-		props.$error &&
+	${({ theme, $error }) => css`
+		background-color: ${darken(0.02, theme.bg)};
+		border: 1px solid ${theme.borderColor};
+		transition: ${theme.transitions.default};
+		color: ${theme.textColor};
+		&:focus {
+			border-color: ${$error ? theme.colors.danger : theme.primary};
+		}
+		${$error &&
 		css`
 			&,
 			&:focus {
-				border-color: ${props.theme.colors.danger};
+				border-color: ${theme.colors.danger};
 			}
 		`}
+	`}
 `;
 
 export const HelperText = styled.span`

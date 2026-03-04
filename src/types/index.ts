@@ -3,16 +3,16 @@ import type { lightTheme } from '@/shared/config/theme/lightTheme';
 export type Theme = typeof lightTheme;
 
 export interface Note {
-	id: number;
+	id: string;
 	title: string;
 	completed: boolean;
 	date: string;
 }
 
 export interface User {
-	id: number;
+	id: string;
 	name: string;
 	login: string;
-	password: string;
+	password?: string;
 	notes: Note[];
 }

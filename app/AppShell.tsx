@@ -1,7 +1,12 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const AppStyled = styled(motion.section)`
+import { AlertWrapper } from '@/features/alert';
+import { Navbar } from '@/features/auth';
+
+const AppStyled = styled(motion.section)`
 	display: flex;
 	flex-wrap: wrap;
 	flex-direction: column;
@@ -13,3 +18,13 @@ export const AppStyled = styled(motion.section)`
 	transition: 0.5s;
 	align-items: center;
 `;
+
+export function AppShell({ children }: { children: React.ReactNode }) {
+	return (
+		<AppStyled>
+			<AlertWrapper />
+			<Navbar />
+			{children}
+		</AppStyled>
+	);
+}

@@ -2,6 +2,7 @@ import { AnimatePresence } from 'framer-motion';
 import { useRef } from 'react';
 
 import { fadein, modalItem } from '@/shared/lib/animations';
+import { useOnClickOutside } from '@/shared/lib/hooks';
 
 import {
 	Close,
@@ -30,14 +31,9 @@ export const Modal = ({
 	width = '400px',
 	className,
 }: ModalProps) => {
-	const modalRef = useRef<HTMLElement>(null);
+	const contentRef = useRef<HTMLDivElement>(null);
 
-	const handleClickOut = (e: React.MouseEvent) => {
-		if (e.target === modalRef.current) {
-			e.stopPropagation();
-			onClose();
-		}
-	};
+	useOnClickOutside(contentRef, onClose);
 
 	return (
 		<AnimatePresence mode="wait">
@@ -47,11 +43,13 @@ export const Modal = ({
 					initial="hidden"
 					animate="visible"
 					exit="exit"
-					ref={modalRef}
-					onClick={handleClickOut}
 					{...{ className }}
 				>
-					<ModalWindow variants={modalItem} {...{ width }}>
+					<ModalWindow
+						ref={contentRef}
+						variants={modalItem}
+						$width={width}
+					>
 						{title && <ModalTitle>{title}</ModalTitle>}
 						{body && <ModalBody>{body}</ModalBody>}
 						{!noClose && <Close onClick={onClose}>&times;</Close>}

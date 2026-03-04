@@ -11,36 +11,29 @@ export const AlertSC = styled(motion.div)<{ $type?: string }>`
 	align-items: center;
 	padding: 12px 20px;
 	border-radius: 4px;
-	color: ${(props) => props.theme.textColor};
 	top: 50px;
 	left: 0;
 	right: 0;
-	box-shadow: ${(props) => props.theme.shadows.alert};
-	z-index: ${(props) => props.theme.z.modal};
 	margin: 0 15px;
-
-	${(props) =>
-		props.$type === 'danger'
-			? css`
-					background-color: ${lighten(
-						0.08,
-						props.theme.colors.danger,
-					)};
-				`
-			: props.$type === 'success'
-				? css`
-						background-color: ${lighten(
-							0.15,
-							props.theme.colors.success,
-						)};
-					`
-				: css`
-						background-color: ${lighten(
-							0.1,
-							props.theme.colors.warning,
-						)};
-						color: #333;
-					`}
+	${({ theme, $type }) => css`
+		color: ${theme.textColor};
+		box-shadow: ${theme.shadows.alert};
+		z-index: ${theme.z.modal};
+		${$type === 'danger' &&
+		css`
+			background-color: ${lighten(0.08, theme.colors.danger)};
+		`}
+		${$type === 'success' &&
+		css`
+			background-color: ${lighten(0.15, theme.colors.success)};
+		`}
+			${$type !== 'danger' &&
+		$type !== 'success' &&
+		css`
+			background-color: ${lighten(0.1, theme.colors.warning)};
+			color: #333;
+		`}
+	`}
 `;
 
 export const CloseButton = styled.button`

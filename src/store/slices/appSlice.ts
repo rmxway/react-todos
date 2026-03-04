@@ -4,14 +4,8 @@ interface AppState {
 	color: 'light' | 'dark';
 }
 
-const getInitialColor = (): 'light' | 'dark' => {
-	if (typeof window === 'undefined') return 'light';
-	const stored = localStorage.getItem('color');
-	return (stored === 'dark' ? 'dark' : 'light') as 'light' | 'dark';
-};
-
 const initialState: AppState = {
-	color: getInitialColor(),
+	color: 'light',
 };
 
 const appSlice = createSlice({
