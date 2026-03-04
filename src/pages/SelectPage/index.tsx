@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion';
 
-import { Select } from '@/components/Select';
+import { Container } from '@/shared/layouts';
+import { item, mainVariant } from '@/shared/lib/animations';
+import { Select } from '@/shared/ui';
 import { useAppSelector } from '@/store/hooks';
-import { item, mainVariant } from '@/styles/animations';
-import { Container, Fly, H1 } from '@/styles/base';
-import { SelectWrapper } from '@/styles/selectWrapper';
+
+import { Fly, H1, SelectWrapper } from './styled';
 
 const frameworksList = [
 	{ id: '23423', title: 'React' },

@@ -1,4 +1,4 @@
-import type { lightTheme } from '../styles/themes/lightTheme';
+import type { lightTheme } from '@/shared/config/theme/lightTheme';
 
 export type Theme = typeof lightTheme;
 

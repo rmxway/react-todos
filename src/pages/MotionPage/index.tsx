@@ -2,11 +2,11 @@ import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 import motionImg from '@/assets/motion.png';
-import { useWidth } from '@/hooks';
-import { item, mainVariant } from '@/styles/animations';
-import { Backplane, Container, H1 } from '@/styles/base';
+import { Container } from '@/shared/layouts';
+import { item, mainVariant } from '@/shared/lib/animations';
+import { useWidth } from '@/shared/lib/hooks';
 
-import { ImageComponent } from './styled';
+import { BackPlane, H1, ImageComponent } from './styled';
 
 export const MotionPage = () => {
 	const moveX = useMotionValue(0);
@@ -40,7 +40,7 @@ export const MotionPage = () => {
 			animate="visible"
 			exit="exit"
 		>
-			<Backplane
+			<BackPlane
 				initial={{ opacity: 0 }}
 				style={{
 					opacity,

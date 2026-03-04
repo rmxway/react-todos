@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 
-import { Modal } from '@/components/Modal';
-import { item, mainVariant } from '@/styles/animations';
-import { Container, H1, MotionButton } from '@/styles/base';
+import { Container } from '@/shared/layouts';
+import { item, mainVariant } from '@/shared/lib/animations';
+import { Button, Modal } from '@/shared/ui';
+
+import { H1 } from './styled';
 
 export const ModalPage = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -17,16 +19,12 @@ export const ModalPage = () => {
 	};
 
 	const paragraph = (
-		<p key="it1">
-			Суперский контент, который изменит все представление о модальных
-			окнах.
-		</p>
-	);
-
-	const closeButton = (
-		<MotionButton key="it2" onClick={handleCloseModal}>
-			Закрыть
-		</MotionButton>
+		<>
+			<p key="it1">
+				Контент, который изменит все представление о модальных окнах.
+			</p>
+			<br />
+		</>
 	);
 
 	return (
@@ -43,15 +41,15 @@ export const ModalPage = () => {
 
 			<br />
 
-			<MotionButton variants={item} onClick={handleOpenModal}>
+			<Button variants={item} onClick={handleOpenModal}>
 				Открыть модальное окно
-			</MotionButton>
+			</Button>
 
 			<Modal
 				open={isOpen}
 				onClose={handleCloseModal}
 				title="Заголовок модального окна в две строки"
-				body={[paragraph, closeButton]}
+				body={paragraph}
 			/>
 		</Container>
 	);
