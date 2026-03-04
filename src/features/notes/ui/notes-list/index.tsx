@@ -1,8 +1,11 @@
+'use client';
+
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect } from 'react';
 
+import { NoteForm } from '@/features/notes/ui/note-form';
+import { NoteItem } from '@/features/notes/ui/note-item';
 import { item, notesVariant } from '@/shared/lib/animations';
 import { Button } from '@/shared/ui';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
@@ -13,39 +16,51 @@ import {
 	removeNote,
 } from '@/store/slices/usersSlice';
 
-import { NoteForm } from '../note-form';
-import { NoteItem } from '../note-item';
 import { AlertParagraph, List, NonNotes, NoteTitle } from './styled';
 
 export const NotesList = () => {
-	const { users } = useAppSelector((state) => state);
-	const { currentUser } = users;
-
-	const findUserNotes = users.currentUser.name
-		? users.list.find((user) =>
-				currentUser.name ? user.id === currentUser.id : null,
-			)?.notes
-		: undefined;
+	const users = useAppSelector((state) => state.users);
+	const { currentUser, notes } = users;
 
 	const dispatch = useAppDispatch();
-	const noItems = findUserNotes ? !findUserNotes.length : null;
+	const noItems = notes.length === 0;
 	const trashIcon = <FontAwesomeIcon icon={faTrash} />;
 
-	useEffect(() => {
-		localStorage.setItem('users', JSON.stringify(users));
-	}, [users]);
-
-	const handleDelete = (id: number) => {
+	const handleDelete = async (id: string) => {
+		const res = await fetch(`/api/todos/${id}`, { method: 'DELETE' });
+		if (!res.ok) {
+			dispatch(
+				showAlert({
+					type: 'danger',
+					text: 'Не удалось удалить запись',
+				}),
+			);
+			return;
+		}
 		dispatch(removeNote(id));
 		dispatch(showAlert({ text: 'Запись удалена' }));
 	};
 
-	const handleRemoveAllNotes = () => {
+	const handleRemoveAllNotes = async () => {
+		const res = await fetch('/api/todos', { method: 'DELETE' });
+		if (!res.ok) {
+			dispatch(
+				showAlert({
+					type: 'danger',
+					text: 'Не удалось удалить все записи',
+				}),
+			);
+			return;
+		}
 		dispatch(removeAllNotes());
 		dispatch(showAlert({ text: 'Все записи были удалены' }));
 	};
 
-	const handleToggle = (id: number) => {
+	const handleToggle = async (id: string) => {
+		const res = await fetch(`/api/todos/${id}`, {
+			method: 'PATCH',
+		});
+		if (!res.ok) return;
 		dispatch(changeCompleted(id));
 	};
 
@@ -64,7 +79,7 @@ export const NotesList = () => {
 			<List variants={notesVariant}>
 				<AnimatePresence>
 					{!noItems &&
-						findUserNotes?.map((note, idx) => (
+						notes.map((note, idx) => (
 							<NoteItem
 								key={note.id}
 								id={note.id}

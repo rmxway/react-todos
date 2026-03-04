@@ -1,3 +1,5 @@
+'use client';
+
 import { motion } from 'framer-motion';
 
 import { Container } from '@/shared/layouts';
@@ -15,14 +17,8 @@ const frameworksList = [
 ];
 
 export const SelectPage = () => {
-	const { users } = useAppSelector((state) => state);
-	const { currentUser } = users;
-
-	const findUserNotes = currentUser.name
-		? users.list.find((user) =>
-				currentUser.name ? user.id === currentUser.id : null,
-			)?.notes
-		: undefined;
+	const users = useAppSelector((state) => state.users);
+	const { notes } = users;
 
 	const onChange = (_sel: { selected: string }) => {
 		// Demo: handle selection
@@ -35,7 +31,7 @@ export const SelectPage = () => {
 			<Fly />
 			<SelectWrapper variants={item}>
 				<Select
-					list={findUserNotes?.map((n) => ({
+					list={notes.map((n) => ({
 						id: n.id,
 						title: n.title,
 					}))}

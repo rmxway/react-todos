@@ -7,6 +7,7 @@ import {
 	selectDropdownVariants,
 	selectLiVariants,
 } from '@/shared/lib/animations';
+import { useOnClickOutside } from '@/shared/lib/hooks';
 
 import { SelectSC } from './styled';
 
@@ -22,24 +23,6 @@ export interface SelectProps {
 	placeholder?: string;
 	className?: string;
 }
-
-const useOnClickOutside = (
-	ref: React.RefObject<HTMLElement>,
-	handler: () => void,
-) => {
-	const handleClickOutside = (event: MouseEvent) => {
-		if (ref.current && !ref.current.contains(event.target as Node)) {
-			handler();
-		}
-	};
-
-	if (typeof window !== 'undefined') {
-		document.addEventListener('mousedown', handleClickOutside);
-		return () => {
-			document.removeEventListener('mousedown', handleClickOutside);
-		};
-	}
-};
 
 export const Select = ({
 	list,
@@ -79,7 +62,11 @@ export const Select = ({
 	};
 
 	return (
-		<SelectSC {...{ ref, noItems, className }} onClick={handleClick}>
+		<SelectSC
+			{...{ ref, className }}
+			$noItems={noItems}
+			onClick={handleClick}
+		>
 			<div className="select-label">{label}</div>
 			<div
 				className={`select-block${isOpen ? ' open' : ''}`}

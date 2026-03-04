@@ -5,68 +5,36 @@ import type { Note, User } from '@/types';
 interface UsersState {
 	list: User[];
 	currentUser: Partial<User>;
+	notes: Note[];
 }
 
-const getInitialState = (): UsersState => {
-	if (typeof window === 'undefined') {
-		return { list: [], currentUser: {} };
-	}
-	try {
-		const stored = localStorage.getItem('users');
-		if (stored) {
-			const parsed = JSON.parse(stored);
-			return {
-				list: parsed.list ?? [],
-				currentUser: parsed.currentUser ?? {},
-			};
-		}
-	} catch {
-		// ignore
-	}
-	return { list: [], currentUser: {} };
+const initialState: UsersState = {
+	list: [],
+	currentUser: {},
+	notes: [],
 };
-
-const initialState = getInitialState();
 
 const usersSlice = createSlice({
 	name: 'users',
 	initialState,
 	reducers: {
-		addNote: (state, action: PayloadAction<string>) => {
-			const curUser = state.list.find(
-				(u) => u.id === state.currentUser.id,
-			);
-			if (!curUser) return;
-			const newNote: Note = {
-				id: Math.floor(Math.random() * Date.now()),
-				title: action.payload,
-				completed: false,
-				date: `[ ${new Date().toLocaleDateString()} ] ${new Date().toLocaleTimeString()}`,
-			};
-			curUser.notes.push(newNote);
+		setCurrentUser: (state, action: PayloadAction<Partial<User>>) => {
+			state.currentUser = action.payload;
 		},
-		removeNote: (state, action: PayloadAction<number>) => {
-			const curUser = state.list.find(
-				(u) => u.id === state.currentUser.id,
-			);
-			if (!curUser) return;
-			curUser.notes = curUser.notes.filter(
-				(n) => n.id !== action.payload,
-			);
+		setNotes: (state, action: PayloadAction<Note[]>) => {
+			state.notes = action.payload;
+		},
+		addNote: (state, action: PayloadAction<Note>) => {
+			state.notes.push(action.payload);
+		},
+		removeNote: (state, action: PayloadAction<string>) => {
+			state.notes = state.notes.filter((n) => n.id !== action.payload);
 		},
 		removeAllNotes: (state) => {
-			const curUser = state.list.find(
-				(u) => u.id === state.currentUser.id,
-			);
-			if (!curUser) return;
-			curUser.notes = [];
+			state.notes = [];
 		},
-		changeCompleted: (state, action: PayloadAction<number>) => {
-			const curUser = state.list.find(
-				(u) => u.id === state.currentUser.id,
-			);
-			if (!curUser) return;
-			const note = curUser.notes.find((n) => n.id === action.payload);
+		changeCompleted: (state, action: PayloadAction<string>) => {
+			const note = state.notes.find((n) => n.id === action.payload);
 			if (note) note.completed = !note.completed;
 		},
 		addUser: (
@@ -92,5 +60,7 @@ export const {
 	changeCompleted,
 	addUser,
 	currentUser,
+	setCurrentUser,
+	setNotes,
 } = usersSlice.actions;
 export default usersSlice.reducer;

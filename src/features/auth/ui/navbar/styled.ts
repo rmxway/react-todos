@@ -31,6 +31,7 @@ export const Nav = styled.nav`
 	}
 
 	.logo {
+		width: auto;
 		height: 35px;
 		max-height: 100%;
 		max-width: 100%;

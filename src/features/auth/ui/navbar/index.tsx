@@ -1,8 +1,11 @@
-import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
+import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useRef, useState } from 'react';
-import { NavLink } from 'react-router-dom';
 
 import logo from '@/assets/logo.png';
+import { UserMenu } from '@/features/auth/ui/user-menu';
 import { Container } from '@/shared/layouts';
 import {
 	menuLineBottom,
@@ -17,15 +20,19 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { hideAlert } from '@/store/slices/alertSlice';
 import { changeTheme } from '@/store/slices/appSlice';
 
-import { UserMenu } from '../user-menu';
 import { MenuButton, MobileMenu, Nav } from './styled';
 
-interface NavbarProps {
-	updateTheme: () => void;
-}
+const links = [
+	{ path: '/', title: 'Notes' },
+	{ path: '/modal', title: 'Modal' },
+	{ path: '/select', title: 'Select' },
+	{ path: '/motion', title: 'Motion' },
+];
 
-export const Navbar = ({ updateTheme }: NavbarProps) => {
-	const [selected, setSelected] = useState(0);
+export const Navbar = () => {
+	const pathname = usePathname();
+	const linkIndex = links.findIndex((l) => l.path === pathname);
+	const selected = linkIndex >= 0 ? linkIndex : 0;
 	const [menuOpened, setMenuOpened] = useState(false);
 	const color = useAppSelector((state) => state.app.color);
 	const ulRef = useRef<HTMLUListElement>(null);
@@ -33,22 +40,14 @@ export const Navbar = ({ updateTheme }: NavbarProps) => {
 	const visibleAlert = useAppSelector((state) => state.alert.visible);
 	const dispatch = useAppDispatch();
 
-	const links = [
-		{ path: '/', title: 'Notes' },
-		{ path: '/modal', title: 'Modal' },
-		{ path: '/select', title: 'Select' },
-		{ path: '/motion', title: 'Motion' },
-	];
-
 	const toggleColor = () => {
 		const newColor = color === 'light' ? 'dark' : 'light';
 		localStorage.setItem('color', newColor);
+		document.cookie = `color=${newColor}; path=/; max-age=31536000`;
 		dispatch(changeTheme(newColor));
-		updateTheme();
 	};
 
-	const handleClick = (idx: number) => {
-		setSelected(idx);
+	const handleClick = () => {
 		window.scrollTo(0, 0);
 		if (visibleAlert) {
 			dispatch(hideAlert());
@@ -63,7 +62,14 @@ export const Navbar = ({ updateTheme }: NavbarProps) => {
 	return (
 		<Nav>
 			<Container>
-				<img className="logo" src={logo} alt="" />
+				<Image
+					src={logo}
+					alt=""
+					className="logo"
+					width={40}
+					height={40}
+					priority
+				/>
 
 				<MenuButton
 					animate={menuOpened ? 'opened' : 'initial'}
@@ -96,18 +102,19 @@ export const Navbar = ({ updateTheme }: NavbarProps) => {
 								{links.map((item, idx) => (
 									<li
 										key={item.title}
-										onClick={() => handleClick(idx)}
+										onClick={() => handleClick()}
 									>
-										<NavLink
-											end
-											to={item.path}
-											className={({ isActive }) =>
-												isActive ? 'active' : ''
+										<Link
+											href={item.path}
+											className={
+												pathname === item.path
+													? 'active'
+													: ''
 											}
 											data-id={idx}
 										>
 											{item.title}
-										</NavLink>
+										</Link>
 									</li>
 								))}
 							</ul>
@@ -115,11 +122,11 @@ export const Navbar = ({ updateTheme }: NavbarProps) => {
 					)}
 				</AnimatePresence>
 
-				<Button variant="light" size="small" onClick={toggleColor}>
+				<Button $variant="light" $size="small" onClick={toggleColor}>
 					{color === 'light' ? 'Светлая' : 'Темная'} тема
 				</Button>
 
-				<AnimateSharedLayout>
+				<LayoutGroup id="navbar-desktop">
 					<motion.ul
 						ref={ulRef}
 						className="desktop-menu"
@@ -130,19 +137,18 @@ export const Navbar = ({ updateTheme }: NavbarProps) => {
 						{links.map((item, idx) => (
 							<motion.li
 								variants={navLiVarinats}
-								onClick={() => handleClick(idx)}
+								onClick={() => handleClick()}
 								key={item.title}
 							>
-								<NavLink
-									end
-									to={item.path}
-									className={({ isActive }) =>
-										isActive ? 'active' : ''
+								<Link
+									href={item.path}
+									className={
+										pathname === item.path ? 'active' : ''
 									}
 									data-id={idx}
 								>
 									{item.title}
-								</NavLink>
+								</Link>
 
 								{idx === selected && (
 									<motion.div
@@ -161,7 +167,7 @@ export const Navbar = ({ updateTheme }: NavbarProps) => {
 							</motion.li>
 						))}
 					</motion.ul>
-				</AnimateSharedLayout>
+				</LayoutGroup>
 
 				<UserMenu />
 			</Container>

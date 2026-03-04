@@ -1,5 +1,6 @@
 import { Formik } from 'formik';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useState } from 'react';
 
 import { item, mainVariant } from '@/shared/lib/animations';
 import { Button, ErrorMessage, Input } from '@/shared/ui';
@@ -14,10 +15,12 @@ interface RegistrationFormProps {
 		password: string;
 		repassword?: string;
 		id?: number;
-	}) => void;
+	}) => void | Promise<void>;
 }
 
 export const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
+	const [isSubmitting, setIsSubmitting] = useState(false);
+
 	return (
 		<motion.div variants={item}>
 			<Formik
@@ -28,9 +31,14 @@ export const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
 					repassword: '',
 				}}
 				validationSchema={RegistrationSchema}
-				onSubmit={(values, { resetForm }) => {
-					onSubmit(values);
-					resetForm({});
+				onSubmit={async (values, { resetForm }) => {
+					setIsSubmitting(true);
+					try {
+						await onSubmit(values);
+						resetForm({});
+					} finally {
+						setIsSubmitting(false);
+					}
 				}}
 			>
 				{({
@@ -125,10 +133,14 @@ export const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
 							</FieldWrapper>
 							<FieldWrapper variants={item} key="button">
 								<Button
-									disabled={!isValid || !dirty}
+									$disabled={
+										!isValid || !dirty || isSubmitting
+									}
 									type="submit"
 								>
-									Регистрация
+									{isSubmitting
+										? 'Отправка...'
+										: 'Регистрация'}
 								</Button>
 							</FieldWrapper>
 							<Comment variants={item} key="comment">

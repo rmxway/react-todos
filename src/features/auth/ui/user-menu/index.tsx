@@ -1,54 +1,58 @@
-import { AnimatePresence } from 'framer-motion';
-import { lazy, Suspense, useRef, useState } from 'react';
+'use client';
 
-import { fadein } from '@/shared/lib/animations';
+import { useSession } from 'next-auth/react';
+import { useEffect, useRef, useState } from 'react';
+
+import { useOnClickOutside } from '@/shared/lib/hooks';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { showAlert } from '@/store/slices/alertSlice';
-import { addUser, currentUser } from '@/store/slices/usersSlice';
-import type { User as UserType } from '@/types';
 
-import { Link, PopupBackplane, User, Wrapper } from './styled';
-
-const LoginForm = lazy(() =>
-	import('../login-form').then((m) => ({ default: m.LoginForm })),
-);
-const RegistrationForm = lazy(() =>
-	import('../registration-form').then((m) => ({
-		default: m.RegistrationForm,
-	})),
-);
-
-const useOnClickOutside = (
-	ref: React.RefObject<HTMLElement>,
-	handler: () => void,
-) => {
-	const handleClickOutside = (event: MouseEvent) => {
-		if (ref.current && !ref.current.contains(event.target as Node)) {
-			handler();
-		}
-	};
-
-	if (typeof window !== 'undefined') {
-		document.addEventListener('mousedown', handleClickOutside);
-		return () => {
-			document.removeEventListener('mousedown', handleClickOutside);
-		};
-	}
-};
+import {
+	clearUserAndNotes,
+	syncUserAndTodos,
+	useUserMenuHandlers,
+} from './handlers';
+import { UserMenuAuth } from './UserMenuAuth';
+import { UserMenuGuest } from './UserMenuGuest';
 
 export const UserMenu = () => {
+	const { data: session, status } = useSession();
 	const dispatch = useAppDispatch();
-	const { users } = useAppSelector((state) => state);
+	const users = useAppSelector((state) => state.users);
 	const ref = useRef<HTMLDivElement>(null);
 
-	const [logged, setLogged] = useState(!!users.currentUser.login);
 	const [isOpen, setIsOpen] = useState(false);
 	const [isReg, setIsReg] = useState(false);
 	const [prevLink, setPrevLink] = useState('');
 
+	const logged = status === 'authenticated' && !!session?.user;
+	const {
+		handleSubmit: submitForm,
+		handleLogin: loginForm,
+		handleLogout,
+	} = useUserMenuHandlers(dispatch);
+
+	useEffect(() => {
+		if (!session?.user?.id) {
+			clearUserAndNotes(dispatch);
+			return;
+		}
+		syncUserAndTodos(
+			dispatch,
+			session.user.id,
+			session.user.name ?? '',
+			session.user.email ?? '',
+		);
+	}, [
+		session?.user?.id,
+		session?.user?.email,
+		session?.user?.name,
+		dispatch,
+	]);
+
 	useOnClickOutside(ref, () => {
-		const links = document.querySelectorAll('.loglink');
-		links.forEach((link) => link.classList.remove('active'));
+		document.querySelectorAll('.loglink').forEach((link) => {
+			link.classList.remove('active');
+		});
 		setIsOpen(false);
 	});
 
@@ -66,98 +70,50 @@ export const UserMenu = () => {
 		});
 
 		const type = target.getAttribute('data-type');
-		if (type === 'register') {
-			setIsReg(true);
-		} else {
-			setIsReg(false);
-		}
+		setIsReg(type === 'register');
 		if (prevLink !== type) {
 			setIsOpen(true);
 		} else {
-			setIsOpen(!isOpen);
+			setIsOpen((open) => !open);
 		}
 		setPrevLink(type ?? '');
 	};
 
-	const handleSubmit = (user: {
+	const handleSubmit = async (user: {
 		name: string;
 		login: string;
 		password: string;
-		id?: number;
 	}) => {
-		const id = user.id ?? Date.now();
-		const userWithId = { ...user, id };
-		setIsOpen(false);
-		setLogged(true);
-		dispatch(addUser(userWithId as UserType));
-		dispatch(currentUser(userWithId));
+		const success = await submitForm(user);
+		if (success) setIsOpen(false);
 	};
 
-	const handleLogin = (user: { login: string; password: string }) => {
-		const findUser = users.list.filter(
-			(item) =>
-				item.login === user.login && item.password === user.password,
+	const handleLogin = async (user: { login: string; password: string }) => {
+		const success = await loginForm(user);
+		if (success) setIsOpen(false);
+	};
+
+	if (status === 'loading') {
+		return null;
+	}
+
+	if (logged) {
+		return (
+			<UserMenuAuth
+				userName={users.currentUser.name ?? session?.user?.name ?? ''}
+				onLogout={handleLogout}
+			/>
 		);
-		if (findUser.length) {
-			setIsOpen(false);
-			setLogged(true);
-			dispatch(currentUser(findUser[0]));
-		} else {
-			dispatch(
-				showAlert({
-					type: 'danger',
-					text: 'Аккаунта не существует',
-				}),
-			);
-		}
-	};
+	}
 
-	const handleLogout = () => {
-		setLogged(false);
-		dispatch(currentUser({}));
-	};
-
-	return !logged ? (
-		<Wrapper layout relative>
-			<div ref={ref}>
-				<Link
-					data-type="register"
-					className="loglink"
-					onClick={handleClick}
-				>
-					Регистрация
-				</Link>
-				<Link
-					data-type="login"
-					className="loglink"
-					onClick={handleClick}
-				>
-					Войти
-				</Link>
-				<AnimatePresence>
-					{isOpen && (
-						<PopupBackplane
-							variants={fadein}
-							initial="hidden"
-							animate={isOpen ? 'visible' : 'hidden'}
-							exit="exit"
-						>
-							<Suspense fallback={null}>
-								{isReg ? (
-									<RegistrationForm onSubmit={handleSubmit} />
-								) : (
-									<LoginForm onSubmit={handleLogin} />
-								)}
-							</Suspense>
-						</PopupBackplane>
-					)}
-				</AnimatePresence>
-			</div>
-		</Wrapper>
-	) : (
-		<Wrapper layout>
-			<User>{users.currentUser.name}</User>
-			<Link onClick={handleLogout}>Выйти</Link>
-		</Wrapper>
+	return (
+		<UserMenuGuest
+			containerRef={ref}
+			isOpen={isOpen}
+			isReg={isReg}
+			onLinkClick={handleClick}
+			onSubmit={handleSubmit}
+			onLogin={handleLogin}
+		/>
 	);
 };

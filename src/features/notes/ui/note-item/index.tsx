@@ -5,13 +5,13 @@ import { Checkbox } from '@/shared/ui';
 import { CloseButton, NoteNumber, NoteStyled } from './styled';
 
 export interface NoteItemProps {
-	id: number;
+	id: string;
 	title: string;
 	date: string;
 	completed: boolean;
 	index: number;
-	onToggle: (id: number) => void;
-	onDelete: (id: number) => void;
+	onToggle: (id: string) => void;
+	onDelete: (id: string) => void;
 }
 
 export const NoteItem = ({
@@ -24,8 +24,8 @@ export const NoteItem = ({
 	onDelete,
 }: NoteItemProps) => {
 	return (
-		<NoteStyled {...noteMotion} layout completed={completed}>
-			<Flex justify="flex-start" align="center">
+		<NoteStyled {...noteMotion} layout $completed={completed}>
+			<Flex $justify="flex-start" $align="center">
 				<Checkbox checked={completed} onChange={() => onToggle(id)} />
 				<NoteNumber>{index + 1}</NoteNumber>
 				<strong>{title}&nbsp; – &nbsp;</strong>

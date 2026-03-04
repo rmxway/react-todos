@@ -2,62 +2,47 @@ import { motion } from 'framer-motion';
 import styled, { css } from 'styled-components';
 
 export interface GridProps {
-	columns?: number | string;
-	rows?: number | string;
-	gap?: string | number;
-	columnGap?: string | number;
-	rowGap?: string | number;
-	areas?: string;
+	$columns?: number | string;
+	$rows?: number | string;
+	$gap?: string | number;
+	$columnGap?: string | number;
+	$rowGap?: string | number;
+	$areas?: string;
 	children?: React.ReactNode;
 	className?: string;
 }
 
+const toGridValue = (v: number | string) =>
+	typeof v === 'number' ? `repeat(${v}, 1fr)` : v;
+const toGapValue = (v: number | string) =>
+	typeof v === 'number' ? `${v}px` : v;
+
 export const StyledGrid = styled(motion.div)<GridProps>`
 	display: grid;
-
-	${(props) =>
-		props.columns &&
+	${({ $columns, $rows, $gap, $columnGap, $rowGap, $areas }) => css`
+		${$columns != null &&
 		css`
-			grid-template-columns: ${typeof props.columns === 'number'
-				? `repeat(${props.columns}, 1fr)`
-				: props.columns};
+			grid-template-columns: ${toGridValue($columns)};
 		`}
-
-	${(props) =>
-		props.rows &&
+		${$rows != null &&
 		css`
-			grid-template-rows: ${typeof props.rows === 'number'
-				? `repeat(${props.rows}, 1fr)`
-				: props.rows};
+			grid-template-rows: ${toGridValue($rows)};
 		`}
-
-    ${(props) =>
-		props.gap &&
+		${$gap != null &&
 		css`
-			gap: ${typeof props.gap === 'number'
-				? `${props.gap}px`
-				: props.gap};
+			gap: ${toGapValue($gap)};
 		`}
-
-    ${(props) =>
-		props.columnGap &&
+		${$columnGap != null &&
 		css`
-			column-gap: ${typeof props.columnGap === 'number'
-				? `${props.columnGap}px`
-				: props.columnGap};
+			column-gap: ${toGapValue($columnGap)};
 		`}
-
-    ${(props) =>
-		props.rowGap &&
+		${$rowGap != null &&
 		css`
-			row-gap: ${typeof props.rowGap === 'number'
-				? `${props.rowGap}px`
-				: props.rowGap};
+			row-gap: ${toGapValue($rowGap)};
 		`}
-
-    ${(props) =>
-		props.areas &&
+		${$areas &&
 		css`
-			grid-template-areas: ${props.areas};
+			grid-template-areas: ${$areas};
 		`}
+	`}
 `;

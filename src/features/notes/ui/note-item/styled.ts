@@ -4,11 +4,7 @@ import styled, { css } from 'styled-components';
 
 import { Button } from '@/shared/ui';
 
-export const NoteStyled = styled(motion.li)<{ completed?: boolean }>`
-	color: ${(props) => props.theme.textColor};
-	background-color: ${(props) => darken(0.05, props.theme.bg)};
-	border: 1px solid ${(props) => props.theme.borderColor};
-	border-top: none;
+export const NoteStyled = styled(motion.li)<{ $completed?: boolean }>`
 	list-style: none;
 	display: flex;
 	justify-content: space-between;
@@ -16,26 +12,28 @@ export const NoteStyled = styled(motion.li)<{ completed?: boolean }>`
 	padding-right: 10px;
 	transition-property: background-color, opacity;
 	transition-duration: 0.3s;
+	border-top: none;
 
-	${({ completed }) =>
-		completed &&
+	${({ theme, $completed }) => css`
+		color: ${theme.textColor};
+		background-color: ${darken(0.05, theme.bg)};
+		border: 1px solid ${theme.borderColor};
+		&:first-child {
+			border-radius: 4px 4px 0 0;
+			border-top: 1px solid ${theme.borderColor};
+		}
+		&:last-child {
+			border-radius: 0 0 4px 4px;
+		}
+		${$completed &&
 		css`
 			opacity: 0.5;
-
 			strong,
 			small {
 				text-decoration: line-through;
 			}
 		`}
-
-	&:first-child {
-		border-radius: 4px 4px 0 0;
-		border-top: 1px solid ${(props) => props.theme.borderColor};
-	}
-
-	&:last-child {
-		border-radius: 0 0 4px 4px;
-	}
+	`}
 `;
 
 export const NoteNumber = styled.div<{ theme: { currentTheme?: string } }>`

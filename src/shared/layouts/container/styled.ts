@@ -7,9 +7,9 @@ import { breakpoints } from '@/shared/config';
 type MotionSectionProps = ComponentProps<typeof motion.section>;
 
 export type ContainerProps = Omit<MotionSectionProps, 'ref'> & {
-	maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
-	padding?: string;
-	centered?: boolean;
+	$maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+	$padding?: string;
+	$centered?: boolean;
 };
 
 const maxWidthMap = {
@@ -23,29 +23,26 @@ const maxWidthMap = {
 export const StyledContainer = styled(motion.section)<ContainerProps>`
 	position: relative;
 	margin: 0 auto;
-	padding: ${(props) => props.padding ?? '0 15px'};
 	width: 100%;
-
-	${(props) => {
-		const width = props.maxWidth ?? 'xl';
+	${({ $padding, $maxWidth, $centered }) => {
+		const width = $maxWidth ?? 'xl';
 		return css`
+			padding: ${$padding ?? '0 15px'};
 			${breakpoints.greaterThan('lg')`
-                max-width: ${maxWidthMap[width === 'full' ? 'xl' : width]};
-            `}
+				max-width: ${maxWidthMap[width === 'full' ? 'xl' : width]};
+			`}
 			${breakpoints.lessThan('lg')`
-                max-width: ${maxWidthMap.lg};
-            `}
-            ${breakpoints.lessThan('md')`
-                max-width: 100%;
-            `}
+				max-width: ${maxWidthMap.lg};
+			`}
+			${breakpoints.lessThan('md')`
+				max-width: 100%;
+			`}
+			${$centered &&
+			css`
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			`}
 		`;
 	}}
-
-	${(props) =>
-		props.centered &&
-		css`
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		`}
 `;

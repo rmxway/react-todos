@@ -2,53 +2,43 @@ import { motion } from 'framer-motion';
 import styled, { css } from 'styled-components';
 
 export interface FlexProps {
-	direction?: 'row' | 'column' | 'row-reverse' | 'column-reverse';
-	justify?:
+	$direction?: 'row' | 'column' | 'row-reverse' | 'column-reverse';
+	$justify?:
 		| 'flex-start'
 		| 'flex-end'
 		| 'center'
 		| 'space-between'
 		| 'space-around'
 		| 'space-evenly';
-	align?: 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'stretch';
-	gap?: string | number;
-	wrap?: 'nowrap' | 'wrap' | 'wrap-reverse';
+	$align?: 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'stretch';
+	$gap?: string | number;
+	$wrap?: 'nowrap' | 'wrap' | 'wrap-reverse';
 	children?: React.ReactNode;
 	className?: string;
 }
 
 export const StyledFlex = styled(motion.div)<FlexProps>`
 	display: flex;
-
-	${(props) =>
-		props.direction &&
+	${({ $direction, $justify, $align, $gap, $wrap }) => css`
+		${$direction &&
 		css`
-			flex-direction: ${props.direction};
+			flex-direction: ${$direction};
 		`}
-
-	${(props) =>
-		props.justify &&
+		${$justify &&
 		css`
-			justify-content: ${props.justify};
+			justify-content: ${$justify};
 		`}
-
-    ${(props) =>
-		props.align &&
+		${$align &&
 		css`
-			align-items: ${props.align};
+			align-items: ${$align};
 		`}
-
-    ${(props) =>
-		props.gap &&
+		${$gap != null &&
 		css`
-			gap: ${typeof props.gap === 'number'
-				? `${props.gap}px`
-				: props.gap};
+			gap: ${typeof $gap === 'number' ? `${$gap}px` : $gap};
 		`}
-
-    ${(props) =>
-		props.wrap &&
+		${$wrap &&
 		css`
-			flex-wrap: ${props.wrap};
+			flex-wrap: ${$wrap};
 		`}
+	`}
 `;

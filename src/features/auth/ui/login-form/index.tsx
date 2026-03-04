@@ -1,5 +1,6 @@
 import { Formik } from 'formik';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useState } from 'react';
 
 import { item, mainVariant } from '@/shared/lib/animations';
 import { Button, ErrorMessage, Input } from '@/shared/ui';
@@ -8,10 +9,15 @@ import { LoginSchema } from './schema';
 import { Comment, FieldWrapper, FormBlock } from './styled';
 
 interface LoginFormProps {
-	onSubmit: (values: { login: string; password: string }) => void;
+	onSubmit: (values: {
+		login: string;
+		password: string;
+	}) => void | Promise<void>;
 }
 
 export const LoginForm = ({ onSubmit }: LoginFormProps) => {
+	const [isSubmitting, setIsSubmitting] = useState(false);
+
 	return (
 		<motion.div variants={item}>
 			<Formik
@@ -20,9 +26,14 @@ export const LoginForm = ({ onSubmit }: LoginFormProps) => {
 					password: '',
 				}}
 				validationSchema={LoginSchema}
-				onSubmit={(values, { resetForm }) => {
-					onSubmit(values);
-					resetForm({});
+				onSubmit={async (values, { resetForm }) => {
+					setIsSubmitting(true);
+					try {
+						await onSubmit(values);
+						resetForm({});
+					} finally {
+						setIsSubmitting(false);
+					}
 				}}
 			>
 				{({
@@ -76,10 +87,12 @@ export const LoginForm = ({ onSubmit }: LoginFormProps) => {
 							</FieldWrapper>
 							<FieldWrapper variants={item} key="button">
 								<Button
-									disabled={!isValid || !dirty}
+									$disabled={
+										!isValid || !dirty || isSubmitting
+									}
 									type="submit"
 								>
-									Войти
+									{isSubmitting ? 'Отправка...' : 'Войти'}
 								</Button>
 							</FieldWrapper>
 							<Comment variants={item} key="comment">

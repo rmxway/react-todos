@@ -4,9 +4,9 @@ import { StyledButton } from './styled';
 export type { ButtonProps } from './styled';
 
 export const Button = ({
-	variant,
-	size = 'medium',
-	disabled = false,
+	$variant,
+	$size = 'medium',
+	$disabled = false,
 	type = 'button',
 	onClick,
 	children,
@@ -15,7 +15,16 @@ export const Button = ({
 }: ButtonProps) => {
 	return (
 		<StyledButton
-			{...{ variant, size, disabled, type, onClick, className, variants }}
+			{...{
+				$variant,
+				$size,
+				$disabled,
+				variants,
+				type,
+				onClick,
+				className,
+			}}
+			disabled={$disabled}
 		>
 			{children}
 		</StyledButton>
