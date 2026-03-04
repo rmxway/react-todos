@@ -70,7 +70,7 @@ export const SelectSC = styled(motion.div)<{ noItems?: boolean }>`
 		overflow-y: auto;
 		z-index: 1;
 		border-radius: 0 0 4px 4px;
-		box-shadow: 0 7px 20px #2227;
+		box-shadow: ${(props) => props.theme.shadows.popup};
 		background-color: ${(props) => darken(0.05, props.theme.bg)};
 
 		li {

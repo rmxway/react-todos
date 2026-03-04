@@ -1,8 +1,9 @@
 import { motion, type Variants } from 'framer-motion';
 import styled, { css } from 'styled-components';
+import { darkTheme, lightTheme } from '@/shared/config/theme';
 
 export interface ButtonProps {
-	variant?: 'primary' | 'secondary' | 'danger' | 'light';
+	variant?: 'primary' | 'danger' | 'light' | 'dark';
 	size?: 'small' | 'medium' | 'large';
 	disabled?: boolean;
 	onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -50,13 +51,15 @@ export const StyledButton = styled(motion.button).attrs(() => ({
 		`}
 
 	${(props) =>
-		props.variant === 'light' &&
+		(props.variant === 'light' || props.variant === 'dark') &&
 		css`
-			border-color: #fff;
-			color: #fff;
+			border-color: ${props.variant === 'light'
+				? lightTheme.bg
+				: darkTheme.bg};
+			color: ${props.variant === 'light' ? lightTheme.bg : darkTheme.bg};
 			opacity: 1;
 		`}
-
+	
 	${(props) =>
 		props.size === 'small' &&
 		css`

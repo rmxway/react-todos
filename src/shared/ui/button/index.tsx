@@ -4,7 +4,7 @@ import { StyledButton } from './styled';
 export type { ButtonProps } from './styled';
 
 export const Button = ({
-	variant = 'secondary',
+	variant,
 	size = 'medium',
 	disabled = false,
 	type = 'button',
