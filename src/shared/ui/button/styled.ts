@@ -1,5 +1,6 @@
 import { motion, type Variants } from 'framer-motion';
 import styled, { css } from 'styled-components';
+
 import { darkTheme, lightTheme } from '@/shared/config/theme';
 
 export interface ButtonProps {
