@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 
-import { Modal } from '@/components/Modal';
-import { item, mainVariant } from '@/styles/animations';
-import { Container, H1, MotionButton } from '@/styles/base';
+import { Container } from '@/shared/layouts';
+import { item, mainVariant } from '@/shared/lib/animations';
+import { Button, Modal } from '@/shared/ui';
+
+import { H1 } from './styled';
 
 export const ModalPage = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -24,9 +26,9 @@ export const ModalPage = () => {
 	);
 
 	const closeButton = (
-		<MotionButton key="it2" onClick={handleCloseModal}>
+		<Button key="it2" onClick={handleCloseModal}>
 			Закрыть
-		</MotionButton>
+		</Button>
 	);
 
 	return (
@@ -43,9 +45,9 @@ export const ModalPage = () => {
 
 			<br />
 
-			<MotionButton variants={item} onClick={handleOpenModal}>
+			<Button variants={item} onClick={handleOpenModal}>
 				Открыть модальное окно
-			</MotionButton>
+			</Button>
 
 			<Modal
 				open={isOpen}

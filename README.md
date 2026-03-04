@@ -6,6 +6,7 @@
 
 - **React 18** + **TypeScript**
 - **Vite** — сборка и dev-сервер
+- **Feature-Sliced Design** — архитектура проекта
 - **Redux Toolkit** — состояние приложения
 - **React Router** — маршрутизация
 - **Styled Components** — стили
@@ -68,15 +69,22 @@ yarn lint:fix   # Исправление ошибок ESLint
 yarn pretty     # Форматирование кода (Prettier)
 ```
 
-## 📁 Структура проекта
+## 📁 Структура проекта (FSD)
 
 ```
 src/
-├── components/     # UI-компоненты (Alert, Checkbox, Form, Modal, Navbar, Notes, Select)
-├── hooks/          # Кастомные хуки
+├── features/       # Фичи приложения
+│   ├── alert/      # Глобальные уведомления
+│   ├── auth/       # Авторизация (Navbar, LoginForm, RegistrationForm)
+│   └── notes/      # Заметки (форма, список, элементы)
 ├── pages/          # Страницы приложения
+├── shared/         # Переиспользуемые модули
+│   ├── config/     # Темы, брейкпоинты
+│   ├── layouts/    # Container, Flex, Grid
+│   ├── lib/        # Хуки, анимации
+│   └── ui/         # UI-компоненты (Alert, Button, Checkbox, Input, Modal, Select)
 ├── store/          # Redux store и слайсы
-├── styles/         # Темы, анимации, глобальные стили
+├── styles/         # Глобальные стили
 └── types/          # TypeScript-типы
 ```
 

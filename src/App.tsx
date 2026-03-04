@@ -1,14 +1,15 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import styled, { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 
-import { Alert } from '@/components/Alert';
-import { Navbar } from '@/components/Navbar';
+import { AlertWrapper } from '@/features/alert';
+import { Navbar } from '@/features/auth';
+import { darkTheme, lightTheme } from '@/shared/config';
 import { store } from '@/store';
-import { darkTheme } from '@/styles/themes/darkTheme';
-import { lightTheme } from '@/styles/themes/lightTheme';
+
+import { AppStyled } from './App.styled';
 
 const NotePage = lazy(() =>
 	import('@/pages/NotePage').then((m) => ({ default: m.NotePage })),
@@ -22,19 +23,6 @@ const SelectPage = lazy(() =>
 const MotionPage = lazy(() =>
 	import('@/pages/MotionPage').then((m) => ({ default: m.MotionPage })),
 );
-
-const AppStyled = styled(motion.section)`
-	display: flex;
-	flex-wrap: wrap;
-	flex-direction: column;
-	flex: 1;
-	padding-top: 65px;
-	padding-bottom: 40px;
-	color: ${(props) => props.theme.textColor};
-	background-color: ${(props) => props.theme.bg};
-	transition: 0.5s;
-	align-items: center;
-`;
 
 function App() {
 	const [color, setColor] = useState(store.getState().app.color);
@@ -51,7 +39,7 @@ function App() {
 			<ThemeProvider theme={theme}>
 				<BrowserRouter basename="/react-todos">
 					<AppStyled>
-						<Alert />
+						<AlertWrapper />
 						<Navbar
 							updateTheme={() =>
 								setColor(store.getState().app.color)
