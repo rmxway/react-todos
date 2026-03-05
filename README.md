@@ -21,6 +21,7 @@
 - Добавление, удаление заметок
 - Отметка задач как выполненных
 - Удаление всех заметок
+- Фильтрация списка по статусу (все / активные / выполненные)
 - API-маршруты для работы с данными (`/api/todos`)
 
 ### 👤 Пользователи
@@ -45,12 +46,34 @@
 | `/select` | Select — кастомный компонент выбора                |
 | `/motion` | Motion — анимации на основе drag (Framer Motion)   |
 
+## 🔧 Требования
+
+- Node.js 18+ (рекомендуется LTS)
+- Yarn 4 (менеджер пакетов указан в `package.json`)
+
+## ⚙️ Установка
+
+```bash
+# Клонирование репозитория
+git clone <your-repo-url> react-todos
+cd react-todos
+
+# Установка зависимостей
+yarn
+```
+
+## 🔑 Настройка окружения
+
+1. Скопируйте файл `.env.local.example` в `.env.local`.
+2. Заполните переменные окружения:
+   - `FIREBASE_PROJECT_ID`, `FIREBASE_CLIENT_EMAIL`, `FIREBASE_PRIVATE_KEY` — данные сервисного аккаунта Firebase Admin.
+   - `NEXTAUTH_SECRET` — секрет для NextAuth (можно сгенерировать через `openssl rand -base64 32`).
+   - `NEXTAUTH_URL` — базовый URL приложения (по умолчанию `http://localhost:3000`).
+   - при необходимости — `SESSION_MAX_AGE_MINUTES`.
+
 ## 🚀 Запуск
 
 ```bash
-# Установка зависимостей
-yarn install
-
 # Режим разработки
 yarn dev
 
