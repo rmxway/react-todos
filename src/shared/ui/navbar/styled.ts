@@ -3,6 +3,7 @@ import { darken } from 'polished';
 import styled from 'styled-components';
 
 import { breakpoints } from '@/shared/config';
+import { StyledContainer } from '@/shared/layouts/container/styled';
 
 export const Nav = styled.nav`
 	position: fixed;
@@ -10,24 +11,23 @@ export const Nav = styled.nav`
 	left: 0;
 	right: 0;
 	min-height: 60px;
-	z-index: ${(props) => props.theme.z.menu};
-	background-color: ${(props) => props.theme.primary};
+	z-index: ${({ theme }) => theme.z.menu};
+	background-color: ${({ theme }) => theme.primary};
 	padding: 10px 0;
 	display: flex;
 	align-items: center;
 	box-shadow: 0 5px 30px #fff4;
-	transition: ${(props) => props.theme.transitions.default};
+	transition: ${({ theme }) => theme.transitions.default};
 
-	& > section {
+	${StyledContainer} {
 		display: flex;
 		align-items: center;
-		justify-content: flex-start;
+		justify-content: start;
 	}
 
 	button {
-		${breakpoints.lessThan('sm')`
-            margin-right: auto;
-        `}
+		margin-right: 10px;
+		flex-shrink: 0;
 	}
 
 	.logo {
@@ -142,7 +142,7 @@ export const MobileMenu = styled(motion.div)`
 
 			&.active {
 				font-weight: 900;
-				color: ${(props) => props.theme.primary};
+				color: ${({ theme }) => theme.primary};
 			}
 		}
 	}

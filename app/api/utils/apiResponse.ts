@@ -10,6 +10,7 @@ type ApiErrorResponse = {
 	errors?: Record<string, string>;
 };
 
+/** Успешный JSON-ответ: { success: true, ...data } */
 export function apiSuccess<T = unknown>(
 	data: T,
 	status = 200,
@@ -20,6 +21,7 @@ export function apiSuccess<T = unknown>(
 	);
 }
 
+/** Ошибка: { success: false, error } или { success: false, errors } для полей */
 export function apiError(
 	error: string | Record<string, string>,
 	status = 400,
@@ -30,18 +32,21 @@ export function apiError(
 	return NextResponse.json({ success: false, errors: error }, { status });
 }
 
+/** 401 — не авторизован */
 export function apiUnauthorized(
 	message = 'Не авторизован',
 ): NextResponse<ApiErrorResponse> {
 	return apiError(message, 401);
 }
 
+/** 404 — не найдено */
 export function apiNotFound(
 	message = 'Не найдено',
 ): NextResponse<ApiErrorResponse> {
 	return apiError(message, 404);
 }
 
+/** 500 — внутренняя ошибка сервера */
 export function apiServerError(
 	message = 'Произошла внутренняя ошибка сервера',
 ): NextResponse<ApiErrorResponse> {

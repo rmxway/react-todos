@@ -2,8 +2,6 @@ import { motion } from 'framer-motion';
 import { darken } from 'polished';
 import styled, { css } from 'styled-components';
 
-import { breakpoints } from '@/shared/config';
-
 export const SelectSC = styled(motion.div)<{ $noItems?: boolean }>`
 	${({ theme, $noItems }) => css`
 		position: relative;
@@ -17,12 +15,7 @@ export const SelectSC = styled(motion.div)<{ $noItems?: boolean }>`
 			cursor: default;
 		`}
 
-		${breakpoints.lessThan('sm')`
-        flex: auto;
-        width: 45%;
-    `}
-
-    .select {
+		.select {
 			&-label {
 				position: absolute;
 				left: 2px;

@@ -13,6 +13,7 @@ export const NoteStyled = styled(motion.li)<{ $completed?: boolean }>`
 	transition-property: background-color, opacity;
 	transition-duration: 0.3s;
 	border-top: none;
+	min-width: 0;
 
 	${({ theme, $completed }) => css`
 		color: ${theme.textColor};
@@ -33,6 +34,33 @@ export const NoteStyled = styled(motion.li)<{ $completed?: boolean }>`
 				text-decoration: line-through;
 			}
 		`}
+
+		.note-content {
+			flex: 1;
+			min-width: 0;
+			padding-right: 10px;
+		}
+
+		.note-text {
+			display: flex;
+			align-items: center;
+			gap: 4px;
+			min-width: 0;
+			flex: 1;
+			flex-wrap: wrap;
+		}
+
+		.note-title {
+			min-width: 0;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.note-text span,
+		.note-text small {
+			flex-shrink: 0;
+		}
 	`}
 `;
 
@@ -57,7 +85,7 @@ export const NoteNumber = styled.div<{ theme: { currentTheme?: string } }>`
 `;
 
 export const CloseButton = styled(Button)`
-	padding: 5px;
-	width: 30px;
+	min-width: 30px;
 	margin-right: 0;
+	padding: 5px;
 `;

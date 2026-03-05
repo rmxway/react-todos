@@ -6,6 +6,10 @@ import bcrypt from 'bcryptjs';
 
 import { getAdminDb } from '@/lib/firebase-admin';
 
+/**
+ * POST /api/register — регистрация нового пользователя.
+ * Firestore: проверяем уникальность email в коллекции users, затем добавляем документ в users с email, passwordHash, name, createdAt.
+ */
 export async function POST(req: Request) {
 	try {
 		const body = await req.json();
@@ -42,6 +46,7 @@ export async function POST(req: Request) {
 			createdAt: new Date().toISOString(),
 		};
 
+		// Firestore: коллекция users, один документ на пользователя (id = docRef.id)
 		const adminDb = getAdminDb();
 		const docRef = await adminDb.collection('users').add(newUser);
 
