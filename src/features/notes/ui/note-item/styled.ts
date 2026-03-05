@@ -85,7 +85,7 @@ export const NoteNumber = styled.div<{ theme: { currentTheme?: string } }>`
 `;
 
 export const CloseButton = styled(Button)`
-	padding: 5px;
 	min-width: 30px;
 	margin-right: 0;
+	padding: 5px;
 `;

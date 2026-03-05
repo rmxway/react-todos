@@ -8,6 +8,7 @@ export interface GridProps {
 	$columnGap?: string | number;
 	$rowGap?: string | number;
 	$areas?: string;
+	$direction?: 'row' | 'column';
 	children?: React.ReactNode;
 	className?: string;
 }
@@ -19,7 +20,20 @@ const toGapValue = (v: number | string) =>
 
 export const StyledGrid = styled(motion.div)<GridProps>`
 	display: grid;
-	${({ $columns, $rows, $gap, $columnGap, $rowGap, $areas }) => css`
+	width: 100%;
+	${({
+		$columns,
+		$rows,
+		$gap,
+		$columnGap,
+		$rowGap,
+		$direction,
+		$areas,
+	}) => css`
+		${$direction &&
+		css`
+			grid-auto-flow: ${$direction};
+		`}
 		${$columns != null &&
 		css`
 			grid-template-columns: ${toGridValue($columns)};

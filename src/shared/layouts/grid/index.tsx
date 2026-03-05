@@ -3,29 +3,6 @@ import { StyledGrid } from './styled';
 
 export type { GridProps } from './styled';
 
-export const Grid = ({
-	$columns,
-	$rows,
-	$gap,
-	$columnGap,
-	$rowGap,
-	$areas,
-	children,
-	className,
-}: GridProps) => {
-	return (
-		<StyledGrid
-			{...{
-				$columns,
-				$rows,
-				$gap,
-				$columnGap,
-				$rowGap,
-				$areas,
-				className,
-			}}
-		>
-			{children}
-		</StyledGrid>
-	);
+export const Grid = ({ children, ...props }: GridProps) => {
+	return <StyledGrid {...props}>{children}</StyledGrid>;
 };

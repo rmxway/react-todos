@@ -3,11 +3,12 @@
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useMemo, useState } from 'react';
 
 import { NoteForm } from '@/features/notes/ui/note-form';
 import { NoteItem } from '@/features/notes/ui/note-item';
 import { item, notesVariant } from '@/shared/lib/animations';
-import { Button } from '@/shared/ui';
+import { Button, Select, type SelectItem } from '@/shared/ui';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { showAlert } from '@/store/slices/alertSlice';
 import {
@@ -16,14 +17,35 @@ import {
 	removeNote,
 } from '@/store/slices/usersSlice';
 
-import { AlertParagraph, List, NonNotes, NoteTitle } from './styled';
+import { AlertParagraph, List, NonNotes, NoteTitle, TopBlock } from './styled';
+
+type NotesFilter = 'all' | 'completed' | 'active';
+
+const FILTER_ITEMS: SelectItem[] = [
+	{ id: 'all', title: 'Все' },
+	{ id: 'active', title: 'Незавершенные' },
+	{ id: 'completed', title: 'Завершенные' },
+];
 
 export const NotesList = () => {
 	const users = useAppSelector((state) => state.users);
 	const { currentUser, notes } = users;
 
 	const dispatch = useAppDispatch();
-	const noItems = notes.length === 0;
+	const [filter, setFilter] = useState<NotesFilter>('all');
+
+	const filteredNotes = useMemo(
+		() =>
+			notes.filter((note) => {
+				if (filter === 'completed') return note.completed;
+				if (filter === 'active') return !note.completed;
+				return true;
+			}),
+		[notes, filter],
+	);
+
+	const hasAnyNotes = notes.length > 0;
+	const hasFilteredNotes = filteredNotes.length > 0;
 	const trashIcon = <FontAwesomeIcon icon={faTrash} />;
 
 	const handleDelete = async (id: string) => {
@@ -64,22 +86,42 @@ export const NotesList = () => {
 		dispatch(changeCompleted(id));
 	};
 
+	const handleFilterChange = (data: { selected: string }) => {
+		const key = FILTER_ITEMS.find(
+			(filterItem) => filterItem.title === data.selected,
+		)?.id;
+		if (!key) return;
+		setFilter(key as NotesFilter);
+	};
+
 	return currentUser.name ? (
 		<motion.div variants={item}>
 			<NoteForm />
-			{noItems && <NonNotes variants={item}>Нет записей</NonNotes>}
-			{!noItems && (
-				<NoteTitle>
-					Список задач
-					<Button onClick={handleRemoveAllNotes}>
-						удалить все {trashIcon}
-					</Button>
-				</NoteTitle>
+			{!hasAnyNotes && <NonNotes variants={item}>Нет записей</NonNotes>}
+			{hasAnyNotes && (
+				<TopBlock $gap={10} $columns={'1fr 170px'} $direction="column">
+					<NoteTitle>
+						Список задач
+						<Button $size="medium" onClick={handleRemoveAllNotes}>
+							удалить все {trashIcon}
+						</Button>
+					</NoteTitle>
+					<Select
+						list={FILTER_ITEMS}
+						placeholder="Все"
+						onChange={handleFilterChange}
+					/>
+					{!hasFilteredNotes && (
+						<NonNotes variants={item}>
+							Нет задач для выбранного фильтра
+						</NonNotes>
+					)}
+				</TopBlock>
 			)}
 			<List variants={notesVariant}>
 				<AnimatePresence>
-					{!noItems &&
-						notes.map((note, idx) => (
+					{hasAnyNotes &&
+						filteredNotes.map((note, idx) => (
 							<NoteItem
 								key={note.id}
 								id={note.id}
