@@ -4,10 +4,18 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth-options';
 import { getAdminDb } from '@/lib/firebase-admin';
 
+/**
+ * Ссылка на подколлекцию todos пользователя в Firestore.
+ * Путь: users/{userId}/todos
+ */
 function getTodosRef(userId: string) {
 	return getAdminDb().collection('users').doc(userId).collection('todos');
 }
 
+/**
+ * GET /api/todos — получить все todo текущего пользователя.
+ * Firestore: читаем все документы из users/{userId}/todos и возвращаем массив.
+ */
 export async function GET() {
 	const session = await getServerSession(authOptions);
 	if (!session?.user?.id) {
@@ -23,6 +31,11 @@ export async function GET() {
 	return apiSuccess({ todos });
 }
 
+/**
+ * POST /api/todos — создать новый todo.
+ * Firestore: добавляем документ в users/{userId}/todos с полями title, completed, date.
+ * ID документа генерируется Firestore автоматически.
+ */
 export async function POST(req: Request) {
 	const session = await getServerSession(authOptions);
 	if (!session?.user?.id) {
@@ -52,6 +65,10 @@ export async function POST(req: Request) {
 	return apiSuccess({ todo }, 201);
 }
 
+/**
+ * DELETE /api/todos — удалить все todo текущего пользователя.
+ * Firestore: batch delete — получаем все документы в users/{userId}/todos и удаляем их одним commit.
+ */
 export async function DELETE() {
 	const session = await getServerSession(authOptions);
 	if (!session?.user?.id) {

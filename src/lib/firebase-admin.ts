@@ -12,7 +12,7 @@ export function getAdminDb(): Firestore {
 		!process.env.FIREBASE_PRIVATE_KEY
 	) {
 		throw new Error(
-			'Firebase Admin is not configured. Set FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, FIREBASE_PRIVATE_KEY.',
+			'Firebase Admin не настроен. Задайте FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, FIREBASE_PRIVATE_KEY.',
 		);
 	}
 	const adminApp =
