@@ -25,11 +25,18 @@ export const NoteItem = ({
 }: NoteItemProps) => {
 	return (
 		<NoteStyled {...noteMotion} layout $completed={completed}>
-			<Flex $justify="flex-start" $align="center">
+			<Flex
+				className="note-content"
+				$justify="flex-start"
+				$align="center"
+			>
 				<Checkbox checked={completed} onChange={() => onToggle(id)} />
 				<NoteNumber>{index + 1}</NoteNumber>
-				<strong>{title}&nbsp; – &nbsp;</strong>
-				<small>{date}</small>
+				<div className="note-text">
+					<strong className="note-title">{title}</strong>
+					<span>&nbsp;–&nbsp;</span>
+					<small>{date}</small>
+				</div>
 			</Flex>
 			<CloseButton type="button" onClick={() => onDelete(id)}>
 				&times;

@@ -9,7 +9,7 @@ export interface UserMenuAuthProps {
 
 export function UserMenuAuth({ userName, onLogout }: UserMenuAuthProps) {
 	return (
-		<Wrapper layout>
+		<Wrapper layout $relative>
 			<User>{userName}</User>
 			<Link onClick={onLogout}>Выйти</Link>
 		</Wrapper>

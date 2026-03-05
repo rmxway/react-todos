@@ -35,7 +35,6 @@ export const Link = styled(motion.div)`
 `;
 
 export const User = styled.div`
-	display: inline-block;
 	margin: 0 10px;
 	color: white;
 	padding: 5px 20px;
@@ -43,6 +42,15 @@ export const User = styled.div`
 	box-shadow: inset 0 -10px 27px #2226;
 	border-radius: 30px;
 	font-weight: 600;
+	max-width: 250px;
+	max-height: 40px;
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	word-break: break-word;
+	line-height: 1.2;
+
 	span {
 		font-weight: 100;
 	}
@@ -66,5 +74,11 @@ export const Wrapper = styled(motion.div)<{ $relative?: boolean }>`
 		$relative &&
 		css`
 			position: relative;
+			margin-left: auto;
+			flex-shrink: 1;
+			min-width: 0;
+			display: flex;
+			flex-wrap: nowrap;
+			align-items: center;
 		`}
 `;

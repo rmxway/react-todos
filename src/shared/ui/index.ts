@@ -4,4 +4,5 @@ export * from './checkbox';
 export * from './error-message';
 export * from './input';
 export * from './modal';
+export * from './navbar';
 export * from './select';
