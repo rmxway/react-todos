@@ -18,6 +18,7 @@ export const NoteTitle = styled.div`
 `;
 
 export const List = styled(motion.ul)`
+	position: relative;
 	margin: 0;
 	padding: 0;
 `;
@@ -36,7 +37,7 @@ export const TopBlock = styled(StyledGrid)`
 	margin-bottom: 20px;
 
 	${SelectSC} {
-		max-width: 250px;
+		max-width: 280px;
 		margin: 0;
 	}
 

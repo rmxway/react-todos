@@ -1,14 +1,14 @@
 import { signIn, signOut } from 'next-auth/react';
 
+import { NOTES_KEY } from '@/features/notes/api/hooks';
+import { queryClient } from '@/lib/queryClient';
 import { useAppDispatch } from '@/store/hooks';
 import { showAlert } from '@/store/slices/alertSlice';
-import { setCurrentUser, setNotes } from '@/store/slices/usersSlice';
-
-import { fetchTodos } from './api';
+import { setCurrentUser } from '@/store/slices/usersSlice';
 
 export function clearUserAndNotes(dispatch: ReturnType<typeof useAppDispatch>) {
 	dispatch(setCurrentUser({}));
-	dispatch(setNotes([]));
+	queryClient.removeQueries({ queryKey: NOTES_KEY });
 }
 
 export async function syncUserAndTodos(
@@ -18,8 +18,6 @@ export async function syncUserAndTodos(
 	email: string,
 ) {
 	dispatch(setCurrentUser({ id: userId, name, login: email }));
-	const todos = await fetchTodos();
-	dispatch(setNotes(todos));
 }
 
 export function useUserMenuHandlers(
@@ -95,7 +93,7 @@ export function useUserMenuHandlers(
 	const handleLogout = () => {
 		signOut({ redirect: false });
 		dispatch(setCurrentUser({}));
-		dispatch(setNotes([]));
+		queryClient.removeQueries({ queryKey: NOTES_KEY });
 	};
 
 	return { handleSubmit, handleLogin, handleLogout };

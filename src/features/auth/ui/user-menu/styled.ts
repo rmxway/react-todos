@@ -6,7 +6,7 @@ export const Link = styled(motion.div)`
 	position: relative;
 	display: inline-block;
 	color: #fff;
-	font-weight: 600;
+	font-weight: 300;
 	transition: 0.2s;
 	height: 100%;
 	padding: 5px 0;
@@ -41,7 +41,7 @@ export const User = styled.div`
 	background-color: ${(props) => darken(0.03, props.theme.primary)};
 	box-shadow: inset 0 -10px 27px #2226;
 	border-radius: 30px;
-	font-weight: 600;
+	font-weight: 300;
 	max-width: 250px;
 	max-height: 40px;
 	overflow: hidden;
@@ -76,6 +76,7 @@ export const Wrapper = styled(motion.div)<{ $relative?: boolean }>`
 			position: relative;
 			margin-left: auto;
 			flex-shrink: 1;
+			font-size: 0.9rem;
 			min-width: 0;
 			display: flex;
 			flex-wrap: nowrap;

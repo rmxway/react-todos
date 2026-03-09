@@ -4,7 +4,11 @@ import styled, { css } from 'styled-components';
 
 import { Button } from '@/shared/ui';
 
-export const NoteStyled = styled(motion.li)<{ $completed?: boolean }>`
+export const NoteStyled = styled(motion.li)<{
+	$completed?: boolean;
+	$deleting?: boolean;
+}>`
+	position: relative;
 	list-style: none;
 	display: flex;
 	justify-content: space-between;
@@ -15,7 +19,7 @@ export const NoteStyled = styled(motion.li)<{ $completed?: boolean }>`
 	border-top: none;
 	min-width: 0;
 
-	${({ theme, $completed }) => css`
+	${({ theme, $completed, $deleting }) => css`
 		color: ${theme.textColor};
 		background-color: ${darken(0.05, theme.bg)};
 		border: 1px solid ${theme.borderColor};
@@ -26,13 +30,32 @@ export const NoteStyled = styled(motion.li)<{ $completed?: boolean }>`
 		&:last-child {
 			border-radius: 0 0 4px 4px;
 		}
+
+		&:after {
+			position: absolute;
+			content: '';
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: ${theme.primary};
+			pointer-events: none;
+			z-index: 0;
+			opacity: 0;
+			transition: all 0.2s;
+		}
+
 		${$completed &&
 		css`
-			opacity: 0.5;
-			strong,
-			small {
-				text-decoration: line-through;
+			&:after {
+				opacity: 0.15;
 			}
+		`}
+
+		${$deleting &&
+		css`
+			opacity: 0.5 !important;
+			pointer-events: none;
 		`}
 
 		.note-content {
@@ -55,6 +78,7 @@ export const NoteStyled = styled(motion.li)<{ $completed?: boolean }>`
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
+			font-weight: 600;
 		}
 
 		.note-text span,

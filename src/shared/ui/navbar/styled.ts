@@ -61,8 +61,8 @@ export const Nav = styled.nav`
 			a {
 				display: block;
 				color: #fff;
-				font-weight: 600;
-				opacity: 0.6;
+				font-weight: 300;
+				opacity: 1;
 				transition: 0.2s;
 				height: 100%;
 				padding: 5px 0 8px;

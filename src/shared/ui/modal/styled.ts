@@ -30,7 +30,8 @@ export const ModalWindow = styled(motion.div)<{ $width?: string }>`
 `;
 
 export const ModalTitle = styled.div`
-	font-size: 22px;
+	font-size: 20px;
+	letter-spacing: 0.1px;
 	font-weight: 600;
 	line-height: 1;
 	padding: 20px 30px 20px 20px;
