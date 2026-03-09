@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 
+import { useNotes } from '@/features/notes/api/hooks';
 import { Container } from '@/shared/layouts';
 import { item, mainVariant } from '@/shared/lib/animations';
 import { Select } from '@/shared/ui';
@@ -17,8 +18,8 @@ const frameworksList = [
 ];
 
 export const SelectPage = () => {
-	const users = useAppSelector((state) => state.users);
-	const { notes } = users;
+	const { currentUser } = useAppSelector((state) => state.users);
+	const { data: notes = [] } = useNotes(!!currentUser?.name);
 
 	const onChange = (_sel: { selected: string }) => {
 		// Demo: handle selection

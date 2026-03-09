@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { darken } from 'polished';
 import styled, { css } from 'styled-components';
 
@@ -20,7 +19,7 @@ export const Label = styled.label`
 	text-transform: uppercase;
 `;
 
-export const StyledInput = styled(motion.input)<{ $error?: boolean }>`
+export const StyledInput = styled.input<{ $error?: boolean }>`
 	padding: 15px;
 	border-radius: 4px;
 	width: 100%;

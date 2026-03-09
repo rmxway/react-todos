@@ -1,9 +1,12 @@
 'use client';
 
+import { QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { SessionProvider } from 'next-auth/react';
 import { useEffect, useSyncExternalStore } from 'react';
 import { ThemeProvider } from 'styled-components';
 
+import { queryClient } from '@/lib/queryClient';
 import { darkTheme, lightTheme, THEME_COOKIE_NAME } from '@/shared/config';
 import type { Store } from '@/store';
 import { changeTheme } from '@/store/slices/appSlice';
@@ -39,8 +42,11 @@ export function Providers({ store, children }: ProvidersProps) {
 	}, [store]);
 
 	return (
-		<SessionProvider>
-			<ThemeProvider {...{ theme }}>{children}</ThemeProvider>
-		</SessionProvider>
+		<QueryClientProvider client={queryClient}>
+			<SessionProvider>
+				<ThemeProvider {...{ theme }}>{children}</ThemeProvider>
+			</SessionProvider>
+			<ReactQueryDevtools initialIsOpen={false} />
+		</QueryClientProvider>
 	);
 }

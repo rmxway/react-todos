@@ -5,17 +5,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useMemo, useState } from 'react';
 
+import {
+	useDeleteAllNotes,
+	useDeleteNote,
+	useNotes,
+	useToggleNote,
+} from '@/features/notes/api/hooks';
 import { NoteForm } from '@/features/notes/ui/note-form';
 import { NoteItem } from '@/features/notes/ui/note-item';
-import { item, notesVariant } from '@/shared/lib/animations';
-import { Button, Select, type SelectItem } from '@/shared/ui';
+import { Flex } from '@/shared/layouts';
+import { item } from '@/shared/lib/animations';
+import { Button, Modal, Select, type SelectItem } from '@/shared/ui';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { showAlert } from '@/store/slices/alertSlice';
-import {
-	changeCompleted,
-	removeAllNotes,
-	removeNote,
-} from '@/store/slices/usersSlice';
 
 import { AlertParagraph, List, NonNotes, NoteTitle, TopBlock } from './styled';
 
@@ -28,8 +30,12 @@ const FILTER_ITEMS: SelectItem[] = [
 ];
 
 export const NotesList = () => {
-	const users = useAppSelector((state) => state.users);
-	const { currentUser, notes } = users;
+	const { currentUser } = useAppSelector((state) => state.users);
+	const isLoggedIn = !!currentUser?.name;
+	const { data: notes = [], isLoading } = useNotes(isLoggedIn);
+	const toggleMutation = useToggleNote();
+	const deleteMutation = useDeleteNote();
+	const deleteAllMutation = useDeleteAllNotes();
 
 	const dispatch = useAppDispatch();
 	const [filter, setFilter] = useState<NotesFilter>('all');
@@ -47,44 +53,81 @@ export const NotesList = () => {
 	const hasAnyNotes = notes.length > 0;
 	const hasFilteredNotes = filteredNotes.length > 0;
 	const trashIcon = <FontAwesomeIcon icon={faTrash} />;
+	const [deletingId, setDeletingId] = useState<string | null>(null);
+	const [isDeleteAllModalOpen, setIsDeleteAllModalOpen] = useState(false);
 
-	const handleDelete = async (id: string) => {
-		const res = await fetch(`/api/todos/${id}`, { method: 'DELETE' });
-		if (!res.ok) {
-			dispatch(
-				showAlert({
-					type: 'danger',
-					text: 'Не удалось удалить запись',
-				}),
-			);
-			return;
-		}
-		dispatch(removeNote(id));
-		dispatch(showAlert({ text: 'Запись удалена' }));
-	};
-
-	const handleRemoveAllNotes = async () => {
-		const res = await fetch('/api/todos', { method: 'DELETE' });
-		if (!res.ok) {
-			dispatch(
-				showAlert({
-					type: 'danger',
-					text: 'Не удалось удалить все записи',
-				}),
-			);
-			return;
-		}
-		dispatch(removeAllNotes());
-		dispatch(showAlert({ text: 'Все записи были удалены' }));
-	};
-
-	const handleToggle = async (id: string) => {
-		const res = await fetch(`/api/todos/${id}`, {
-			method: 'PATCH',
+	const handleToggle = (id: string) => {
+		toggleMutation.mutate(id, {
+			onError: (err) => {
+				dispatch(
+					showAlert({
+						type: 'danger',
+						text: err.message ?? 'Ошибка переключения',
+					}),
+				);
+			},
 		});
-		if (!res.ok) return;
-		dispatch(changeCompleted(id));
 	};
+
+	const handleDelete = (id: string) => {
+		setDeletingId(id);
+
+		deleteMutation.mutate(id, {
+			onSuccess: () => {
+				setDeletingId(null);
+				dispatch(showAlert({ text: 'Запись удалена' }));
+			},
+			onError: (err) => {
+				setDeletingId(null);
+				dispatch(
+					showAlert({
+						type: 'danger',
+						text: err.message ?? 'Не удалось удалить запись',
+					}),
+				);
+			},
+		});
+	};
+
+	const handleRemoveAllNotes = () => {
+		setIsDeleteAllModalOpen(false);
+		deleteAllMutation.mutate(undefined, {
+			onSuccess: () => {
+				dispatch(showAlert({ text: 'Все записи были удалены' }));
+				setFilter('all');
+			},
+			onError: (err) => {
+				dispatch(
+					showAlert({
+						type: 'danger',
+						text: err.message ?? 'Не удалось удалить все записи',
+					}),
+				);
+			},
+		});
+	};
+
+	const deleteAllModalBody = (
+		<Flex $direction="column" $gap={20}>
+			<p>Вы точно хотите удалить все?</p>
+			<Flex $gap={10} $justify="flex-end">
+				<Button
+					$size="medium"
+					onClick={() => setIsDeleteAllModalOpen(false)}
+				>
+					Отмена
+				</Button>
+				<Button
+					$variant="primary"
+					$size="medium"
+					$disabled={deleteAllMutation.isPending}
+					onClick={handleRemoveAllNotes}
+				>
+					Удалить
+				</Button>
+			</Flex>
+		</Flex>
+	);
 
 	const handleFilterChange = (data: { selected: string }) => {
 		const key = FILTER_ITEMS.find(
@@ -97,12 +140,16 @@ export const NotesList = () => {
 	return currentUser.name ? (
 		<motion.div variants={item}>
 			<NoteForm />
-			{!hasAnyNotes && <NonNotes variants={item}>Нет записей</NonNotes>}
-			{hasAnyNotes && (
-				<TopBlock $gap={10} $columns={'1fr 170px'} $direction="column">
+			{isLoading && <NonNotes variants={item}>Загрузка...</NonNotes>}
+			{!isLoading && hasAnyNotes && (
+				<TopBlock $gap={10} $columns={'1fr 200px'} $direction="column">
 					<NoteTitle>
 						Список задач
-						<Button $size="medium" onClick={handleRemoveAllNotes}>
+						<Button
+							$size="medium"
+							onClick={() => setIsDeleteAllModalOpen(true)}
+							$disabled={deleteAllMutation.isPending}
+						>
 							удалить все {trashIcon}
 						</Button>
 					</NoteTitle>
@@ -111,30 +158,46 @@ export const NotesList = () => {
 						placeholder="Все"
 						onChange={handleFilterChange}
 					/>
-					{!hasFilteredNotes && (
-						<NonNotes variants={item}>
-							Нет задач для выбранного фильтра
-						</NonNotes>
-					)}
 				</TopBlock>
 			)}
-			<List variants={notesVariant}>
-				<AnimatePresence>
-					{hasAnyNotes &&
-						filteredNotes.map((note, idx) => (
-							<NoteItem
-								key={note.id}
-								id={note.id}
-								title={note.title}
-								date={note.date}
-								completed={note.completed}
-								index={idx}
-								onToggle={handleToggle}
-								onDelete={handleDelete}
-							/>
-						))}
+			{!isLoading && !hasFilteredNotes && (
+				<NonNotes variants={item}>
+					{hasAnyNotes
+						? 'Нет задач для выбранного фильтра'
+						: 'Нет записей'}
+				</NonNotes>
+			)}
+			<List>
+				<AnimatePresence mode="popLayout" presenceAffectsLayout>
+					{!isLoading &&
+						hasAnyNotes &&
+						filteredNotes.map((note, idx) => {
+							const { _optimisticId } = note;
+
+							return (
+								<NoteItem
+									key={_optimisticId ?? note.id}
+									id={note.id}
+									title={note.title}
+									date={note.date}
+									completed={note.completed}
+									index={idx}
+									staggerDelay={idx * 0.05}
+									isDeleting={deletingId === note.id}
+									onToggle={handleToggle}
+									onDelete={handleDelete}
+								/>
+							);
+						})}
 				</AnimatePresence>
 			</List>
+			<Modal
+				open={isDeleteAllModalOpen}
+				onClose={() => setIsDeleteAllModalOpen(false)}
+				title="Удаление всех записей"
+				body={deleteAllModalBody}
+				noClose
+			/>
 		</motion.div>
 	) : (
 		<AlertParagraph variants={item} transition={{ duration: 1 }}>

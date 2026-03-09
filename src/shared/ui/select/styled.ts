@@ -7,6 +7,7 @@ export const SelectSC = styled(motion.div)<{ $noItems?: boolean }>`
 		position: relative;
 		display: block;
 		flex: 1;
+		font-size: 0.8rem;
 		margin: 20px 10px;
 		cursor: pointer;
 		${$noItems &&
@@ -81,7 +82,7 @@ export const SelectSC = styled(motion.div)<{ $noItems?: boolean }>`
 				}
 
 				&:hover {
-					background-color: ${theme.bg};
+					background-color: ${darken(0.07, theme.bg)};
 				}
 			}
 		}

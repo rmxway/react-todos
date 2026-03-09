@@ -1,4 +1,6 @@
-export const alertMotion = {
+import { MotionProps } from 'framer-motion';
+
+export const alertMotion: MotionProps = {
 	initial: { opacity: 0, top: -100 },
 	animate: { opacity: 1, top: 70 },
 	exit: { opacity: 0, top: 0 },
@@ -10,7 +12,7 @@ export const alertMotion = {
 };
 
 export const noteMotion = {
-	initial: { x: -200, opacity: 0 },
+	initial: { x: -20, opacity: 0 },
 	animate: { x: 0, opacity: 1 },
 	exit: { opacity: 0, scaleY: 0 },
 	transition: {

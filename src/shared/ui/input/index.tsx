@@ -1,3 +1,5 @@
+import { forwardRef } from 'react';
+
 import { HelperText, InputWrapper, Label, StyledInput } from './styled';
 
 export interface InputProps {
@@ -13,39 +15,48 @@ export interface InputProps {
 	label?: string;
 	helperText?: string;
 	className?: string;
+	disabled?: boolean;
 }
 
-export const Input = ({
-	type = 'text',
-	value,
-	onChange,
-	onBlur,
-	placeholder,
-	name,
-	id,
-	autoComplete,
-	error = false,
-	label,
-	helperText,
-	className,
-}: InputProps) => {
-	return (
-		<InputWrapper {...{ className }}>
-			{label && <Label htmlFor={id}>{label}</Label>}
-			<StyledInput
-				{...{
-					type,
-					value,
-					onChange,
-					onBlur,
-					placeholder,
-					name,
-					id,
-					autoComplete,
-				}}
-				$error={error}
-			/>
-			{helperText && <HelperText>{helperText}</HelperText>}
-		</InputWrapper>
-	);
-};
+export const Input = forwardRef<HTMLInputElement, InputProps>(
+	(
+		{
+			type = 'text',
+			value,
+			onChange,
+			onBlur,
+			placeholder,
+			name,
+			id,
+			autoComplete,
+			error = false,
+			label,
+			helperText,
+			className,
+			disabled = false,
+		},
+		ref,
+	) => {
+		return (
+			<InputWrapper {...{ className }}>
+				{label && <Label htmlFor={id}>{label}</Label>}
+				<StyledInput
+					ref={ref}
+					{...{
+						type,
+						value,
+						onChange,
+						onBlur,
+						placeholder,
+						name,
+						id,
+						autoComplete,
+						disabled,
+					}}
+					$error={error}
+				/>
+				{helperText && <HelperText>{helperText}</HelperText>}
+			</InputWrapper>
+		);
+	},
+);

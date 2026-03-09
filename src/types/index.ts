@@ -7,6 +7,7 @@ export interface Note {
 	title: string;
 	completed: boolean;
 	date: string;
+	_optimisticId?: string;
 }
 
 export interface User {
