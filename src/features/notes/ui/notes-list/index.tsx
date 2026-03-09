@@ -112,6 +112,7 @@ export const NotesList = () => {
 			<p>Вы точно хотите удалить все?</p>
 			<Flex $gap={10} $justify="flex-end">
 				<Button
+					$variant="dark"
 					$size="medium"
 					onClick={() => setIsDeleteAllModalOpen(false)}
 				>
@@ -138,11 +139,16 @@ export const NotesList = () => {
 	};
 
 	return currentUser.name ? (
-		<motion.div variants={item}>
+		<motion.div initial="hidden" animate="visible">
 			<NoteForm />
 			{isLoading && <NonNotes variants={item}>Загрузка...</NonNotes>}
 			{!isLoading && hasAnyNotes && (
-				<TopBlock $gap={10} $columns={'1fr 200px'} $direction="column">
+				<TopBlock
+					variants={item}
+					$gap={10}
+					$columns={'1fr 200px'}
+					$direction="column"
+				>
 					<NoteTitle>
 						Список задач
 						<Button
@@ -167,7 +173,7 @@ export const NotesList = () => {
 						: 'Нет записей'}
 				</NonNotes>
 			)}
-			<List>
+			<List variants={item}>
 				<AnimatePresence mode="popLayout" presenceAffectsLayout>
 					{!isLoading &&
 						hasAnyNotes &&
@@ -196,7 +202,6 @@ export const NotesList = () => {
 				onClose={() => setIsDeleteAllModalOpen(false)}
 				title="Удаление всех записей"
 				body={deleteAllModalBody}
-				noClose
 			/>
 		</motion.div>
 	) : (

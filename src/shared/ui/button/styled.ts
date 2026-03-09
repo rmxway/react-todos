@@ -1,8 +1,6 @@
 import { motion, type Variants } from 'framer-motion';
 import styled, { css } from 'styled-components';
 
-import { darkTheme, lightTheme } from '@/shared/config/theme';
-
 export interface ButtonProps {
 	$variant?: 'primary' | 'danger' | 'light' | 'dark';
 	$size?: 'small' | 'medium' | 'large';
@@ -49,14 +47,19 @@ export const StyledButton = styled(motion.button).attrs(() => ({
 			color: white;
 			opacity: 1;
 		`}
-			${($variant === 'light' || $variant === 'dark') &&
+		
+		// Если необходимо независимо от темы выбрать темный или светлый цвет
+		${($variant === 'light' || $variant === 'dark') &&
 		css`
 			border-color: ${$variant === 'light'
-				? lightTheme.bg
-				: darkTheme.bg};
-			color: ${$variant === 'light' ? lightTheme.bg : darkTheme.bg};
+				? theme.colors.light
+				: theme.colors.dark};
+			color: ${$variant === 'light'
+				? theme.colors.light
+				: theme.colors.dark};
 			opacity: 1;
 		`}
+		
 		${$size === 'small' &&
 		css`
 			padding: 5px 10px;

@@ -31,6 +31,13 @@ export default async function RootLayout({
 
 	return (
 		<html lang="ru">
+			<head>
+				<meta
+					name="viewport"
+					content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+				/>
+				<meta name="keywords" content="todo, react, next.js" />
+			</head>
 			<body>
 				<StyledComponentsRegistry>
 					<StoreProvider {...{ initialTheme }}>

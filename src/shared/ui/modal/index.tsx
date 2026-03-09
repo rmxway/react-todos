@@ -1,5 +1,6 @@
 import { AnimatePresence } from 'framer-motion';
 import { useRef } from 'react';
+import { createPortal } from 'react-dom';
 
 import { fadein, modalItem } from '@/shared/lib/animations';
 import { useOnClickOutside } from '@/shared/lib/hooks';
@@ -35,7 +36,7 @@ export const Modal = ({
 
 	useOnClickOutside(contentRef, onClose);
 
-	return (
+	return createPortal(
 		<AnimatePresence mode="wait">
 			{open && (
 				<ModalWrapper
@@ -56,6 +57,7 @@ export const Modal = ({
 					</ModalWindow>
 				</ModalWrapper>
 			)}
-		</AnimatePresence>
+		</AnimatePresence>,
+		document.body,
 	);
 };

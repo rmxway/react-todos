@@ -14,7 +14,7 @@ export const NotePage = () => {
 			variants={mainVariant}
 			initial="hidden"
 			animate="visible"
-			exit="exit"
+			exit="hidden"
 		>
 			<H1>React Notes App</H1>
 			<motion.p variants={item}>TodoList, Animations</motion.p>

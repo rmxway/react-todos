@@ -34,9 +34,9 @@ export const ModalPage = () => {
 			variants={mainVariant}
 			initial="hidden"
 			animate="visible"
-			exit="exit"
+			exit="hidden"
 		>
-			<H1 variants={item}>Modal Page</H1>
+			<H1>Modal Page</H1>
 			<motion.p variants={item}>
 				Здесь представлен пример использования modal
 			</motion.p>

@@ -36,10 +36,6 @@ export const mainVariant = {
 			staggerChildren: 0.1,
 		},
 	},
-	exit: {
-		y: 10,
-		opacity: 0,
-	},
 };
 
 export const notesVariant = {
@@ -62,10 +58,6 @@ export const item = {
 		transition: {
 			duration: 0.3,
 		},
-	},
-	exit: {
-		y: 30,
-		opacity: 0,
 	},
 };
 

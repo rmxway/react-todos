@@ -40,7 +40,7 @@ export const MotionPage = () => {
 			variants={mainVariant}
 			initial="hidden"
 			animate="visible"
-			exit="exit"
+			exit="hidden"
 		>
 			<BackPlane
 				initial={{ opacity: 0 }}
@@ -52,7 +52,7 @@ export const MotionPage = () => {
 				onClick={handleReturnImage}
 			/>
 			<motion.div style={{ position: 'relative', top: up }}>
-				<H1 variants={item}>Motion page</H1>
+				<H1>Motion page</H1>
 				<motion.p variants={item}>
 					Здесь представлен пример использования motion анимации,
 					основанной на drag событии.

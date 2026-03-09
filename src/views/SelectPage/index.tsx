@@ -26,8 +26,13 @@ export const SelectPage = () => {
 	};
 
 	return (
-		<Container variants={mainVariant} initial="hidden" animate="visible">
-			<H1 variants={item}>Select page</H1>
+		<Container
+			variants={mainVariant}
+			initial="hidden"
+			animate="visible"
+			exit="hidden"
+		>
+			<H1>Select page</H1>
 			<motion.p variants={item}>Component Select</motion.p>
 			<Fly />
 			<SelectWrapper variants={item}>
