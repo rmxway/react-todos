@@ -42,7 +42,7 @@ export const NoteStyled = styled(motion.li)<{
 			pointer-events: none;
 			z-index: 0;
 			opacity: 0;
-			transition: all 0.2s;
+			transition: opacity 0.2s;
 		}
 
 		${$completed &&
@@ -109,7 +109,9 @@ export const NoteNumber = styled.div<{ theme: { currentTheme?: string } }>`
 `;
 
 export const CloseButton = styled(Button)`
+	font-size: 1.2rem;
 	min-width: 30px;
 	margin-right: 0;
+	line-height: 15px;
 	padding: 5px;
 `;

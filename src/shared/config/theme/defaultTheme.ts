@@ -4,6 +4,8 @@ export const defaultTheme = {
 		warning: '#f6d584',
 		success: '#1a8e56',
 		silver: '#696969',
+		dark: '#333',
+		light: '#fff',
 	},
 	gaps: {
 		containerWidth: '1200px',
