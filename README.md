@@ -7,12 +7,14 @@
 - **React 18** + **TypeScript**
 - **Next.js 14** — сборка, dev-сервер, маршрутизация (App Router)
 - **Feature-Sliced Design** — архитектура проекта
-- **Redux Toolkit** — состояние приложения
+- **Redux Toolkit** — глобальное состояние (тема, alert)
+- **TanStack React Query** — кэширование и работа с API заметок
 - **NextAuth** — авторизация
 - **Styled Components** — стили
 - **Framer Motion** — анимации
 - **Formik** + **Yup** — формы и валидация
-- **Firebase** — бэкенд (при необходимости)
+- **FontAwesome** — иконки
+- **Firebase Admin** — бэкенд (хранение данных)
 
 ## Возможности
 
@@ -22,6 +24,7 @@
 - Отметка задач как выполненных
 - Удаление всех заметок
 - Фильтрация списка по статусу (все / активные / выполненные)
+- Оптимистичные обновления (React Query)
 - API-маршруты для работы с данными (`/api/todos`)
 
 ### 👤 Пользователи
@@ -49,7 +52,7 @@
 ## 🔧 Требования
 
 - Node.js 18+ (рекомендуется LTS)
-- Yarn 4 (менеджер пакетов указан в `package.json`)
+- Yarn 4.13+ (packageManager в `package.json`)
 
 ## ⚙️ Установка
 
@@ -104,24 +107,26 @@ app/                    # Next.js App Router
 ├── motion/
 ├── modal/
 ├── select/
+├── AppShell.tsx        # Оболочка: Navbar, Alert, layout
+├── Providers.tsx       # QueryClient, Session, Theme
+├── StoreProvider.tsx
 ├── layout.tsx
 ├── page.tsx
-├── StoreProvider.tsx
 └── ...
 
 src/
 ├── features/
 │   ├── alert/          # Глобальные уведомления
 │   ├── auth/           # Авторизация (Navbar, формы, UserMenu)
-│   └── notes/          # Заметки (форма, список, элементы)
-├── views/              # Страницы-представления (NotePage, ModalPage, SelectPage, MotionPage)
+│   └── notes/          # Заметки (форма, список, API, хуки React Query)
+├── views/              # NotePage, ModalPage, SelectPage, MotionPage
 ├── shared/
 │   ├── config/         # Темы, брейкпоинты, константы
 │   ├── layouts/        # Container, Flex, Grid
 │   ├── lib/            # Хуки, анимации
 │   └── ui/             # Alert, Button, Checkbox, Input, Modal, Select, ErrorMessage
 ├── store/              # Redux store и слайсы
-├── lib/                # auth-options, firebase-admin, registry (Styled Components)
+├── lib/                # auth-options, firebase-admin, queryClient, registry
 ├── styles/             # Глобальные стили
 └── types/              # TypeScript-типы
 ```
