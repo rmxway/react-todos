@@ -6,11 +6,15 @@ export const ModalWrapper = styled(motion.section)`
 	position: fixed;
 	display: flex;
 	justify-content: center;
-	align-items: center;
+	align-items: flex-start;
 	top: 0;
 	bottom: 0;
 	left: 0;
 	right: 0;
+	padding: 20px 15px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
 	background-color: ${transparentize(0.4, '#000')};
 	z-index: ${(props) => props.theme.z.modal};
 `;
@@ -18,11 +22,13 @@ export const ModalWrapper = styled(motion.section)`
 export const ModalWindow = styled(motion.div)<{ $width?: string }>`
 	position: relative;
 	width: 100%;
-	min-height: 200px;
+	min-height: 100px;
 	color: #222;
-	overflow: hidden;
 	background-color: #fff;
 	border-radius: 10px;
+	margin: auto 0;
+	overflow: hidden;
+	border: 2px solid #000000bb;
 	${({ theme, $width }) => css`
 		max-width: ${$width ?? '300px'};
 		box-shadow: ${theme.shadows.modal};

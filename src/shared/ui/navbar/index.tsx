@@ -9,6 +9,7 @@ import { Container } from '@/shared/layouts';
 import {
 	menuLineBottom,
 	menuLineCenter,
+	menuLinesTransition,
 	menuLineTop,
 	mobileMenuVar,
 	navLiVarinats,
@@ -80,15 +81,15 @@ export const Navbar = ({ rightSlot }: NavbarProps) => {
 				>
 					<motion.span
 						variants={menuLineTop}
-						transition={{ duration: 1, type: 'spring' as const }}
+						transition={menuLinesTransition}
 					/>
 					<motion.span
 						variants={menuLineCenter}
-						transition={{ duration: 1, type: 'spring' as const }}
+						transition={menuLinesTransition}
 					/>
 					<motion.span
 						variants={menuLineBottom}
-						transition={{ duration: 1, type: 'spring' as const }}
+						transition={menuLinesTransition}
 					/>
 				</MenuButton>
 

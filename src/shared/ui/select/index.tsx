@@ -81,7 +81,7 @@ export const Select = ({
 						variants={selectDropdownVariants}
 						initial="close"
 						animate={isOpen ? 'open' : 'close'}
-						exit="exit"
+						exit="close"
 					>
 						{(list ?? []).map((item, idx) => (
 							<motion.li

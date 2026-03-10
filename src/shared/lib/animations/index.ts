@@ -125,17 +125,20 @@ export const navLiVarinats = {
 	},
 };
 
-export const transitionLines = {
-	duration: 1,
-	type: 'spring' as const,
+export const menuLinesTransition = {
+	type: 'tween' as const,
+	duration: 0.3,
+	ease: 'easeInOut' as const,
 };
 
 export const menuLineCenter = {
 	initial: {
 		opacity: 1,
+		width: 32,
 	},
 	opened: {
 		opacity: 0,
+		width: 0,
 	},
 };
 
@@ -143,10 +146,12 @@ export const menuLineTop = {
 	initial: {
 		rotate: 0,
 		y: 0,
+		transformOrigin: 'center center',
 	},
 	opened: {
 		rotate: 45,
-		y: 9,
+		y: '0.625rem',
+		transformOrigin: 'center center',
 	},
 };
 
@@ -154,10 +159,12 @@ export const menuLineBottom = {
 	initial: {
 		rotate: 0,
 		y: 0,
+		transformOrigin: 'center center',
 	},
 	opened: {
 		rotate: -45,
-		y: -9,
+		y: '-0.625rem',
+		transformOrigin: 'center center',
 	},
 };
 
@@ -175,35 +182,32 @@ export const mobileMenuVar = {
 export const selectDropdownVariants = {
 	close: {
 		opacity: 0,
+		scaleY: 0.95,
 	},
 	open: {
-		left: 0,
 		opacity: 1,
+		scaleY: 1,
 		transition: {
 			type: 'tween' as const,
 			duration: 0.2,
-			staggerChildren: 0.05,
-		},
-	},
-	exit: {
-		opacity: 0,
-		transition: {
-			type: 'tween' as const,
-			duration: 0.15,
+			ease: 'easeOut' as const,
+			staggerChildren: 0.04,
 		},
 	},
 };
 
 export const selectLiVariants = {
 	close: {
-		x: -5,
 		opacity: 0,
+		y: -8,
 	},
 	open: {
-		x: 0,
 		opacity: 1,
+		y: 0,
 		transition: {
-			duration: 0.1,
+			type: 'tween' as const,
+			duration: 0.15,
+			ease: 'easeOut' as const,
 		},
 	},
 };

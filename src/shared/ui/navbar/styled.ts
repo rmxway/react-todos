@@ -91,9 +91,11 @@ export const Nav = styled.nav`
 
 export const MenuButton = styled(motion.button)`
 	display: none;
-
+	position: relative;
 	width: 35px;
 	height: 22px;
+	padding: 11px 5px;
+	box-sizing: content-box;
 	background: none;
 	border: none;
 	outline: none;
@@ -101,10 +103,11 @@ export const MenuButton = styled(motion.button)`
 
 	span {
 		display: inline-block;
+		width: 32px;
 		height: 2px;
-		width: 100%;
 		border-radius: 5px;
-		background-color: white;
+		background-color: #fff;
+		backface-visibility: hidden;
 	}
 
 	${breakpoints.lessThan('sm')`
@@ -112,6 +115,7 @@ export const MenuButton = styled(motion.button)`
         flex-direction: column;
         justify-content: space-between;
         margin-right: 15px;
+		align-items: center;
     `}
 `;
 
@@ -119,7 +123,7 @@ export const MobileMenu = styled(motion.div)`
 	flex-grow: 1;
 	position: absolute;
 	background-color: ${({ theme }) => darken(0.05, theme.bg)};
-	top: 45px;
+	top: 100%;
 	box-shadow: 0 10px 10px #0004;
 	left: 0;
 	min-width: 300px;

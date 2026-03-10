@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 import { fadein, modalItem } from '@/shared/lib/animations';
-import { useOnClickOutside } from '@/shared/lib/hooks';
+import { useBodyScrollLock, useOnClickOutside } from '@/shared/lib/hooks';
 
 import {
 	Close,
@@ -35,6 +35,7 @@ export const Modal = ({
 	const contentRef = useRef<HTMLDivElement>(null);
 
 	useOnClickOutside(contentRef, onClose);
+	useBodyScrollLock(open);
 
 	return createPortal(
 		<AnimatePresence mode="wait">
