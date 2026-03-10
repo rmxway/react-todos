@@ -39,7 +39,7 @@ export const User = styled.div`
 	color: white;
 	padding: 5px 20px;
 	background-color: ${(props) => darken(0.03, props.theme.primary)};
-	box-shadow: inset 0 -10px 27px #2226;
+	box-shadow: inset 0 -10px 20px #2226;
 	border-radius: 30px;
 	font-weight: 300;
 	max-width: 250px;
@@ -49,7 +49,7 @@ export const User = styled.div`
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 2;
 	word-break: break-word;
-	line-height: 1.2;
+	line-height: 1;
 
 	span {
 		font-weight: 100;

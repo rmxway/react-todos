@@ -1,3 +1,3 @@
 export { NoteForm } from './note-form';
-export { NoteItem } from './note-item';
+export { NoteItemContent, NoteStyled } from './note-item';
 export { NotesList } from './notes-list';

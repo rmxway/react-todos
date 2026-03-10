@@ -21,6 +21,9 @@ export const defaultTheme = {
 	transitions: {
 		default: 'all .3s',
 	},
+	radius: {
+		border: '10px',
+	},
 	shadows: {
 		alert: '0 10px 30px #2225',
 		popup: '0 5px 10px #2225',

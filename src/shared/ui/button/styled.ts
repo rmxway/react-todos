@@ -2,7 +2,7 @@ import { motion, type Variants } from 'framer-motion';
 import styled, { css } from 'styled-components';
 
 export interface ButtonProps {
-	$variant?: 'primary' | 'danger' | 'light' | 'dark';
+	$variant?: 'primary' | 'danger' | 'light' | 'dark' | 'noBorder';
 	$size?: 'small' | 'medium' | 'large';
 	$disabled?: boolean;
 	onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -18,7 +18,6 @@ export const StyledButton = styled(motion.button).attrs(() => ({
 	transition: { duration: 0.2 },
 }))<ButtonProps>`
 	font-family: 'Roboto Condensed', sans-serif;
-	border-radius: 5px;
 	padding: 14px;
 	font-size: 14px;
 	outline: none;
@@ -32,6 +31,7 @@ export const StyledButton = styled(motion.button).attrs(() => ({
 
 	${({ theme, $variant, $size, $disabled }) => css`
 		border: 2px solid ${theme.textColor};
+		border-radius: ${theme.radius.border};
 		color: ${theme.textColor};
 		${$variant === 'primary' &&
 		css`
@@ -46,6 +46,11 @@ export const StyledButton = styled(motion.button).attrs(() => ({
 			border-color: ${theme.colors.danger};
 			color: white;
 			opacity: 1;
+		`}
+
+		${$variant === 'noBorder' &&
+		css`
+			border: none;
 		`}
 		
 		// Если необходимо независимо от темы выбрать темный или светлый цвет
