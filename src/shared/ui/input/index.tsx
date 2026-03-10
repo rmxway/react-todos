@@ -28,7 +28,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 			placeholder,
 			name,
 			id,
-			autoComplete,
+			autoComplete = 'off',
 			error = false,
 			label,
 			helperText,
@@ -54,6 +54,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 						disabled,
 					}}
 					$error={error}
+					autoCapitalize="off"
 				/>
 				{helperText && <HelperText>{helperText}</HelperText>}
 			</InputWrapper>
