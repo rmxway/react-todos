@@ -38,6 +38,7 @@ export const NoteStyled = styled(motion.li)<{
 	min-height: 50px;
 	border-top: none;
 	min-width: 0;
+	margin-bottom: -1px;
 
 	${({ theme, $completed, $deleting }) => css`
 		color: ${theme.textColor};
