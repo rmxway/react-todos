@@ -25,13 +25,13 @@ export const ModalWindow = styled(motion.div)<{ $width?: string }>`
 	min-height: 100px;
 	color: #222;
 	background-color: #fff;
-	border-radius: 10px;
 	margin: auto 0;
 	overflow: hidden;
 	border: 2px solid #000000bb;
 	${({ theme, $width }) => css`
 		max-width: ${$width ?? '300px'};
 		box-shadow: ${theme.shadows.modal};
+		border-radius: ${theme.radius.border};
 	`}
 `;
 
