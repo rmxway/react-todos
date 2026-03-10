@@ -12,14 +12,11 @@ export const alertMotion: MotionProps = {
 };
 
 export const noteMotion = {
-	initial: { x: -20, opacity: 0 },
-	animate: { x: 0, opacity: 1 },
-	exit: { opacity: 0, scaleY: 0 },
+	initial: { opacity: 0 },
+	animate: { opacity: 1 },
+	exit: { opacity: 0 },
 	transition: {
-		duration: 0.6,
-		type: 'spring' as const,
-		stiffness: 150,
-		damping: 20,
+		duration: 0.3,
 	},
 };
 

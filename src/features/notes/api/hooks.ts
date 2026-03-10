@@ -21,13 +21,14 @@ export function useAddNote() {
 		onMutate: async (title) => {
 			await queryClient.cancelQueries({ queryKey: NOTES_KEY });
 			const previous = queryClient.getQueryData<Note[]>(NOTES_KEY);
+			const date = new Date().toISOString();
 
 			const tempId = `temp-${Date.now()}`;
 			const optimisticNote: Note = {
 				id: tempId,
 				title,
 				completed: false,
-				date: new Date().toISOString(),
+				date,
 			};
 
 			queryClient.setQueryData<Note[]>(NOTES_KEY, (old = []) => [
