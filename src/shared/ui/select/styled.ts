@@ -9,6 +9,7 @@ export const SelectSC = styled(motion.div)<{ $noItems?: boolean }>`
 		max-width: 100%;
 		font-size: 0.8rem;
 		margin: 20px 10px;
+		width: 100%;
 		cursor: pointer;
 
 		${$noItems &&
@@ -34,7 +35,7 @@ export const SelectSC = styled(motion.div)<{ $noItems?: boolean }>`
 				align-items: center;
 				padding: 15px;
 				background-color: ${darken(0.02, theme.bg)};
-				border-radius: 4px;
+				border-radius: ${theme.radius.border};
 				border: 1px solid ${theme.borderColor};
 				transition: border-color 0.2s;
 				transform: translateZ(0);
@@ -42,6 +43,8 @@ export const SelectSC = styled(motion.div)<{ $noItems?: boolean }>`
 
 				&.open {
 					border-color: ${theme.primary};
+					border-bottom-right-radius: 0;
+					border-bottom-left-radius: 0;
 					.select-icon {
 						transform: scale(1, -1) translateZ(0);
 						-webkit-transform: scale(1, -1) translateZ(0);
@@ -68,7 +71,7 @@ export const SelectSC = styled(motion.div)<{ $noItems?: boolean }>`
 			overflow: hidden;
 			overflow-y: auto;
 			z-index: 1;
-			border-radius: 0 0 4px 4px;
+			border-radius: 0 0 ${theme.radius.border} ${theme.radius.border};
 			box-shadow: ${theme.shadows.popup};
 			background-color: ${darken(0.05, theme.bg)};
 			transform: translateZ(0);

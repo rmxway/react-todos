@@ -12,9 +12,9 @@ import {
 	useToggleNote,
 } from '@/features/notes/api/hooks';
 import { NoteForm } from '@/features/notes/ui/note-form';
-import { NoteItem } from '@/features/notes/ui/note-item';
+import { NoteItemContent, NoteStyled } from '@/features/notes/ui/note-item';
 import { Flex } from '@/shared/layouts';
-import { item } from '@/shared/lib/animations';
+import { item, noteMotion } from '@/shared/lib/animations';
 import { Button, Modal, Select, type SelectItem } from '@/shared/ui';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { showAlert } from '@/store/slices/alertSlice';
@@ -179,7 +179,7 @@ export const NotesList = () => {
 						: 'Нет записей'}
 				</NonNotes>
 			)}
-			<List>
+			<List variants={item}>
 				<AnimatePresence mode="popLayout">
 					{!isLoading &&
 						hasAnyNotes &&
@@ -187,18 +187,22 @@ export const NotesList = () => {
 							const { _optimisticId } = note;
 
 							return (
-								<NoteItem
+								<NoteStyled
 									key={_optimisticId ?? note.id}
-									id={note.id}
-									title={note.title}
-									date={note.date}
-									completed={note.completed}
-									index={idx}
-									staggerDelay={idx * 0.05}
-									isDeleting={deletingId === note.id}
-									onToggle={handleToggle}
-									onDelete={handleDelete}
-								/>
+									{...noteMotion(idx)}
+									$completed={note.completed}
+									$deleting={deletingId === note.id}
+									layout
+								>
+									<NoteItemContent
+										id={note.id}
+										title={note.title}
+										date={note.date}
+										completed={note.completed}
+										onToggle={handleToggle}
+										onDelete={handleDelete}
+									/>
+								</NoteStyled>
 							);
 						})}
 				</AnimatePresence>

@@ -17,10 +17,12 @@ export const Fly = styled.div`
 
 export const SelectWrapper = styled(motion.div)`
 	display: flex;
-	flex-wrap: wrap;
+	flex-wrap: nowrap;
 	margin: 0 -10px;
+	width: 100%;
 
-	${breakpoints.lessThan('lg')`
+	${breakpoints.lessThan('sm')`
 		flex-direction: column;
+		flex-wrap: wrap;
 	`}
 `;

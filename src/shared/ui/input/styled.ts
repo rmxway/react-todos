@@ -21,7 +21,6 @@ export const Label = styled.label`
 
 export const StyledInput = styled.input<{ $error?: boolean }>`
 	padding: 15px;
-	border-radius: 4px;
 	width: 100%;
 	box-sizing: border-box;
 	font-size: 16px;
@@ -34,6 +33,7 @@ export const StyledInput = styled.input<{ $error?: boolean }>`
 	${({ theme, $error }) => css`
 		background-color: ${darken(0.02, theme.bg)};
 		border: 1px solid ${theme.borderColor};
+		border-radius: ${theme.radius.border};
 		transition: ${theme.transitions.default};
 		color: ${theme.textColor};
 		&:focus {

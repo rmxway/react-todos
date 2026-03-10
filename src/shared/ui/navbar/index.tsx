@@ -15,7 +15,7 @@ import {
 	navLiVarinats,
 	navVariants,
 } from '@/shared/lib/animations';
-import { Button } from '@/shared/ui';
+import { Button, MoonIcon, SunIcon } from '@/shared/ui';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { hideAlert } from '@/store/slices/alertSlice';
 import { changeTheme } from '@/store/slices/appSlice';
@@ -26,7 +26,6 @@ const links = [
 	{ path: '/', title: 'Notes' },
 	{ path: '/modal', title: 'Modal' },
 	{ path: '/select', title: 'Select' },
-	{ path: '/motion', title: 'Motion' },
 ];
 
 interface NavbarProps {
@@ -39,6 +38,10 @@ export const Navbar = ({ rightSlot }: NavbarProps) => {
 	const selected = linkIndex >= 0 ? linkIndex : 0;
 	const [menuOpened, setMenuOpened] = useState(false);
 	const color = useAppSelector((state) => state.app.color);
+	const isDark = color === 'dark';
+	const themeToggleLabel = isDark
+		? 'Включить светлую тему'
+		: 'Включить тёмную тему';
 	const ulRef = useRef<HTMLUListElement>(null);
 	const mobileMenuRef = useRef<HTMLDivElement>(null);
 	const visibleAlert = useAppSelector((state) => state.alert.visible);
@@ -126,8 +129,17 @@ export const Navbar = ({ rightSlot }: NavbarProps) => {
 					)}
 				</AnimatePresence>
 
-				<Button $variant="light" $size="small" onClick={toggleColor}>
-					{color === 'light' ? 'Светлая' : 'Темная'} тема
+				<Button
+					$variant="noBorder"
+					$size="small"
+					onClick={toggleColor}
+					aria-label={themeToggleLabel}
+				>
+					{isDark ? (
+						<SunIcon color="light" />
+					) : (
+						<MoonIcon color="light" />
+					)}
 				</Button>
 
 				<LayoutGroup id="navbar-desktop">

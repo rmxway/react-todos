@@ -2,6 +2,7 @@ export * from './alert';
 export * from './button';
 export * from './checkbox';
 export * from './error-message';
+export * from './icons';
 export * from './input';
 export * from './modal';
 export * from './navbar';

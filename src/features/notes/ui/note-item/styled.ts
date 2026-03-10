@@ -4,6 +4,27 @@ import styled, { css } from 'styled-components';
 
 import { Button } from '@/shared/ui';
 
+export const NoteNumber = styled.div`
+	display: inline-block;
+	text-align: center;
+	font-size: 14px;
+	font-weight: 400;
+	color: #fff;
+	height: 45px;
+	letter-spacing: 0;
+	line-height: 50px;
+	margin: 0 20px 0 0;
+	background-color: ${(props) => lighten(0.2, props.theme.colors.silver)};
+`;
+
+export const CloseButton = styled(Button)`
+	font-size: 1.2rem;
+	width: 30px;
+	height: 30px;
+	margin-right: 0;
+	padding: 0;
+`;
+
 export const NoteStyled = styled(motion.li)<{
 	$completed?: boolean;
 	$deleting?: boolean;
@@ -14,8 +35,7 @@ export const NoteStyled = styled(motion.li)<{
 	justify-content: space-between;
 	align-items: center;
 	padding-right: 10px;
-	transition-property: background-color;
-	transition-duration: 0.3s;
+	min-height: 50px;
 	border-top: none;
 	min-width: 0;
 
@@ -23,38 +43,28 @@ export const NoteStyled = styled(motion.li)<{
 		color: ${theme.textColor};
 		background-color: ${darken(0.05, theme.bg)};
 		border: 1px solid ${theme.borderColor};
+		transition-property: background-color;
+		transition-duration: 0.2s;
+
 		&:first-child {
-			border-radius: 4px 4px 0 0;
+			border-radius: ${theme.radius.border} ${theme.radius.border} 0 0;
 			border-top: 1px solid ${theme.borderColor};
 		}
 		&:last-child {
-			border-radius: 0 0 4px 4px;
+			border-radius: 0 0 ${theme.radius.border} ${theme.radius.border};
 		}
-
-		&:after {
-			position: absolute;
-			content: '';
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-color: ${theme.primary};
-			pointer-events: none;
-			z-index: 0;
-			opacity: 0;
-			transition: opacity 0.2s;
+		&:only-child {
+			border-radius: ${theme.radius.border};
 		}
 
 		${$completed &&
 		css`
-			&:after {
-				opacity: 0.15;
-			}
+			background-color: ${darken(0.1, theme.bg)};
 		`}
 
 		${$deleting &&
 		css`
-			opacity: 0.5 !important;
+			background-color: ${lighten(0.01, theme.bg)};
 			pointer-events: none;
 		`}
 
@@ -86,32 +96,4 @@ export const NoteStyled = styled(motion.li)<{
 			flex-shrink: 0;
 		}
 	`}
-`;
-
-export const NoteNumber = styled.div<{ theme: { currentTheme?: string } }>`
-	display: inline-block;
-	text-align: center;
-	font-size: 14px;
-	font-weight: 400;
-	color: white;
-	width: 35px;
-	height: 45px;
-	letter-spacing: 0;
-	line-height: 50px;
-	margin: 0 20px 0 0;
-	background-color: ${(props) => props.theme.colors.silver};
-
-	${(props) =>
-		props.theme.currentTheme === 'light' &&
-		css`
-			background-color: ${lighten(0.3, props.theme.colors.silver)};
-		`}
-`;
-
-export const CloseButton = styled(Button)`
-	font-size: 1.2rem;
-	min-width: 30px;
-	margin-right: 0;
-	line-height: 15px;
-	padding: 5px;
 `;
