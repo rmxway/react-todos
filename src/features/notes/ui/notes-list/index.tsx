@@ -3,7 +3,7 @@
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import {
 	useDeleteAllNotes,
@@ -56,38 +56,44 @@ export const NotesList = () => {
 	const [deletingId, setDeletingId] = useState<string | null>(null);
 	const [isDeleteAllModalOpen, setIsDeleteAllModalOpen] = useState(false);
 
-	const handleToggle = (id: string) => {
-		toggleMutation.mutate(id, {
-			onError: (err) => {
-				dispatch(
-					showAlert({
-						type: 'danger',
-						text: err.message ?? 'Ошибка переключения',
-					}),
-				);
-			},
-		});
-	};
+	const handleToggle = useCallback(
+		(id: string) => {
+			toggleMutation.mutate(id, {
+				onError: (err) => {
+					dispatch(
+						showAlert({
+							type: 'danger',
+							text: err.message ?? 'Ошибка переключения',
+						}),
+					);
+				},
+			});
+		},
+		[toggleMutation, dispatch],
+	);
 
-	const handleDelete = (id: string) => {
-		setDeletingId(id);
+	const handleDelete = useCallback(
+		(id: string) => {
+			setDeletingId(id);
 
-		deleteMutation.mutate(id, {
-			onSuccess: () => {
-				setDeletingId(null);
-				dispatch(showAlert({ text: 'Запись удалена' }));
-			},
-			onError: (err) => {
-				setDeletingId(null);
-				dispatch(
-					showAlert({
-						type: 'danger',
-						text: err.message ?? 'Не удалось удалить запись',
-					}),
-				);
-			},
-		});
-	};
+			deleteMutation.mutate(id, {
+				onSuccess: () => {
+					setDeletingId(null);
+					dispatch(showAlert({ text: 'Запись удалена' }));
+				},
+				onError: (err) => {
+					setDeletingId(null);
+					dispatch(
+						showAlert({
+							type: 'danger',
+							text: err.message ?? 'Не удалось удалить запись',
+						}),
+					);
+				},
+			});
+		},
+		[deleteMutation, dispatch],
+	);
 
 	const handleRemoveAllNotes = () => {
 		setIsDeleteAllModalOpen(false);
@@ -173,8 +179,8 @@ export const NotesList = () => {
 						: 'Нет записей'}
 				</NonNotes>
 			)}
-			<List variants={item}>
-				<AnimatePresence mode="popLayout" presenceAffectsLayout>
+			<List>
+				<AnimatePresence mode="popLayout">
 					{!isLoading &&
 						hasAnyNotes &&
 						filteredNotes.map((note, idx) => {

@@ -14,7 +14,7 @@ export const NoteStyled = styled(motion.li)<{
 	justify-content: space-between;
 	align-items: center;
 	padding-right: 10px;
-	transition-property: background-color, opacity;
+	transition-property: background-color;
 	transition-duration: 0.3s;
 	border-top: none;
 	min-width: 0;

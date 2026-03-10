@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
+import { breakpoints } from '@/shared/config';
+
 export const H1 = styled(motion.h1)`
 	font-family: 'Roboto Condensed', sans-serif;
 	font-weight: 100;
@@ -17,4 +19,8 @@ export const SelectWrapper = styled(motion.div)`
 	display: flex;
 	flex-wrap: wrap;
 	margin: 0 -10px;
+
+	${breakpoints.lessThan('lg')`
+		flex-direction: column;
+	`}
 `;

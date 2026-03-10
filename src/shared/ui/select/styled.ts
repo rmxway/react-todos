@@ -6,10 +6,11 @@ export const SelectSC = styled(motion.div)<{ $noItems?: boolean }>`
 	${({ theme, $noItems }) => css`
 		position: relative;
 		display: block;
-		flex: 1;
+		max-width: 100%;
 		font-size: 0.8rem;
 		margin: 20px 10px;
 		cursor: pointer;
+
 		${$noItems &&
 		css`
 			opacity: 0.4;
@@ -35,18 +36,23 @@ export const SelectSC = styled(motion.div)<{ $noItems?: boolean }>`
 				background-color: ${darken(0.02, theme.bg)};
 				border-radius: 4px;
 				border: 1px solid ${theme.borderColor};
-				transition: 0.2s;
+				transition: border-color 0.2s;
+				transform: translateZ(0);
+				-webkit-transform: translateZ(0);
 
 				&.open {
 					border-color: ${theme.primary};
 					.select-icon {
-						transform: scale(1, -1);
+						transform: scale(1, -1) translateZ(0);
+						-webkit-transform: scale(1, -1) translateZ(0);
 					}
 				}
 			}
 
 			&-icon {
-				transition: 0.2s;
+				transition: transform 0.2s;
+				transform: translateZ(0);
+				-webkit-transform: translateZ(0);
 			}
 		}
 
@@ -65,12 +71,17 @@ export const SelectSC = styled(motion.div)<{ $noItems?: boolean }>`
 			border-radius: 0 0 4px 4px;
 			box-shadow: ${theme.shadows.popup};
 			background-color: ${darken(0.05, theme.bg)};
+			transform: translateZ(0);
+			-webkit-transform: translateZ(0);
+			will-change: opacity, transform;
 
 			li {
 				cursor: pointer;
 				padding: 15px;
 				border-bottom: 1px solid ${darken(0.1, theme.borderColor)};
-				transition: 0.1s;
+				transition: background-color 0.1s;
+				transform: translateZ(0);
+				-webkit-transform: translateZ(0);
 
 				&.selected,
 				&.selected:hover {
