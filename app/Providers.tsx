@@ -9,6 +9,7 @@ import { ThemeProvider } from 'styled-components';
 import { queryClient } from '@/lib/queryClient';
 import { darkTheme, lightTheme, THEME_COOKIE_NAME } from '@/shared/config';
 import type { Store } from '@/store';
+import { showAlert } from '@/store/slices/alertSlice';
 import { changeTheme } from '@/store/slices/appSlice';
 
 function getSnapshot(store: Store) {
@@ -39,6 +40,19 @@ export function Providers({ store, children }: ProvidersProps) {
 				store.dispatch(changeTheme(stored));
 			}
 		}
+	}, [store]);
+
+	useEffect(() => {
+		const handleOffline = () => {
+			store.dispatch(
+				showAlert({
+					type: 'danger',
+					text: 'Нет подключения к интернету',
+				}),
+			);
+		};
+		window.addEventListener('offline', handleOffline);
+		return () => window.removeEventListener('offline', handleOffline);
 	}, [store]);
 
 	return (

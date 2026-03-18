@@ -16,9 +16,14 @@ export interface SelectItem {
 	title: string;
 }
 
+export interface SelectChangeData {
+	selected: string;
+	selectedId: string | number;
+}
+
 export interface SelectProps {
 	list?: SelectItem[];
-	onChange?: (data: { selected: string }) => void;
+	onChange?: (data: SelectChangeData) => void;
 	label?: string;
 	placeholder?: string;
 	className?: string;
@@ -35,7 +40,7 @@ export const Select = ({
 		list && list.length ? placeholder : 'Нет данных...',
 	);
 	const [isOpen, setIsOpen] = useState(false);
-	const [selected, setSelected] = useState<number | null>(null);
+	const [selectedId, setSelectedId] = useState<string | number | null>(null);
 	const noItems = !list || !list.length;
 	const ref = useRef<HTMLDivElement>(null);
 
@@ -52,11 +57,13 @@ export const Select = ({
 
 		if (type === 'item') {
 			const newTitle = target.innerText;
-			const { id } = target.dataset;
-			if (id !== undefined) {
-				setSelected(+id);
+			const idStr = target.dataset.id;
+			if (idStr !== undefined) {
+				const item = (list ?? []).find((i) => String(i.id) === idStr);
+				const id = item?.id ?? idStr;
+				setSelectedId(id);
 				setTitle(newTitle);
-				onChange?.({ selected: newTitle });
+				onChange?.({ selected: newTitle, selectedId: id });
 			}
 		}
 	};
@@ -83,12 +90,17 @@ export const Select = ({
 						animate={isOpen ? 'open' : 'close'}
 						exit="close"
 					>
-						{(list ?? []).map((item, idx) => (
+						{(list ?? []).map((item) => (
 							<motion.li
 								variants={selectLiVariants}
 								key={item.id}
-								className={selected === idx ? 'selected' : ''}
-								data-id={idx}
+								className={
+									selectedId !== null &&
+									String(selectedId) === String(item.id)
+										? 'selected'
+										: ''
+								}
+								data-id={String(item.id)}
 								data-type="item"
 							>
 								{item.title}

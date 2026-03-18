@@ -1,5 +1,10 @@
-import { apiError, apiSuccess } from '@api/utils/apiResponse';
+import {
+	apiError,
+	apiSuccess,
+	apiTooManyRequests,
+} from '@api/utils/apiResponse';
 import { handleApiError } from '@api/utils/errorHandler';
+import { checkRateLimit, getClientIp } from '@api/utils/rateLimit';
 import { checkEmailExists } from '@api/utils/users';
 import { parseRequestBody } from '@api/utils/validation';
 import bcrypt from 'bcryptjs';
@@ -11,6 +16,14 @@ import { getAdminDb } from '@/lib/firebase-admin';
  * Firestore: проверяем уникальность email в коллекции users, затем добавляем документ в users с email, passwordHash, name, createdAt.
  */
 export async function POST(req: Request) {
+	const result = checkRateLimit(getClientIp(req), 'register');
+	if (!result.success) {
+		return apiTooManyRequests(
+			'Слишком много попыток регистрации. Попробуйте позже.',
+			result.retryAfter,
+		);
+	}
+
 	try {
 		const body = await req.json();
 		const { email, password, name } = parseRequestBody<{

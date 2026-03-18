@@ -10,23 +10,44 @@ import {
 	useDeleteNote,
 	useNotes,
 	useToggleNote,
+	useUpdateNote,
 } from '@/features/notes/api/hooks';
+import {
+	filterNotes,
+	type NotesFilter,
+	type NotesSortBy,
+} from '@/features/notes/lib/filterNotes';
 import { NoteForm } from '@/features/notes/ui/note-form';
 import { NoteItemContent, NoteStyled } from '@/features/notes/ui/note-item';
 import { Flex } from '@/shared/layouts';
 import { item, noteMotion } from '@/shared/lib/animations';
-import { Button, Modal, Select, type SelectItem } from '@/shared/ui';
+import { Button, Input, Modal, Select, type SelectItem } from '@/shared/ui';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { showAlert } from '@/store/slices/alertSlice';
 
-import { AlertParagraph, List, NonNotes, NoteTitle, TopBlock } from './styled';
-
-type NotesFilter = 'all' | 'completed' | 'active';
+import {
+	AlertParagraph,
+	List,
+	NonNotes,
+	NotesStats,
+	NoteTitle,
+	SkeletonCheckbox,
+	SkeletonItem,
+	SkeletonList,
+	SkeletonText,
+	TopBlock,
+} from './styled';
 
 const FILTER_ITEMS: SelectItem[] = [
 	{ id: 'all', title: 'Все' },
 	{ id: 'active', title: 'Незавершенные' },
 	{ id: 'completed', title: 'Завершенные' },
+];
+
+const SORT_ITEMS: SelectItem[] = [
+	{ id: 'date', title: 'По дате' },
+	{ id: 'title', title: 'По названию' },
+	{ id: 'status', title: 'По статусу' },
 ];
 
 export const NotesList = () => {
@@ -36,18 +57,16 @@ export const NotesList = () => {
 	const toggleMutation = useToggleNote();
 	const deleteMutation = useDeleteNote();
 	const deleteAllMutation = useDeleteAllNotes();
+	const updateMutation = useUpdateNote();
 
 	const dispatch = useAppDispatch();
 	const [filter, setFilter] = useState<NotesFilter>('all');
+	const [searchQuery, setSearchQuery] = useState('');
+	const [sortBy, setSortBy] = useState<NotesSortBy>('date');
 
 	const filteredNotes = useMemo(
-		() =>
-			notes.filter((note) => {
-				if (filter === 'completed') return note.completed;
-				if (filter === 'active') return !note.completed;
-				return true;
-			}),
-		[notes, filter],
+		() => filterNotes({ notes, filter, searchQuery, sortBy }),
+		[notes, filter, searchQuery, sortBy],
 	);
 
 	const hasAnyNotes = notes.length > 0;
@@ -136,27 +155,71 @@ export const NotesList = () => {
 		</Flex>
 	);
 
-	const handleFilterChange = (data: { selected: string }) => {
-		const key = FILTER_ITEMS.find(
-			(filterItem) => filterItem.title === data.selected,
-		)?.id;
-		if (!key) return;
-		setFilter(key as NotesFilter);
+	const handleFilterChange = (data: {
+		selected: string;
+		selectedId: string | number;
+	}) => {
+		setFilter(data.selectedId as NotesFilter);
 	};
+
+	const handleSortChange = (data: {
+		selected: string;
+		selectedId: string | number;
+	}) => {
+		setSortBy(data.selectedId as NotesSortBy);
+	};
+
+	const handleUpdateTitle = useCallback(
+		(id: string, title: string) => {
+			if (id.startsWith('temp-')) return;
+			updateMutation.mutate(
+				{ id, title },
+				{
+					onSuccess: () => {
+						dispatch(showAlert({ text: 'Заметка обновлена' }));
+					},
+					onError: (err) => {
+						dispatch(
+							showAlert({
+								type: 'danger',
+								text: err.message ?? 'Ошибка при обновлении',
+							}),
+						);
+					},
+				},
+			);
+		},
+		[updateMutation, dispatch],
+	);
 
 	return currentUser.name ? (
 		<motion.div initial="hidden" animate="visible">
 			<NoteForm />
-			{isLoading && <NonNotes variants={item}>Загрузка...</NonNotes>}
+			{isLoading && (
+				<SkeletonList variants={item}>
+					{[1, 2, 3, 4, 5].map((i) => (
+						<SkeletonItem key={i}>
+							<SkeletonCheckbox />
+							<SkeletonText />
+						</SkeletonItem>
+					))}
+				</SkeletonList>
+			)}
 			{!isLoading && hasAnyNotes && (
-				<TopBlock
-					variants={item}
-					$gap={10}
-					$columns={'1fr 200px'}
-					$direction="column"
-				>
-					<NoteTitle>
-						Список задач
+				<>
+					<TopBlock
+						variants={item}
+						$gap={10}
+						$columns={'175px 1fr 130px 300px'}
+						$direction="column"
+					>
+						<Input
+							type="text"
+							placeholder="Поиск..."
+							value={searchQuery}
+							onChange={(e) => setSearchQuery(e.target.value)}
+						/>
+						<span />
 						<Button
 							$size="medium"
 							onClick={() => setIsDeleteAllModalOpen(true)}
@@ -164,14 +227,29 @@ export const NotesList = () => {
 						>
 							удалить все {trashIcon}
 						</Button>
+						<Flex $gap={10} $align="center">
+							<Select
+								list={FILTER_ITEMS}
+								placeholder="Все"
+								onChange={handleFilterChange}
+							/>
+							<Select
+								list={SORT_ITEMS}
+								placeholder="По дате"
+								onChange={handleSortChange}
+							/>
+						</Flex>
+					</TopBlock>
+					<NoteTitle variants={item}>
+						<span>Список задач</span>
+						<NotesStats>
+							Выполнено {notes.filter((n) => n.completed).length}{' '}
+							из {notes.length}
+						</NotesStats>
 					</NoteTitle>
-					<Select
-						list={FILTER_ITEMS}
-						placeholder="Все"
-						onChange={handleFilterChange}
-					/>
-				</TopBlock>
+				</>
 			)}
+
 			{!isLoading && !hasFilteredNotes && (
 				<NonNotes variants={item}>
 					{hasAnyNotes
@@ -201,6 +279,7 @@ export const NotesList = () => {
 										completed={note.completed}
 										onToggle={handleToggle}
 										onDelete={handleDelete}
+										onUpdateTitle={handleUpdateTitle}
 									/>
 								</NoteStyled>
 							);

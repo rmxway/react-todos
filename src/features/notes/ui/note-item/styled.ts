@@ -90,6 +90,21 @@ export const NoteStyled = styled(motion.li)<{
 			overflow: hidden;
 			text-overflow: ellipsis;
 			font-weight: 600;
+			cursor: pointer;
+			border-bottom: 2px dotted ${theme.borderColor};
+		}
+
+		.note-title-edit {
+			flex: 1;
+			min-width: 0;
+			padding: 4px 8px;
+			font-size: inherit;
+			font-weight: 600;
+			border: 1px solid ${theme.borderColor};
+			border-radius: ${theme.radius.border};
+			background-color: ${theme.bg};
+			color: ${theme.textColor};
+			outline: none;
 		}
 
 		.note-text span,

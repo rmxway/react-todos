@@ -77,6 +77,26 @@ export function useToggleNote() {
 	});
 }
 
+export function useUpdateNote() {
+	return useMutation({
+		mutationFn: ({ id, title }: { id: string; title: string }) =>
+			notesApi.updateNote(id, { title }),
+		onMutate: async ({ id, title }) => {
+			await queryClient.cancelQueries({ queryKey: NOTES_KEY });
+			const previous = queryClient.getQueryData<Note[]>(NOTES_KEY);
+
+			queryClient.setQueryData<Note[]>(NOTES_KEY, (old = []) =>
+				old.map((note) => (note.id === id ? { ...note, title } : note)),
+			);
+
+			return { previous };
+		},
+		onError: (_err, _vars, context) => {
+			queryClient.setQueryData(NOTES_KEY, context?.previous);
+		},
+	});
+}
+
 const isTempId = (id: string) => id.startsWith('temp-');
 
 export function useDeleteNote() {

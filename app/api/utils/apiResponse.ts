@@ -52,3 +52,18 @@ export function apiServerError(
 ): NextResponse<ApiErrorResponse> {
 	return apiError(message, 500);
 }
+
+/** 429 — слишком много запросов */
+export function apiTooManyRequests(
+	message = 'Слишком много попыток. Попробуйте позже.',
+	retryAfter?: number,
+): NextResponse<ApiErrorResponse> {
+	const headers: Record<string, string> = {};
+	if (retryAfter != null) {
+		headers['Retry-After'] = String(retryAfter);
+	}
+	return NextResponse.json(
+		{ success: false, error: message },
+		{ status: 429, headers },
+	);
+}

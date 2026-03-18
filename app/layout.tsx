@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 
 import { StyledComponentsRegistry } from '@/lib/registry';
-import { APP_TITLE, THEME_COOKIE_NAME } from '@/shared/config';
+import { APP_TITLE, BASE_URL, THEME_COOKIE_NAME } from '@/shared/config';
 
 import { AppShell } from './AppShell';
 import { StoreProvider } from './StoreProvider';
@@ -15,6 +15,23 @@ export const metadata: Metadata = {
 		template: `%s | ${APP_TITLE}`,
 	},
 	description: 'TodoList, Animations',
+	keywords: ['todo', 'react', 'next.js', 'заметки', 'задачи'],
+	openGraph: {
+		title: APP_TITLE,
+		description: 'TodoList, Animations',
+		url: BASE_URL,
+		siteName: APP_TITLE,
+		type: 'website',
+	},
+	twitter: {
+		card: 'summary_large_image',
+		title: APP_TITLE,
+		description: 'TodoList, Animations',
+	},
+	robots: {
+		index: true,
+		follow: true,
+	},
 };
 
 export default async function RootLayout({
@@ -36,7 +53,6 @@ export default async function RootLayout({
 					name="viewport"
 					content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
 				/>
-				<meta name="keywords" content="todo, react, next.js" />
 			</head>
 			<body>
 				<StyledComponentsRegistry>

@@ -10,6 +10,11 @@ import { useWidth } from '@/shared/lib/hooks';
 
 import { BackPlane, H1, ImageComponent } from './styled';
 
+const getImageSrc = (img: unknown): string =>
+	typeof img === 'object' && img !== null && 'src' in img
+		? (img as { src: string }).src
+		: String(img ?? '');
+
 export const MotionPage = () => {
 	const moveX = useMotionValue(0);
 	const scale = useTransform(moveX, [-300, 0], [1.4, 1]);
@@ -60,11 +65,7 @@ export const MotionPage = () => {
 			</motion.div>
 			<ImageComponent ref={componentRef}>
 				<motion.img
-					src={
-						typeof motionImg === 'object' && 'src' in motionImg
-							? motionImg.src
-							: String(motionImg)
-					}
+					src={getImageSrc(motionImg)}
 					alt="img"
 					ref={imageRef}
 					variants={item}

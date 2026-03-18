@@ -1,8 +1,25 @@
-import { apiError, apiSuccess, apiUnauthorized } from '@api/utils/apiResponse';
+import {
+	apiError,
+	apiSuccess,
+	apiTooManyRequests,
+	apiUnauthorized,
+} from '@api/utils/apiResponse';
+import { checkRateLimit, getClientIp } from '@api/utils/rateLimit';
 import { getServerSession } from 'next-auth';
 
 import { authOptions } from '@/lib/auth-options';
 import { getAdminDb } from '@/lib/firebase-admin';
+
+function checkTodosRateLimit(req: Request) {
+	const result = checkRateLimit(getClientIp(req), 'todos');
+	if (!result.success) {
+		return apiTooManyRequests(
+			'Слишком много запросов. Попробуйте позже.',
+			result.retryAfter,
+		);
+	}
+	return null;
+}
 
 /**
  * Ссылка на подколлекцию todos пользователя в Firestore.
@@ -16,7 +33,10 @@ function getTodosRef(userId: string) {
  * GET /api/todos — получить все todo текущего пользователя.
  * Firestore: читаем все документы из users/{userId}/todos и возвращаем массив.
  */
-export async function GET() {
+export async function GET(req: Request) {
+	const rateLimitRes = checkTodosRateLimit(req);
+	if (rateLimitRes) return rateLimitRes;
+
 	const session = await getServerSession(authOptions);
 	if (!session?.user?.id) {
 		return apiUnauthorized();
@@ -37,6 +57,9 @@ export async function GET() {
  * ID документа генерируется Firestore автоматически.
  */
 export async function POST(req: Request) {
+	const rateLimitRes = checkTodosRateLimit(req);
+	if (rateLimitRes) return rateLimitRes;
+
 	const session = await getServerSession(authOptions);
 	if (!session?.user?.id) {
 		return apiUnauthorized();
@@ -46,6 +69,9 @@ export async function POST(req: Request) {
 	const title = typeof body?.title === 'string' ? body.title.trim() : '';
 	if (!title) {
 		return apiError('Заголовок обязателен', 400);
+	}
+	if (title.length > 200) {
+		return apiError('Заголовок не более 200 символов', 400);
 	}
 
 	const date = `[ ${new Date().toLocaleDateString()} ] ${new Date().toLocaleTimeString()}`;
@@ -69,7 +95,10 @@ export async function POST(req: Request) {
  * DELETE /api/todos — удалить все todo текущего пользователя.
  * Firestore: batch delete — получаем все документы в users/{userId}/todos и удаляем их одним commit.
  */
-export async function DELETE() {
+export async function DELETE(req: Request) {
+	const rateLimitRes = checkTodosRateLimit(req);
+	if (rateLimitRes) return rateLimitRes;
+
 	const session = await getServerSession(authOptions);
 	if (!session?.user?.id) {
 		return apiUnauthorized();
