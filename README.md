@@ -15,15 +15,19 @@
 - **Formik** + **Yup** — формы и валидация
 - **FontAwesome** — иконки
 - **Firebase Admin** — бэкенд (хранение данных)
+- **Vitest** + **Testing Library** — тестирование
 
 ## Возможности
 
 ### 📝 Notes (главная страница)
 
 - Добавление, удаление заметок
+- Редактирование заголовка по клику на заметку
 - Отметка задач как выполненных
 - Удаление всех заметок
+- Поиск по заголовку заметки
 - Фильтрация списка по статусу (все / активные / выполненные)
+- Сортировка: по дате, по названию, по статусу
 - Оптимистичные обновления (React Query)
 - API-маршруты для работы с данными (`/api/todos`)
 
@@ -94,7 +98,20 @@ yarn typecheck   # Проверка типов TypeScript
 yarn lint        # Проверка ESLint (src, app)
 yarn lint:fix    # Исправление ошибок ESLint
 yarn pretty      # Форматирование кода (Prettier)
+yarn test        # Запуск тестов (Vitest) в watch-режиме
+yarn test:run    # Однократный прогон тестов
 ```
+
+## 🧪 Тестирование
+
+Проект использует **Vitest** и **Testing Library** для unit- и компонентных тестов:
+
+- `src/store/slices/alertSlice.test.ts` — тесты Redux-слайса
+- `src/features/notes/api/notes.test.ts` — тесты API заметок
+- `src/features/notes/ui/note-form/NoteForm.test.tsx` — тесты формы
+- `src/features/notes/ui/note-item/NoteItemContent.test.tsx` — тесты элемента заметки
+- `src/shared/ui/select/Select.test.tsx` — тесты компонента Select
+- `app/api/utils/` — тесты утилит API
 
 ## 📁 Структура проекта (FSD + Next.js)
 
@@ -124,7 +141,7 @@ src/
 │   ├── config/         # Темы, брейкпоинты, константы
 │   ├── layouts/        # Container, Flex, Grid
 │   ├── lib/            # Хуки, анимации
-│   └── ui/             # Alert, Button, Checkbox, Input, Modal, Select, ErrorMessage
+│   └── ui/             # Alert, Button, Checkbox, ErrorBoundary, ErrorMessage, Input, Modal, Select, Skeleton
 ├── store/              # Redux store и слайсы
 ├── lib/                # auth-options, firebase-admin, queryClient, registry
 ├── styles/             # Глобальные стили
