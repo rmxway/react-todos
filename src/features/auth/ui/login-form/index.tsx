@@ -5,8 +5,8 @@ import { useState } from 'react';
 import { item, mainVariant } from '@/shared/lib/animations';
 import { Button, ErrorMessage, Input } from '@/shared/ui';
 
+import { Comment, FieldWrapper, FormBlock } from '../styled';
 import { LoginSchema } from './schema';
-import { Comment, FieldWrapper, FormBlock } from './styled';
 
 interface LoginFormProps {
 	onSubmit: (values: {

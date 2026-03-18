@@ -11,7 +11,7 @@ export const FormBlock = styled(motion.form)`
 `;
 
 export const FieldWrapper = styled(motion.div)`
-	margin-bottom: 15px;
+	margin-bottom: 20px;
 `;
 
 export const Comment = styled(motion.div)`

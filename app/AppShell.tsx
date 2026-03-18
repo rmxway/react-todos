@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import { AlertWrapper } from '@/features/alert';
 import { Navbar } from '@/features/auth';
+import { ErrorBoundary } from '@/shared/ui';
 
 const AppStyled = styled(motion.section)`
 	display: flex;
@@ -24,7 +25,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 		<AppStyled>
 			<AlertWrapper />
 			<Navbar />
-			{children}
+			<ErrorBoundary>{children}</ErrorBoundary>
 		</AppStyled>
 	);
 }

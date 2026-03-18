@@ -18,6 +18,7 @@ export const StyledErrorMessage = styled(motion.div).attrs(() => ({
 	animate: 'visible',
 	exit: 'exit',
 }))`
+	position: absolute;
 	color: ${(props) => props.theme.colors.danger};
 	margin: 5px 0 0;
 	font-size: 11px;

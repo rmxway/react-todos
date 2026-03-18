@@ -21,6 +21,7 @@ export const Label = styled.label`
 
 export const StyledInput = styled.input<{ $error?: boolean }>`
 	padding: 15px;
+	height: 46px;
 	width: 100%;
 	box-sizing: border-box;
 	font-size: 16px;

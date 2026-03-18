@@ -18,7 +18,7 @@ export const StyledButton = styled(motion.button).attrs(() => ({
 	transition: { duration: 0.2 },
 }))<ButtonProps>`
 	font-family: 'Roboto Condensed', sans-serif;
-	padding: 14px;
+	padding: 12px 15px;
 	font-size: 14px;
 	outline: none;
 	opacity: 0.7;
