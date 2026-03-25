@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useCallback, useMemo, useState } from 'react';
 
+import { AuthInlinePanel } from '@/features/auth/ui';
 import {
 	useDeleteAllNotes,
 	useDeleteNote,
@@ -26,7 +27,6 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { showAlert } from '@/store/slices/alertSlice';
 
 import {
-	AlertParagraph,
 	List,
 	NonNotes,
 	NotesStats,
@@ -72,7 +72,9 @@ export const NotesList = () => {
 	const hasAnyNotes = notes.length > 0;
 	const hasFilteredNotes = filteredNotes.length > 0;
 	const trashIcon = <FontAwesomeIcon icon={faTrash} />;
-	const [deletingId, setDeletingId] = useState<string | null>(null);
+	const [deletingIds, setDeletingIds] = useState<Set<string>>(
+		() => new Set(),
+	);
 	const [isDeleteAllModalOpen, setIsDeleteAllModalOpen] = useState(false);
 
 	const handleToggle = useCallback(
@@ -93,15 +95,23 @@ export const NotesList = () => {
 
 	const handleDelete = useCallback(
 		(id: string) => {
-			setDeletingId(id);
+			setDeletingIds((prev) => new Set(prev).add(id));
 
 			deleteMutation.mutate(id, {
 				onSuccess: () => {
-					setDeletingId(null);
+					setDeletingIds((prev) => {
+						const next = new Set(prev);
+						next.delete(id);
+						return next;
+					});
 					dispatch(showAlert({ text: 'Запись удалена' }));
 				},
 				onError: (err) => {
-					setDeletingId(null);
+					setDeletingIds((prev) => {
+						const next = new Set(prev);
+						next.delete(id);
+						return next;
+					});
 					dispatch(
 						showAlert({
 							type: 'danger',
@@ -269,7 +279,7 @@ export const NotesList = () => {
 									key={_optimisticId ?? note.id}
 									{...noteMotion(idx)}
 									$completed={note.completed}
-									$deleting={deletingId === note.id}
+									$deleting={deletingIds.has(note.id)}
 									layout
 								>
 									<NoteItemContent
@@ -294,8 +304,6 @@ export const NotesList = () => {
 			/>
 		</motion.div>
 	) : (
-		<AlertParagraph variants={item} transition={{ duration: 1 }}>
-			<div>Зайдите в свой аккаунт либо зарегистрируйте новый.</div>
-		</AlertParagraph>
+		<AuthInlinePanel />
 	);
 };

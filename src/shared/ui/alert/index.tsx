@@ -1,3 +1,5 @@
+'use client';
+
 import { AnimatePresence } from 'framer-motion';
 
 import { alertMotion } from '@/shared/lib/animations';

@@ -144,12 +144,12 @@ export const menuLineTop = {
 	initial: {
 		rotate: 0,
 		y: 0,
-		transformOrigin: 'center center',
+		transformOrigin: '50% 50%',
 	},
 	opened: {
 		rotate: 45,
 		y: '0.625rem',
-		transformOrigin: 'center center',
+		transformOrigin: '50% 50%',
 	},
 };
 
@@ -157,12 +157,12 @@ export const menuLineBottom = {
 	initial: {
 		rotate: 0,
 		y: 0,
-		transformOrigin: 'center center',
+		transformOrigin: '50% 50%',
 	},
 	opened: {
 		rotate: -45,
 		y: '-0.625rem',
-		transformOrigin: 'center center',
+		transformOrigin: '50% 50%',
 	},
 };
 

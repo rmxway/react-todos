@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import alertReducer from './slices/alertSlice';
 import appReducer from './slices/appSlice';
+import authUiReducer from './slices/authUiSlice';
 import usersReducer from './slices/usersSlice';
 
 export type ThemeColor = 'light' | 'dark';
@@ -11,6 +12,7 @@ export function createStore(initialTheme: ThemeColor = 'light') {
 		reducer: {
 			alert: alertReducer,
 			app: appReducer,
+			authUi: authUiReducer,
 			users: usersReducer,
 		},
 		preloadedState: { app: { color: initialTheme } },
