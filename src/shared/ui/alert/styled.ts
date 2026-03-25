@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { lighten } from 'polished';
 import styled, { css } from 'styled-components';
 
-export const AlertSC = styled(motion.div)<{ $type?: string }>`
+const AlertBase = styled.div<{ $type?: string }>`
 	position: fixed;
 	line-height: 1;
 	display: flex;
@@ -35,6 +35,8 @@ export const AlertSC = styled(motion.div)<{ $type?: string }>`
 		`}
 	`}
 `;
+
+export const AlertSC = motion.create(AlertBase);
 
 export const CloseButton = styled.button`
 	border: none;

@@ -8,6 +8,7 @@ import { ThemeProvider } from 'styled-components';
 import { lightTheme } from '@/shared/config';
 import alertReducer from '@/store/slices/alertSlice';
 import appReducer from '@/store/slices/appSlice';
+import authUiReducer from '@/store/slices/authUiSlice';
 import usersReducer from '@/store/slices/usersSlice';
 
 const createTestStore = () =>
@@ -15,6 +16,7 @@ const createTestStore = () =>
 		reducer: {
 			alert: alertReducer,
 			app: appReducer,
+			authUi: authUiReducer,
 			users: usersReducer,
 		},
 		preloadedState: {

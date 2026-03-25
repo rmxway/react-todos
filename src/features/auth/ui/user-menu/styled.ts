@@ -1,6 +1,24 @@
 import { motion } from 'framer-motion';
+import NextLink from 'next/link';
 import { darken, lighten } from 'polished';
 import styled, { css } from 'styled-components';
+
+export const NavGuestLink = styled(NextLink)`
+	position: relative;
+	display: inline-block;
+	color: #fff;
+	font-weight: 300;
+	transition: 0.2s;
+	height: 100%;
+	padding: 5px 0;
+	margin-left: 15px;
+	cursor: pointer;
+	text-decoration: none;
+
+	&:hover {
+		opacity: 0.9;
+	}
+`;
 
 export const Link = styled(motion.div)`
 	position: relative;
@@ -54,19 +72,6 @@ export const User = styled.div`
 	span {
 		font-weight: 100;
 	}
-`;
-
-export const PopupBackplane = styled(motion.div)`
-	position: absolute;
-	top: 40px;
-	right: 0;
-	width: 300px;
-	z-index: 0;
-	padding: 20px;
-	border-radius: 0 0 10px 10px;
-	background-color: ${(props) => lighten(0.05, props.theme.bg)};
-	box-shadow: ${(props) => props.theme.shadows.popup};
-	transition: 0.2s;
 `;
 
 export const Wrapper = styled(motion.div)<{ $relative?: boolean }>`

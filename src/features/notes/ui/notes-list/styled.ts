@@ -31,15 +31,6 @@ export const List = styled(motion.ul)`
 	padding: 0;
 `;
 
-export const AlertParagraph = styled(motion.div)`
-	width: 100%;
-	margin-top: 100px;
-	text-align: center;
-	font-size: 20px;
-	font-weight: 100;
-	letter-spacing: 2px;
-`;
-
 export const SkeletonItem = styled.li`
 	${({ theme }) => css`
 		display: flex;
