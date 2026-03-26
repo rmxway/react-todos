@@ -14,11 +14,11 @@ export const metadata: Metadata = {
 		default: APP_TITLE,
 		template: `%s | ${APP_TITLE}`,
 	},
-	description: 'TodoList, Animations',
-	keywords: ['todo', 'react', 'next.js', 'заметки', 'задачи'],
+	description: 'Notes, Animations',
+	keywords: ['note', 'notes', 'react', 'next.js', 'заметки'],
 	openGraph: {
 		title: APP_TITLE,
-		description: 'TodoList, Animations',
+		description: 'Notes, Animations',
 		url: BASE_URL,
 		siteName: APP_TITLE,
 		type: 'website',
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 	twitter: {
 		card: 'summary_large_image',
 		title: APP_TITLE,
-		description: 'TodoList, Animations',
+		description: 'Notes, Animations',
 	},
 	robots: {
 		index: true,

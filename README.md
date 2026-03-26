@@ -1,4 +1,4 @@
-# React Todos
+# React Notes
 
 Приложение для управления заметками с авторизацией, темами и анимациями.
 
@@ -29,7 +29,7 @@
 - Фильтрация списка по статусу (все / активные / выполненные)
 - Сортировка: по дате, по названию, по статусу
 - Оптимистичные обновления (React Query)
-- API-маршруты для работы с данными (`/api/todos`)
+- API-маршруты для работы с данными (`/api/notes`)
 
 ### 👤 Пользователи
 
@@ -46,12 +46,12 @@
 
 ### 📄 Страницы
 
-| Путь      | Описание                                           |
-| --------- | -------------------------------------------------- |
-| `/`       | Notes — список заметок                             |
-| `/modal`  | Modal — пример модального окна                     |
-| `/select` | Select — кастомный компонент выбора                |
-| `/motion` | Motion — анимации на основе drag (Framer Motion)   |
+| Путь      | Описание                                         |
+| --------- | ------------------------------------------------ |
+| `/`       | Notes — список заметок                           |
+| `/modal`  | Modal — пример модального окна                   |
+| `/select` | Select — кастомный компонент выбора              |
+| `/motion` | Motion — анимации на основе drag (Framer Motion) |
 
 ## 🔧 Требования
 
@@ -62,8 +62,8 @@
 
 ```bash
 # Клонирование репозитория
-git clone <your-repo-url> react-todos
-cd react-todos
+git clone <your-repo-url> react-notes
+cd react-notes
 
 # Установка зависимостей
 yarn
@@ -73,10 +73,10 @@ yarn
 
 1. Скопируйте файл `.env.local.example` в `.env.local`.
 2. Заполните переменные окружения:
-   - `FIREBASE_PROJECT_ID`, `FIREBASE_CLIENT_EMAIL`, `FIREBASE_PRIVATE_KEY` — данные сервисного аккаунта Firebase Admin.
-   - `NEXTAUTH_SECRET` — секрет для NextAuth (можно сгенерировать через `openssl rand -base64 32`).
-   - `NEXTAUTH_URL` — базовый URL приложения (по умолчанию `http://localhost:3000`).
-   - при необходимости — `SESSION_MAX_AGE_MINUTES`.
+    - `FIREBASE_PROJECT_ID`, `FIREBASE_CLIENT_EMAIL`, `FIREBASE_PRIVATE_KEY` — данные сервисного аккаунта Firebase Admin.
+    - `NEXTAUTH_SECRET` — секрет для NextAuth (можно сгенерировать через `openssl rand -base64 32`).
+    - `NEXTAUTH_URL` — базовый URL приложения (по умолчанию `http://localhost:3000`).
+    - при необходимости — `SESSION_MAX_AGE_MINUTES`.
 
 ## 🚀 Запуск
 
@@ -120,7 +120,7 @@ app/                    # Next.js App Router
 ├── api/                # API Routes
 │   ├── auth/           # NextAuth
 │   ├── register/       # Регистрация
-│   └── todos/          # CRUD заметок
+│   └── notes/          # CRUD заметок
 ├── motion/
 ├── modal/
 ├── select/

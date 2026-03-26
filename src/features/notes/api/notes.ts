@@ -7,12 +7,12 @@ interface ApiError {
 
 interface GetNotesResponse {
 	success: true;
-	todos: Note[];
+	notes: Note[];
 }
 
 interface AddNoteResponse {
 	success: true;
-	todo: Note;
+	note: Note;
 }
 
 interface ToggleNoteResponse {
@@ -49,22 +49,22 @@ async function handleResponse<T>(
 }
 
 export async function getNotes(): Promise<Note[]> {
-	const res = await fetch('/api/todos', fetchOptions);
-	return handleResponse(res, (data) => (data as GetNotesResponse).todos);
+	const res = await fetch('/api/notes', fetchOptions);
+	return handleResponse(res, (data) => (data as GetNotesResponse).notes);
 }
 
 export async function addNote(title: string): Promise<Note> {
-	const res = await fetch('/api/todos', {
+	const res = await fetch('/api/notes', {
 		...fetchOptions,
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ title }),
 	});
-	return handleResponse(res, (data) => (data as AddNoteResponse).todo);
+	return handleResponse(res, (data) => (data as AddNoteResponse).note);
 }
 
 export async function toggleNote(id: string): Promise<{ completed: boolean }> {
-	const res = await fetch(`/api/todos/${id}`, {
+	const res = await fetch(`/api/notes/${id}`, {
 		...fetchOptions,
 		method: 'PATCH',
 	});
@@ -77,7 +77,7 @@ export async function updateNote(
 	id: string,
 	{ title }: { title: string },
 ): Promise<{ title: string }> {
-	const res = await fetch(`/api/todos/${id}`, {
+	const res = await fetch(`/api/notes/${id}`, {
 		...fetchOptions,
 		method: 'PATCH',
 		headers: { 'Content-Type': 'application/json' },
@@ -89,7 +89,7 @@ export async function updateNote(
 }
 
 export async function deleteNote(id: string): Promise<void> {
-	const res = await fetch(`/api/todos/${id}`, {
+	const res = await fetch(`/api/notes/${id}`, {
 		...fetchOptions,
 		method: 'DELETE',
 	});
@@ -97,7 +97,7 @@ export async function deleteNote(id: string): Promise<void> {
 }
 
 export async function deleteAllNotes(): Promise<void> {
-	const res = await fetch('/api/todos', {
+	const res = await fetch('/api/notes', {
 		...fetchOptions,
 		method: 'DELETE',
 	});
