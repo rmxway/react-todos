@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 
 import {
 	clearUserAndNotes,
-	syncUserAndTodos,
+	syncUserAndNotes,
 	useUserMenuHandlers,
 } from './handlers';
 import { UserMenuAuth } from './UserMenuAuth';
@@ -26,7 +26,7 @@ export const UserMenu = () => {
 			clearUserAndNotes(dispatch);
 			return;
 		}
-		syncUserAndTodos(
+		syncUserAndNotes(
 			dispatch,
 			session.user.id,
 			session.user.name ?? '',

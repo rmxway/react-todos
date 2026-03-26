@@ -107,7 +107,6 @@ export const NoteStyled = styled(motion.li)<{
 			outline: none;
 		}
 
-		.note-text span,
 		.note-text small {
 			flex-shrink: 0;
 		}

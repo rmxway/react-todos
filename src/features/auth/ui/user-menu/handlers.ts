@@ -11,7 +11,7 @@ export function clearUserAndNotes(dispatch: ReturnType<typeof useAppDispatch>) {
 	queryClient.removeQueries({ queryKey: NOTES_KEY });
 }
 
-export async function syncUserAndTodos(
+export async function syncUserAndNotes(
 	dispatch: ReturnType<typeof useAppDispatch>,
 	userId: string,
 	name: string,

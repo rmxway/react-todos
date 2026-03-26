@@ -10,8 +10,8 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth-options';
 import { getAdminDb } from '@/lib/firebase-admin';
 
-function checkTodosRateLimit(req: Request) {
-	const result = checkRateLimit(getClientIp(req), 'todos');
+function checkNotesRateLimit(req: Request) {
+	const result = checkRateLimit(getClientIp(req), 'notes');
 	if (!result.success) {
 		return apiTooManyRequests(
 			'Слишком много запросов. Попробуйте позже.',
@@ -22,28 +22,28 @@ function checkTodosRateLimit(req: Request) {
 }
 
 /**
- * Ссылка на один документ todo в Firestore.
- * Путь: users/{userId}/todos/{todoId}
+ * Ссылка на один документ заметки в Firestore.
+ * Путь: users/{userId}/notes/{noteId}
  */
-function getTodoRef(userId: string, todoId: string) {
+function getNoteRef(userId: string, noteId: string) {
 	return getAdminDb()
 		.collection('users')
 		.doc(userId)
-		.collection('todos')
-		.doc(todoId);
+		.collection('notes')
+		.doc(noteId);
 }
 
 const TITLE_MAX_LENGTH = 200;
 
 /**
- * PATCH /api/todos/[id] — переключить completed или обновить title.
+ * PATCH /api/notes/[id] — переключить completed или обновить title.
  * Body: { title?: string } — если передан title, обновить его. Иначе — toggle completed.
  */
 export async function PATCH(
 	req: Request,
 	{ params }: { params: Promise<{ id: string }> },
 ) {
-	const rateLimitRes = checkTodosRateLimit(req);
+	const rateLimitRes = checkNotesRateLimit(req);
 	if (rateLimitRes) return rateLimitRes;
 
 	const session = await getServerSession(authOptions);
@@ -52,7 +52,7 @@ export async function PATCH(
 	}
 
 	const { id } = await params;
-	const ref = getTodoRef(session.user.id, id);
+	const ref = getNoteRef(session.user.id, id);
 	const doc = await ref.get();
 
 	if (!doc.exists) {
@@ -86,14 +86,14 @@ export async function PATCH(
 }
 
 /**
- * DELETE /api/todos/[id] — удалить один todo по id.
- * Firestore: проверяем существование документа users/{userId}/todos/{id}, затем ref.delete().
+ * DELETE /api/notes/[id] — удалить одну заметку по id.
+ * Firestore: проверяем существование документа users/{userId}/notes/{id}, затем ref.delete().
  */
 export async function DELETE(
 	req: Request,
 	{ params }: { params: Promise<{ id: string }> },
 ) {
-	const rateLimitRes = checkTodosRateLimit(req);
+	const rateLimitRes = checkNotesRateLimit(req);
 	if (rateLimitRes) return rateLimitRes;
 
 	const session = await getServerSession(authOptions);
@@ -102,7 +102,7 @@ export async function DELETE(
 	}
 
 	const { id } = await params;
-	const ref = getTodoRef(session.user.id, id);
+	const ref = getNoteRef(session.user.id, id);
 	const doc = await ref.get();
 
 	if (!doc.exists) {

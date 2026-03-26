@@ -10,8 +10,8 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth-options';
 import { getAdminDb } from '@/lib/firebase-admin';
 
-function checkTodosRateLimit(req: Request) {
-	const result = checkRateLimit(getClientIp(req), 'todos');
+function checkNotesRateLimit(req: Request) {
+	const result = checkRateLimit(getClientIp(req), 'notes');
 	if (!result.success) {
 		return apiTooManyRequests(
 			'Слишком много запросов. Попробуйте позже.',
@@ -22,19 +22,19 @@ function checkTodosRateLimit(req: Request) {
 }
 
 /**
- * Ссылка на подколлекцию todos пользователя в Firestore.
- * Путь: users/{userId}/todos
+ * Ссылка на подколлекцию notes пользователя в Firestore.
+ * Путь: users/{userId}/notes
  */
-function getTodosRef(userId: string) {
-	return getAdminDb().collection('users').doc(userId).collection('todos');
+function getNotesRef(userId: string) {
+	return getAdminDb().collection('users').doc(userId).collection('notes');
 }
 
 /**
- * GET /api/todos — получить все todo текущего пользователя.
- * Firestore: читаем все документы из users/{userId}/todos и возвращаем массив.
+ * GET /api/notes — получить все заметки текущего пользователя.
+ * Firestore: читаем все документы из users/{userId}/notes и возвращаем массив.
  */
 export async function GET(req: Request) {
-	const rateLimitRes = checkTodosRateLimit(req);
+	const rateLimitRes = checkNotesRateLimit(req);
 	if (rateLimitRes) return rateLimitRes;
 
 	const session = await getServerSession(authOptions);
@@ -42,22 +42,22 @@ export async function GET(req: Request) {
 		return apiUnauthorized();
 	}
 
-	const snapshot = await getTodosRef(session.user.id).get();
-	const todos = snapshot.docs.map((doc) => ({
+	const snapshot = await getNotesRef(session.user.id).get();
+	const notes = snapshot.docs.map((doc) => ({
 		id: doc.id,
 		...doc.data(),
 	}));
 
-	return apiSuccess({ todos });
+	return apiSuccess({ notes });
 }
 
 /**
- * POST /api/todos — создать новый todo.
- * Firestore: добавляем документ в users/{userId}/todos с полями title, completed, date.
+ * POST /api/notes — создать новую заметку.
+ * Firestore: добавляем документ в users/{userId}/notes с полями title, completed, date.
  * ID документа генерируется Firestore автоматически.
  */
 export async function POST(req: Request) {
-	const rateLimitRes = checkTodosRateLimit(req);
+	const rateLimitRes = checkNotesRateLimit(req);
 	if (rateLimitRes) return rateLimitRes;
 
 	const session = await getServerSession(authOptions);
@@ -75,28 +75,28 @@ export async function POST(req: Request) {
 	}
 
 	const date = `[ ${new Date().toLocaleDateString()} ] ${new Date().toLocaleTimeString()}`;
-	const docRef = await getTodosRef(session.user.id).add({
+	const docRef = await getNotesRef(session.user.id).add({
 		title,
 		completed: false,
 		date,
 	});
 
-	const todo = {
+	const note = {
 		id: docRef.id,
 		title,
 		completed: false,
 		date,
 	};
 
-	return apiSuccess({ todo }, 201);
+	return apiSuccess({ note }, 201);
 }
 
 /**
- * DELETE /api/todos — удалить все todo текущего пользователя.
- * Firestore: batch delete — получаем все документы в users/{userId}/todos и удаляем их одним commit.
+ * DELETE /api/notes — удалить все заметки текущего пользователя.
+ * Firestore: batch delete — получаем все документы в users/{userId}/notes и удаляем их одним commit.
  */
 export async function DELETE(req: Request) {
-	const rateLimitRes = checkTodosRateLimit(req);
+	const rateLimitRes = checkNotesRateLimit(req);
 	if (rateLimitRes) return rateLimitRes;
 
 	const session = await getServerSession(authOptions);
@@ -104,7 +104,7 @@ export async function DELETE(req: Request) {
 		return apiUnauthorized();
 	}
 
-	const snapshot = await getTodosRef(session.user.id).get();
+	const snapshot = await getNotesRef(session.user.id).get();
 	const batch = getAdminDb().batch();
 	snapshot.docs.forEach((doc) => {
 		batch.delete(doc.ref);

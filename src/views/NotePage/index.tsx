@@ -28,8 +28,11 @@ export const NotePage = ({ authMode }: { authMode: AuthMode }) => {
 			animate="visible"
 			exit="hidden"
 		>
-			<H1>React Notes App</H1>
-			<motion.p variants={item}>TodoList, Animations</motion.p>
+			<H1>React Notes</H1>
+			<motion.p variants={item}>
+				Создавайте заметки, фильтруйте список и отмечайте выполненные
+				задачи.
+			</motion.p>
 			<Fly />
 			<NotesList />
 		</Container>

@@ -10,7 +10,7 @@ const WINDOW_MS = 60 * 1000; // 1 minute
 export const LIMITS = {
 	register: 5,
 	auth: 10,
-	todos: 60,
+	notes: 60,
 } as const;
 
 function getKey(ip: string, prefix: string) {

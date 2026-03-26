@@ -11,22 +11,22 @@ describe('notes API', () => {
 		vi.unstubAllGlobals();
 	});
 
-	it('getNotes should return todos from API', async () => {
-		const todos = [
+	it('getNotes should return notes from API', async () => {
+		const notes = [
 			{ id: '1', title: 'Test', completed: false, date: '2024-01-01' },
 		];
 		vi.mocked(fetch).mockResolvedValueOnce({
 			ok: true,
-			json: () => Promise.resolve({ success: true, todos }),
+			json: () => Promise.resolve({ success: true, notes }),
 		} as Response);
 
 		const result = await notesApi.getNotes();
-		expect(result).toEqual(todos);
-		expect(fetch).toHaveBeenCalledWith('/api/todos', expect.any(Object));
+		expect(result).toEqual(notes);
+		expect(fetch).toHaveBeenCalledWith('/api/notes', expect.any(Object));
 	});
 
 	it('addNote should POST with title', async () => {
-		const todo = {
+		const note = {
 			id: '1',
 			title: 'New',
 			completed: false,
@@ -34,12 +34,12 @@ describe('notes API', () => {
 		};
 		vi.mocked(fetch).mockResolvedValueOnce({
 			ok: true,
-			json: () => Promise.resolve({ success: true, todo }),
+			json: () => Promise.resolve({ success: true, note }),
 		} as Response);
 
 		const result = await notesApi.addNote('New');
-		expect(result).toEqual(todo);
-		expect(fetch).toHaveBeenCalledWith('/api/todos', {
+		expect(result).toEqual(note);
+		expect(fetch).toHaveBeenCalledWith('/api/notes', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ title: 'New' }),

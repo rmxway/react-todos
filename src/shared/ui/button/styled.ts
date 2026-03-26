@@ -30,7 +30,7 @@ export const StyledButton = styled(motion.button).attrs(() => ({
 	}
 
 	${({ theme, $variant, $size, $disabled }) => css`
-		border: 2px solid ${theme.textColor};
+		border: 1px solid ${theme.textColor};
 		border-radius: ${theme.radius.border};
 		color: ${theme.textColor};
 		${$variant === 'primary' &&
