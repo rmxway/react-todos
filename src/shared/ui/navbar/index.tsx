@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import { useRef, useState } from 'react';
 
 import logo from '@/assets/logo.png';
+import { IS_DEV } from '@/shared/config';
 import { Container } from '@/shared/layouts';
 import {
 	menuLineBottom,
@@ -24,11 +25,16 @@ import { changeTheme } from '@/store/slices/appSlice';
 
 import { MenuButton, MobileMenu, Nav } from './styled';
 
-const links = [
-	{ path: '/', title: 'Notes' },
-	{ path: '/modal', title: 'Modal' },
-	{ path: '/select', title: 'Select' },
-];
+const links: { path: string; title: string }[] = [];
+if (IS_DEV) {
+	links.push(
+		{ path: '/', title: 'Notes' },
+		{ path: '/modal', title: 'Modal' },
+		{ path: '/select', title: 'Select' },
+	);
+}
+
+const isMenuVisible = links.length > 0;
 
 interface NavbarProps {
 	rightSlot?: React.ReactNode;
@@ -80,56 +86,60 @@ export const Navbar = ({ rightSlot }: NavbarProps) => {
 					priority
 				/>
 
-				<MenuButton
-					animate={menuOpened ? 'opened' : 'initial'}
-					onClick={handleClickMobileMenu}
-				>
-					<motion.span
-						variants={menuLineTop}
-						transition={menuLinesTransition}
-					/>
-					<motion.span
-						variants={menuLineCenter}
-						transition={menuLinesTransition}
-					/>
-					<motion.span
-						variants={menuLineBottom}
-						transition={menuLinesTransition}
-					/>
-				</MenuButton>
-
-				<AnimatePresence mode="wait">
-					{menuOpened && (
-						<MobileMenu
-							ref={mobileMenuRef}
-							variants={mobileMenuVar}
-							initial="hidden"
-							animate={menuOpened ? 'visible' : 'hidden'}
-							exit="hidden"
+				{isMenuVisible && (
+					<>
+						<MenuButton
+							animate={menuOpened ? 'opened' : 'initial'}
+							onClick={handleClickMobileMenu}
 						>
-							<ul className="mobile-menu">
-								{links.map((item, idx) => (
-									<li
-										key={item.title}
-										onClick={() => handleClick()}
-									>
-										<Link
-											href={item.path}
-											className={
-												pathname === item.path
-													? 'active'
-													: ''
-											}
-											data-id={idx}
-										>
-											{item.title}
-										</Link>
-									</li>
-								))}
-							</ul>
-						</MobileMenu>
-					)}
-				</AnimatePresence>
+							<motion.span
+								variants={menuLineTop}
+								transition={menuLinesTransition}
+							/>
+							<motion.span
+								variants={menuLineCenter}
+								transition={menuLinesTransition}
+							/>
+							<motion.span
+								variants={menuLineBottom}
+								transition={menuLinesTransition}
+							/>
+						</MenuButton>
+
+						<AnimatePresence mode="wait">
+							{menuOpened && (
+								<MobileMenu
+									ref={mobileMenuRef}
+									variants={mobileMenuVar}
+									initial="hidden"
+									animate={menuOpened ? 'visible' : 'hidden'}
+									exit="hidden"
+								>
+									<ul className="mobile-menu">
+										{links.map((item, idx) => (
+											<li
+												key={item.title}
+												onClick={() => handleClick()}
+											>
+												<Link
+													href={item.path}
+													className={
+														pathname === item.path
+															? 'active'
+															: ''
+													}
+													data-id={idx}
+												>
+													{item.title}
+												</Link>
+											</li>
+										))}
+									</ul>
+								</MobileMenu>
+							)}
+						</AnimatePresence>
+					</>
+				)}
 
 				<Button
 					$variant="noBorder"
@@ -144,48 +154,52 @@ export const Navbar = ({ rightSlot }: NavbarProps) => {
 					)}
 				</Button>
 
-				<LayoutGroup id="navbar-desktop">
-					<motion.ul
-						ref={ulRef}
-						className="desktop-menu"
-						variants={navVariants}
-						initial="hidden"
-						animate="visible"
-					>
-						{links.map((item, idx) => (
-							<motion.li
-								variants={navLiVarinats}
-								onClick={() => handleClick()}
-								key={item.title}
-							>
-								<Link
-									href={item.path}
-									className={
-										pathname === item.path ? 'active' : ''
-									}
-									data-id={idx}
+				{isMenuVisible && (
+					<LayoutGroup id="navbar-desktop">
+						<motion.ul
+							ref={ulRef}
+							className="desktop-menu"
+							variants={navVariants}
+							initial="hidden"
+							animate="visible"
+						>
+							{links.map((item, idx) => (
+								<motion.li
+									variants={navLiVarinats}
+									onClick={() => handleClick()}
+									key={item.title}
 								>
-									{item.title}
-								</Link>
+									<Link
+										href={item.path}
+										className={
+											pathname === item.path
+												? 'active'
+												: ''
+										}
+										data-id={idx}
+									>
+										{item.title}
+									</Link>
 
-								{idx === selected && (
-									<motion.div
-										initial={{ opacity: 0 }}
-										animate={{ opacity: 1 }}
-										transition={{
-											duration: 0.2,
-											type: 'spring',
-											stiffness: 100,
-											mass: 0.4,
-										}}
-										layoutId="underline"
-										className="underline"
-									/>
-								)}
-							</motion.li>
-						))}
-					</motion.ul>
-				</LayoutGroup>
+									{idx === selected && (
+										<motion.div
+											initial={{ opacity: 0 }}
+											animate={{ opacity: 1 }}
+											transition={{
+												duration: 0.2,
+												type: 'spring',
+												stiffness: 100,
+												mass: 0.4,
+											}}
+											layoutId="underline"
+											className="underline"
+										/>
+									)}
+								</motion.li>
+							))}
+						</motion.ul>
+					</LayoutGroup>
+				)}
 
 				{rightSlot}
 			</Container>

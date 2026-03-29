@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, type RenderOptions } from '@testing-library/react';
-import type { ReactElement } from 'react';
+import type { PropsWithChildren, ReactElement } from 'react';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 
@@ -35,15 +35,11 @@ const createTestQueryClient = () =>
 		},
 	});
 
-interface WrapperProps {
-	children: React.ReactNode;
-}
-
 function createWrapper() {
 	const store = createTestStore();
 	const queryClient = createTestQueryClient();
 
-	return function Wrapper({ children }: WrapperProps) {
+	return function Wrapper({ children }: PropsWithChildren) {
 		return (
 			<Provider store={store}>
 				<QueryClientProvider client={queryClient}>
